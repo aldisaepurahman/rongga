@@ -37,7 +37,7 @@ class TextInputState extends State<TextInputCustom> {
       cursorColor: gray,
       decoration: widget.type == TextInputCustomType.WITH_ICON
           ? InputDecoration(
-              fillColor: white,
+              fillColor: lightGray,
               filled: true,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -49,7 +49,7 @@ class TextInputState extends State<TextInputCustom> {
               ),
               prefixIcon: Icon(widget.icon))
           : InputDecoration(
-              fillColor: white,
+              fillColor: lightGray,
               filled: true,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),

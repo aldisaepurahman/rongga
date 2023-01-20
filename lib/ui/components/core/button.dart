@@ -58,9 +58,9 @@ class ButtonWidget extends StatelessWidget {
             minimumSize: type == ButtonType.SMALL
                 ? const Size(60, 30)
                 : type == ButtonType.LARGE
-                    ? const Size(60, 60)
+                    ? const Size(60, 50)
                     : type == ButtonType.LARGE_WIDE
-                        ? const Size.fromHeight(60)
+                        ? const Size.fromHeight(50)
                         : const Size(60, 45)),
         child: Text(
           content,

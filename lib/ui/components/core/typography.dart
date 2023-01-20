@@ -6,12 +6,13 @@ class TextTypography extends StatelessWidget {
   final TextType type;
   final String text;
   final String? jumbleText;
+  final TextAlign? align;
 
   TextTypography(
       {Key? key,
       required this.type,
       required this.text,
-      this.jumbleText})
+      this.jumbleText, this.align})
       : super(key: key);
 
   Map<TextType, double> fontSize = {
@@ -42,6 +43,7 @@ class TextTypography extends StatelessWidget {
 
     return Text(
       text,
+      textAlign: align ?? TextAlign.start,
       style: TextStyle(
         fontSize: fontSize[type],
         fontFamily: "Poppins",

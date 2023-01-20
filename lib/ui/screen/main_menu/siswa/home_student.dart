@@ -66,7 +66,8 @@ class _StudentHome extends State<StudentHome> {
         children: [
           TextTypography(
               type: TextType.DESCRIPTION,
-              text: "Anda belum pernah melakukan tes sebelumnya\nSilahkan ikuti tes terlebih dahulu"
+              text: "Anda belum pernah melakukan tes sebelumnya\nSilahkan ikuti tes terlebih dahulu",
+            align: TextAlign.center,
           ),
           const SizedBox(height: 10),
           ButtonWidget(
