@@ -3,7 +3,12 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 
 class BottomNavBar extends StatefulWidget {
   final Function callback;
-  const BottomNavBar({super.key, required this.callback});
+  /*final ValueChanged<int> currentPageIndex;
+  final ValueChanged<int> nextPageIndex;*/
+
+  const BottomNavBar({super.key, required this.callback,
+    // required this.currentPageIndex, required this.nextPageIndex
+  });
 
   @override
   _BottomNavBar createState() => _BottomNavBar();
@@ -13,9 +18,11 @@ class _BottomNavBar extends State<BottomNavBar> {
   int _selectedBarIcon = 0;
 
   void _changeBarIcon(int indexIcon) {
+    // widget.currentPageIndex(_selectedBarIcon);
     setState(() {
       _selectedBarIcon = indexIcon;
     });
+    // widget.nextPageIndex(indexIcon);
     widget.callback(indexIcon);
   }
 
@@ -49,6 +56,8 @@ class _BottomNavBar extends State<BottomNavBar> {
           fontSize: 12,
           fontWeight: FontWeight.bold
       ),
+      unselectedItemColor: white,
+      selectedItemColor: orange,
       backgroundColor: skyBlue,
     );
   }

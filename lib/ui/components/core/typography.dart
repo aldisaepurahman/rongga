@@ -25,21 +25,15 @@ class TextTypography extends StatelessWidget {
     if (type == TextType.DESCRIPTION_SPAN) {
       return RichText(
           text: TextSpan(
+            style: const TextStyle(
+              fontSize: 14,
+              fontFamily: "Poppins"
+            ),
             children: [
-              TextSpan(
-                text: text,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: "Poppins"
-                )
-              ),
+              TextSpan(text: text),
               TextSpan(
                 text: jumbleText,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
-                  fontFamily: "Poppins"
-                )
+                style: const TextStyle(fontWeight: FontWeight.bold)
               )
             ]
           )
