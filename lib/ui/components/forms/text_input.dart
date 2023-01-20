@@ -29,10 +29,9 @@ class TextInputState extends State<TextInputCustom> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      textAlignVertical: TextAlignVertical.bottom,
+      obscureText: widget.hint == "Password" ? true : false,
       controller: widget.controller,
       style: const TextStyle(
-        fontSize: 13,
         fontFamily: "Poppins"
       ),
       cursorColor: gray,
@@ -46,12 +45,9 @@ class TextInputState extends State<TextInputCustom> {
               hintText: widget.hint,
               hintStyle: TextStyle(
                 color: gray,
-                fontSize: 13,
                 fontFamily: 'Poppins',
               ),
-              prefixIcon: SizedBox(
-                child: Icon(widget.icon),
-              ))
+              prefixIcon: Icon(widget.icon))
           : InputDecoration(
               fillColor: white,
               filled: true,

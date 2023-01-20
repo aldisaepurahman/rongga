@@ -10,7 +10,11 @@ class RadioButton extends StatefulWidget {
   final List<String> choiceList;
   final ValueChanged<String?> onSelectedChoice;
 
-  const RadioButton({super.key, required this.type, required this.choiceList, required this.onSelectedChoice});
+  const RadioButton(
+      {super.key,
+      required this.type,
+      required this.choiceList,
+      required this.onSelectedChoice});
 
   @override
   RadioButtonState createState() => RadioButtonState();
@@ -22,26 +26,45 @@ class RadioButtonState extends State<RadioButton> {
   List<Widget> _buildChoiceList() {
     List<Widget> choices = [];
     widget.choiceList.forEach((item) {
-      choices.add(Padding(
-          padding: widget.type == RadioType.VERTICAL
-              ? const EdgeInsets.only(top: 10)
-              : const EdgeInsets.all(0),
-        child: RadioListTile(
-          title: TextTypography(type: TextType.DESCRIPTION, text: item),
-          selected: selectedChoice == item,
-          value: item,
-          groupValue: selectedChoice,
-          onChanged: (value) {
-            setState(() {
-              selectedChoice = value;
-              widget.onSelectedChoice(selectedChoice);
-              // if (question[index].groupValue != "") {
-              //   validateBtn[index] = true;
-              // }
-            });
-          },
-          activeColor: green,
-        )),
+      choices.add(
+        Padding(
+            padding: widget.type == RadioType.VERTICAL
+                ? const EdgeInsets.only(top: 10)
+                : const EdgeInsets.all(0),
+            child: widget.type == RadioType.VERTICAL
+                ? RadioListTile(
+                    title:
+                        TextTypography(type: TextType.DESCRIPTION, text: item),
+                    selected: selectedChoice == item,
+                    value: item,
+                    groupValue: selectedChoice,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedChoice = value;
+                        widget.onSelectedChoice(selectedChoice);
+                        // if (question[index].groupValue != "") {
+                        //   validateBtn[index] = true;
+                        // }
+                      });
+                    },
+                    activeColor: green,
+                  )
+                : Row(
+                    children: [
+                      Radio(
+                        value: item,
+                        groupValue: selectedChoice,
+                        activeColor: green,
+                        onChanged: (value) {
+                          setState(() {
+                            selectedChoice = value;
+                            widget.onSelectedChoice(selectedChoice);
+                          });
+                        },
+                      ),
+                      TextTypography(type: TextType.DESCRIPTION, text: item)
+                    ],
+                  )),
       );
     });
 
@@ -64,5 +87,4 @@ class RadioButtonState extends State<RadioButton> {
       children: _buildChoiceList(),
     );
   }
-
 }

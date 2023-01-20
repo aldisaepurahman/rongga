@@ -4,6 +4,7 @@ import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/slider/slider.dart';
+import 'package:non_cognitive/ui/screen/auth/register.dart';
 import 'package:non_cognitive/utils/onboarding_list.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -88,6 +89,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     _controller.nextPage(
                       duration: const Duration(milliseconds: 400),
                       curve: Curves.bounceIn
+                    );
+                  } else {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                          builder: (context) => const Register(),
+                      )
                     );
                   }
                 },
