@@ -30,9 +30,9 @@ class ButtonWidget extends StatelessWidget {
               foregroundColor: tint,
               backgroundColor: white,
               minimumSize: const Size(60, 45),
+              side: BorderSide(color: background, width: 2),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(color: background))),
+                  borderRadius: BorderRadius.circular(10))),
           onPressed: onPressed,
           child: Text(
             content,
