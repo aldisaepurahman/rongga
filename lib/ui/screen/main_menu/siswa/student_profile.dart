@@ -7,6 +7,7 @@ import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/item_list/profile_item_list.dart';
+import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({super.key});
@@ -55,7 +56,12 @@ class _StudentProfile extends State<StudentProfile> {
               tint: green,
               type: ButtonType.OUTLINED,
               content: "Ubah Profil",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => const StudentProfileUpdate(),
+                ));
+              },
             ),
           ],
         ),

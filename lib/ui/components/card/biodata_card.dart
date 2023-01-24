@@ -69,7 +69,7 @@ class BiodataCard extends StatelessWidget {
               color: gray,
             ),
             const ProfileItemList(
-                icon: Icons.home_outlined,
+                icon: Icons.location_on,
                 label: "Alamat",
                 description: "Jl. Nusa Persada Jakarta"
             ),

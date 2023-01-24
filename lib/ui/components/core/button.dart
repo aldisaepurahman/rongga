@@ -11,6 +11,7 @@ class ButtonWidget extends StatelessWidget {
   final ButtonType type;
   final String content;
   final IconData? icon;
+  final bool? miniButton;
 
   const ButtonWidget({
     super.key,
@@ -19,7 +20,8 @@ class ButtonWidget extends StatelessWidget {
     required this.type,
     required this.onPressed,
     this.content = "",
-    this.icon
+    this.icon,
+    this.miniButton
   });
 
   @override
@@ -40,6 +42,7 @@ class ButtonWidget extends StatelessWidget {
           ));
     } else if (type == ButtonType.FLOAT) {
       return FloatingActionButton(
+        mini: miniButton ?? false,
         onPressed: onPressed,
         backgroundColor: background,
         foregroundColor: tint,

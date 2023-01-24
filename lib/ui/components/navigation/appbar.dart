@@ -5,8 +5,9 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 class AppBarCustom extends StatelessWidget with PreferredSizeWidget {
   final String title;
   final bool useBackButton;
+  final VoidCallback? onBackPressed;
 
-  const AppBarCustom({super.key, required this.title, required this.useBackButton});
+  const AppBarCustom({super.key, required this.title, required this.useBackButton, this.onBackPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class AppBarCustom extends StatelessWidget with PreferredSizeWidget {
       foregroundColor: white,
       leading: Visibility(
         visible: useBackButton,
-        child: BackButton(color: white),
+        child: BackButton(color: white, onPressed: onBackPressed),
       ),
       actions: [
         IconButton(
