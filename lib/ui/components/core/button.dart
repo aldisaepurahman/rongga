@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
-enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, FLOAT }
+enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, OUTLINED_SMALL, FLOAT }
 
 class ButtonWidget extends StatelessWidget {
   final Color background;
@@ -26,12 +26,12 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (type == ButtonType.OUTLINED) {
+    if (type == ButtonType.OUTLINED || type == ButtonType.OUTLINED_SMALL) {
       return OutlinedButton(
           style: OutlinedButton.styleFrom(
               foregroundColor: tint,
               backgroundColor: white,
-              minimumSize: const Size(60, 45),
+              minimumSize: type == ButtonType.OUTLINED_SMALL ? const Size(60, 30) : const Size(60, 45),
               side: BorderSide(color: background, width: 2),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10))),

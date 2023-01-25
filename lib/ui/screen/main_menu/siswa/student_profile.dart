@@ -8,6 +8,7 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/item_list/profile_item_list.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
+import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({super.key});
@@ -48,7 +49,12 @@ class _StudentProfile extends State<StudentProfile> {
               tint: white,
               type: ButtonType.MEDIUM,
               content: "Mulai Tes",
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Questionnaire(),
+                    ));
+              },
             ),
             const SizedBox(width: 20),
             ButtonWidget(

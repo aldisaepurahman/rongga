@@ -1,12 +1,17 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
+import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
+import 'package:non_cognitive/ui/screen/main_menu/change_password.dart';
 
 class StudentProfileUpdate extends StatefulWidget {
   const StudentProfileUpdate({super.key});
@@ -40,6 +45,8 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     // "Keluar",
   ];
 
+  late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
+
   final idNumberController = TextEditingController(text: "198242749");
   final nameController = TextEditingController(text: "Rahman Aji");
   final emailController = TextEditingController(text: "ajirahman@gmail.com");
@@ -51,6 +58,80 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   String _statusSiswa = "Peserta didik baru";
   String _tingkatSiswa = "VII (Tujuh)";
 
+  void backWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Peringatan!",
+          content: "Perubahan yang anda inginkan tidak akan tersimpan. Anda yakin akan membatalkan perubahan ini?",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  void submitWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Peringatan!",
+          content: "Apakah anda yakin dengan perubahan ini?",
+          path_image: "assets/images/questionmark.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    bottom_sheet_profile_list = [
+      BottomSheetCustomItem(
+        icon: Icons.photo,
+        title: "Take Picture from Gallery",
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      BottomSheetCustomItem(
+        icon: Icons.camera_alt,
+        title: "Take Picture from Camera",
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+      ),
+      BottomSheetCustomItem(
+        icon: Icons.delete_outline,
+        title: "Delete your profile picture",
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        color: red
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +139,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
         title: "Update Profil",
         useBackButton: true,
         onBackPressed: () {
-          Navigator.of(context).pop();
+          backWarningDialog();
         },
       ),
       body: ListView(
@@ -80,7 +161,17 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         type: ButtonType.FLOAT,
                         icon: Icons.camera_alt,
                         miniButton: true,
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              shape: const RoundedRectangleBorder( // <-- SEE HERE
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25.0),
+                                ),
+                              ),
+                              builder: (context) => BottomSheetCustom(items: bottom_sheet_profile_list),
+                          );
+                        },
                     )
                 )
               ],
@@ -184,6 +275,26 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                 icon: Icons.location_on,
               )
           ),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: RichText(
+              text: TextSpan(
+                  style: TextStyle(
+                      color: green,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Poppins"),
+                  children: [
+                    TextSpan(
+                        text: "Lupa password anda?",
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) => const ChangePassword())
+                            );
+                          })
+                  ]),
+            ),
+          ),
           Center(
             child: Container(
               margin: const EdgeInsets.only(top: 25),
@@ -275,7 +386,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
         type: ButtonType.FLOAT,
         icon: Icons.save,
         onPressed: () {
-          Navigator.of(context).pop();
+          submitWarningDialog();
         },
       ),
     );

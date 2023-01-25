@@ -23,6 +23,7 @@ class QuestionCardState extends State<QuestionCard> {
   Widget build(BuildContext context) {
     return CardContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextTypography(
             type: TextType.DESCRIPTION,

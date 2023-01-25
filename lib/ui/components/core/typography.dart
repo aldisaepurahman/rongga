@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 
 enum TextType { HEADER, DESCRIPTION, DESCRIPTION_SPAN, LABEL, LABEL_TITLE, TITLE }
 
@@ -7,13 +8,16 @@ class TextTypography extends StatelessWidget {
   final String text;
   final String? jumbleText;
   final TextAlign? align;
+  final Color? color;
 
   TextTypography(
       {Key? key,
       required this.type,
       required this.text,
-      this.jumbleText, this.align})
-      : super(key: key);
+      this.jumbleText,
+      this.align,
+      this.color
+   }) : super(key: key);
 
   Map<TextType, double> fontSize = {
     TextType.HEADER: 20,
@@ -28,9 +32,10 @@ class TextTypography extends StatelessWidget {
     if (type == TextType.DESCRIPTION_SPAN) {
       return RichText(
           text: TextSpan(
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              fontFamily: "Poppins"
+              fontFamily: "Poppins",
+              color: color ?? black
             ),
             children: [
               TextSpan(text: text),
@@ -49,6 +54,7 @@ class TextTypography extends StatelessWidget {
       style: TextStyle(
         fontSize: fontSize[type],
         fontFamily: "Poppins",
+        color: color ?? black,
         fontWeight: type == TextType.DESCRIPTION ? FontWeight.normal : FontWeight.bold
       ),
     );
