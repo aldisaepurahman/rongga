@@ -11,10 +11,12 @@ class FamilyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardContainer(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextTypography(
               type: TextType.TITLE,
               text: "Kondisi Keluarga",
+              align: TextAlign.center,
             ),
             for (var item in items)
               Padding(

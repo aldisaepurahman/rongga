@@ -6,7 +6,9 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
+import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/questionnaire_list.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class Questionnaire extends StatefulWidget {
   const Questionnaire({super.key});
@@ -35,8 +37,10 @@ class _Questionnaire extends State<Questionnaire> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
+                ));
           },
         );
       },
@@ -57,8 +61,10 @@ class _Questionnaire extends State<Questionnaire> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: true),
+                ));
           },
         );
       },
@@ -101,10 +107,10 @@ class _Questionnaire extends State<Questionnaire> {
                 QuestionCard(
                   question: questions,
                   onSelectedChoice: (value) {
-                    if (value == "Lainnya") {
-                      questions.alternativeValue = value!;
-                    }
                     questions.groupValue = value!;
+                  },
+                  onAlternativeFilled: (value) {
+                    questions.alternativeValue = value;
                   },
                 ),
               Container(

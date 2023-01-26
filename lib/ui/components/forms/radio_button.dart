@@ -8,12 +8,14 @@ enum RadioType { VERTICAL, HORIZONTAL }
 class RadioButton extends StatefulWidget {
   final RadioType type;
   final List<String> choiceList;
+  String selectedChoice;
   final ValueChanged<String?> onSelectedChoice;
 
-  const RadioButton(
+  RadioButton(
       {super.key,
       required this.type,
       required this.choiceList,
+      required this.selectedChoice,
       required this.onSelectedChoice});
 
   @override
@@ -21,7 +23,6 @@ class RadioButton extends StatefulWidget {
 }
 
 class RadioButtonState extends State<RadioButton> {
-  String? selectedChoice = "";
 
   List<Widget> _buildChoiceList() {
     List<Widget> choices = [];
@@ -31,13 +32,13 @@ class RadioButtonState extends State<RadioButton> {
               ? RadioListTile(
             title:
             TextTypography(type: TextType.DESCRIPTION, text: item),
-            selected: selectedChoice == item,
+            selected: widget.selectedChoice == item,
             value: item,
-            groupValue: selectedChoice,
+            groupValue: widget.selectedChoice,
             onChanged: (value) {
               setState(() {
-                selectedChoice = value;
-                widget.onSelectedChoice(selectedChoice);
+                widget.selectedChoice = value!;
+                widget.onSelectedChoice(widget.selectedChoice);
                 // if (question[index].groupValue != "") {
                 //   validateBtn[index] = true;
                 // }
@@ -49,12 +50,12 @@ class RadioButtonState extends State<RadioButton> {
             children: [
               Radio(
                 value: item,
-                groupValue: selectedChoice,
+                groupValue: widget.selectedChoice,
                 activeColor: green,
                 onChanged: (value) {
                   setState(() {
-                    selectedChoice = value;
-                    widget.onSelectedChoice(selectedChoice);
+                    widget.selectedChoice = value!;
+                    widget.onSelectedChoice(widget.selectedChoice);
                   });
                 },
               ),
@@ -79,7 +80,7 @@ class RadioButtonState extends State<RadioButton> {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
       children: _buildChoiceList(),
     );
   }

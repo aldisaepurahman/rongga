@@ -238,6 +238,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
               child: RadioButton(
                 type: RadioType.HORIZONTAL,
                 choiceList: const <String>["Laki-laki", "Perempuan"],
+                selectedChoice: _genderType,
                 onSelectedChoice: (value) {
                   _genderType = value!;
                 },

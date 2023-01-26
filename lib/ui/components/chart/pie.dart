@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class Pie extends StatefulWidget {
@@ -12,25 +14,21 @@ class Pie extends StatefulWidget {
 class PieState extends State<Pie>{
 
   final dataMap = <String, double>{
-    "Flutter": 5,
-    "React": 3,
-    "Xamarin": 2,
-    "Ionic": 2,
+    "Visual": 3,
+    "Auditori": 4,
+    "Kinestetik": 8,
   };
 
   final legendLabels = <String, String>{
-    "Flutter": "Flutter legend",
-    "React": "React legend",
-    "Xamarin": "Xamarin legend",
-    "Ionic": "Ionic legend",
+    "Visual": "Visual legend",
+    "Auditori": "Auditori legend",
+    "Kinestetik": "Kinestetik legend",
   };
 
   final colorList = <Color>[
-    const Color(0xfffdcb6e),
-    const Color(0xff0984e3),
-    const Color(0xfffd79a8),
-    const Color(0xffe17055),
-    const Color(0xff6c5ce7),
+    red,
+    blue,
+    green,
   ];
 
   @override
@@ -50,7 +48,6 @@ class PieState extends State<Pie>{
       initialAngleInDegree: 0,
       chartType: ChartType.disc,
       ringStrokeWidth: 32,
-      centerText: "HYBRID",
       legendOptions: const LegendOptions(
         showLegendsInRow: false,
         legendPosition: LegendPosition.right,
@@ -62,12 +59,12 @@ class PieState extends State<Pie>{
         ),
       ),
       chartValuesOptions: const ChartValuesOptions(
-        showChartValueBackground: true,
+        showChartValueBackground: false,
         showChartValues: true,
-        showChartValuesInPercentage: false,
+        showChartValuesInPercentage: true,
         showChartValuesOutside: false,
-        decimalPlaces: 1,
-        chartValueStyle: TextStyle(fontFamily: "Poppins"),
+        decimalPlaces: 0,
+        chartValueStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: "Poppins"),
       )
     );
   }

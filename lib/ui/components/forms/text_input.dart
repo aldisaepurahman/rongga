@@ -8,13 +8,16 @@ class TextInputCustom extends StatefulWidget {
   final String hint;
   final TextInputCustomType type;
   final IconData? icon;
+  final Function(String)? onChanged;
 
   const TextInputCustom(
       {super.key,
       required this.controller,
       required this.hint,
       required this.type,
-      this.icon});
+      this.icon,
+      this.onChanged,
+      });
 
   @override
   TextInputState createState() => TextInputState();
@@ -35,6 +38,7 @@ class TextInputState extends State<TextInputCustom> {
         fontFamily: "Poppins"
       ),
       cursorColor: gray,
+      onChanged: widget.onChanged ?? (value) {},
       decoration: widget.type == TextInputCustomType.WITH_ICON
           ? InputDecoration(
               fillColor: lightGray,

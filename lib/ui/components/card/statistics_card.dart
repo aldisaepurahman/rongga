@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:non_cognitive/ui/components/chart/pie.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
-
-import '../chart/pie.dart';
-import '../core/color.dart';
-import '../core/typography.dart';
+import 'package:non_cognitive/ui/components/core/typography.dart';
 
 class StatisticsCard extends StatelessWidget {
   const StatisticsCard({super.key});
@@ -12,6 +10,7 @@ class StatisticsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextTypography(
             type: TextType.DESCRIPTION,

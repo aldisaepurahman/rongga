@@ -69,25 +69,34 @@ class _NavigationState extends State<Navigations> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
+    /*return WillPopScope(
         child: Scaffold(
           body: _screen,
           appBar: AppBarCustom(title: _titlePage, useBackButton: false),
           bottomNavigationBar: BottomNavBar(
             callback: changeScreen,
-              /*currentPageIndex: (value) => _navigationQueue.addLast(value),
-              nextPageIndex: (value) => changeScreen(value),*/
+              *//*currentPageIndex: (value) => _navigationQueue.addLast(value),
+              nextPageIndex: (value) => changeScreen(value),*//*
           ),
         ),
         onWillPop: () async {
-          /*if (_navigationQueue.isEmpty) return true;
+          *//*if (_navigationQueue.isEmpty) return true;
 
           setState(() {
             _previousPageIndex = _navigationQueue.last;
             _navigationQueue.removeLast();
-          });*/
+          });*//*
           return false;
         },
+    );*/
+    return Scaffold(
+      body: _screen,
+      appBar: AppBarCustom(title: _titlePage, useBackButton: false),
+      bottomNavigationBar: BottomNavBar(
+        callback: changeScreen,
+        /*currentPageIndex: (value) => _navigationQueue.addLast(value),
+              nextPageIndex: (value) => changeScreen(value),*/
+      ),
     );
   }
 }

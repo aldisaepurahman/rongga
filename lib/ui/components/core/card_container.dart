@@ -4,11 +4,13 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 
 class CardContainer extends StatelessWidget {
   final Widget child;
-  const CardContainer({super.key, required this.child});
+  final double? height;
+  const CardContainer({super.key, required this.child, this.height});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: height,
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
       decoration: BoxDecoration(

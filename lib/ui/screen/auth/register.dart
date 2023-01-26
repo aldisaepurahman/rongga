@@ -78,6 +78,7 @@ class _RegisterState extends State<Register> {
             child: RadioButton(
               type: RadioType.HORIZONTAL,
               choiceList: const <String>["Siswa", "Guru"],
+              selectedChoice: _userType,
               onSelectedChoice: (value) {
                 _userType = value!;
               },

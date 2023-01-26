@@ -527,3 +527,116 @@ final study_style_questions = [
       alternativeValue: ""
   ),
 ];
+
+
+final family_questions_dummy = [
+  QuestionItem(
+      question: "Dalam mendidik dan membesarkan saya, orang tua saya selalu ",
+      choices: [
+        "Mendidik dengan baik",
+        "Memanjakan saya",
+        "Cuek terhadap saya",
+        "Melarang atau memaksa saya"
+      ],
+      groupValue: "Mendidik dengan baik",
+      category: "Cara Orang Tua Mendidik",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Kondisi Keluarga Saya ",
+      choices: [
+        "Orang tua saya hidup bersama",
+        "Orang tua saya bercerai",
+        "Salah satu orang tua saya telah meninggal",
+        "Ayah dan Ibu sudah meninggal"
+      ],
+      groupValue: "Orang tua saya hidup bersama",
+      category: "Relasi dengan Anggota Keluarga",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Saya sering berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
+      choices: [
+        "Ya",
+        "Tidak"
+      ],
+      groupValue: "Tidak",
+      category: "Relasi dengan Anggota Keluarga",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Saya selalu merasa nyaman ketika berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
+      choices: [
+        "Ya",
+        "Tidak"
+      ],
+      groupValue: "Ya",
+      category: "Relasi dengan Anggota Keluarga",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Suasana di rumah sangat tenang dan membuat saya nyaman ketika belajar ",
+      choices: [
+        "Ya",
+        "Tidak"
+      ],
+      groupValue: "Tidak",
+      category: "Suasana Rumah",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Anggota keluarga saya sangat harmonis sehingga saya betah berada di rumah ",
+      choices: [
+        "Ya",
+        "Tidak"
+      ],
+      groupValue: "Ya",
+      category: "Suasana Rumah",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Menurut saya kondisi ekonomi keluarga saya ",
+      choices: [
+        "Lebih",
+        "Cukup",
+        "Kurang"
+      ],
+      groupValue: "Lebih",
+      category: "Kondisi Ekonomi",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Kondisi Orang tua saya ",
+      choices: [
+        "Ayah saja yang bekerja",
+        "Ibu saja yang bekerja",
+        "Ayah dan Ibu bekerja",
+        "Kedua orang tua sedang menganggur"
+      ],
+      groupValue: "Ayah dan Ibu bekerja",
+      category: "Kondisi Ekonomi",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Orang tua saya memiliki latar belakang pendidikan ",
+      choices: [
+        "Sarjana",
+        "SMA",
+        "SD - SMP"
+      ],
+      groupValue: "Sarjana",
+      category: "Latar Belakang Kebudayaan",
+      alternativeValue: ""
+  ),
+  QuestionItem(
+      question: "Orang Saya Berasal dari suku ",
+      choices: [
+        "Jawa",
+        "Sunda",
+        "Lainnya"
+      ],
+      groupValue: "Lainnya",
+      category: "Latar Belakang Kebudayaan",
+      alternativeValue: "Batak"
+  )
+];

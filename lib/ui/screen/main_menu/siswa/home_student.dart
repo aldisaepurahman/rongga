@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/ui/components/card/family_card.dart';
+import 'package:non_cognitive/ui/components/card/psychology_card.dart';
+import 'package:non_cognitive/ui/components/card/statistics_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
+import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
+import 'package:non_cognitive/utils/question_list.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class StudentHome extends StatefulWidget {
@@ -16,33 +21,15 @@ class StudentHome extends StatefulWidget {
 }
 
 class _StudentHome extends State<StudentHome> {
+  bool needConfirmation = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    /*return SingleChildScrollView(
-      child: SafeArea(
-        child: (!widget.expandedContents)
-        ? Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextTypography(
-                  type: TextType.DESCRIPTION,
-                  text: "Anda belum pernah melakukan tes sebelumnya\nSilahkan ikuti tes terlebih dahulu"
-              ),
-              ButtonWidget(
-                  background: green,
-                  tint: white,
-                  type: ButtonType.LARGE,
-                  content: "Ikuti Tes",
-                  onPressed: () {},
-              )
-            ],
-          ),
-        ) : Column(
-          children: [],
-        ),
-      ),
-    );*/
     if (widget.type == UserType.GURU) {
       return ListView(
         children: [
@@ -56,7 +43,58 @@ class _StudentHome extends State<StudentHome> {
       );
     } else if (widget.expandedContents) {
       return ListView(
-        children: [],
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(vertical: 25),
+        children: [
+          Visibility(
+            visible: needConfirmation,
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextTypography(
+                          type: TextType.TITLE,
+                          text: "Perhatian!",
+                        ),
+                        TextTypography(
+                          type: TextType.DESCRIPTION,
+                          text: "Anda dinyatakan naik kelas menuju tingkat berikutnya.",
+                        ),
+                      ],
+                    )
+                  ),
+                  const SizedBox(width: 10),
+                  ButtonWidget(
+                      background: orange,
+                      tint: white,
+                      type: ButtonType.MEDIUM,
+                      content: "Baik",
+                      onPressed: () {
+                        setState(() {
+                          needConfirmation = false;
+                        });
+                      },
+                  )
+                ],
+              )
+            )
+          ),
+          const SizedBox(height: 15),
+          const StatisticsCard(),
+          const PsychologyCard(
+              title: "Kesejahteraan Psikologi",
+              chartTitle: "Diagram Kesejahteraan Psikologi"
+          ),
+          const PsychologyCard(
+              title: "Aktivitas Belajar",
+              chartTitle: "Diagram Aktivitas Belajar"
+          ),
+          FamilyCard(items: family_questions_dummy)
+        ],
       );
     }
 
@@ -74,8 +112,13 @@ class _StudentHome extends State<StudentHome> {
             background: green,
             tint: white,
             type: ButtonType.LARGE,
-            content: "Ikuti Tes",
-            onPressed: () {},
+            content: "Mulai Tes",
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const Questionnaire(),
+                  ));
+            },
           )
         ],
       ),

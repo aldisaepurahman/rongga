@@ -50,7 +50,7 @@ class _StudentProfile extends State<StudentProfile> {
               type: ButtonType.MEDIUM,
               content: "Mulai Tes",
               onPressed: () {
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const Questionnaire(),
                     ));

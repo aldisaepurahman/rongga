@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:non_cognitive/ui/components/chart/bar.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
-
-import '../core/color.dart';
-import '../core/typography.dart';
+import 'package:non_cognitive/ui/components/core/typography.dart';
 
 class PsychologyCard extends StatelessWidget {
   final String title;
@@ -13,6 +11,7 @@ class PsychologyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardContainer(
+      height: 1000,
       child: Column(
         children: [
           TextTypography(
@@ -23,12 +22,13 @@ class PsychologyCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10),
             child: TextTypography(
               type: TextType.DESCRIPTION,
-              text: "Keterangan : Diagram di bawah ini dibentuk dari rata-rata"
-                  "setiap dimensi kesejahteraan psikologi yang telah dipilih"
-                  "siswa. Setiap jawaban pada setiap dimensi yang bernilai"
+              text: "Keterangan : Diagram di bawah ini dibentuk dari rata-rata "
+                  "setiap dimensi kesejahteraan psikologi yang telah dipilih "
+                  "siswa. Setiap jawaban pada setiap dimensi yang bernilai "
                   "\"selalu\" akan diberi poin 3, yang bernilai \"kadang-"
-                  "kadang\" akan diberi poin 2, dan yang bernilai"
+                  "kadang\" akan diberi poin 2, dan yang bernilai "
                   "\"tidak pernah\" diberi poin 1.",
+              align: TextAlign.justify,
             ),
           ),
           Padding(
@@ -40,10 +40,8 @@ class PsychologyCard extends StatelessWidget {
                 ),
               )
           ),
-          const Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Bar()
-          )
+          const SizedBox(height: 10),
+          const Expanded(child: Bar())
         ],
       ),
     );
