@@ -71,7 +71,7 @@ class ItemSearchCard extends StatelessWidget {
                 tint: black,
                 type: ButtonType.LARGE_WIDE,
                 content: "Cek Detail",
-                onPressed: () {},
+                onPressed: onCheckDetailed,
               )
           ),
         ],

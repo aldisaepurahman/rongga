@@ -40,11 +40,11 @@ class Badges extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           color: type.color
       ),
-      constraints: const BoxConstraints(maxWidth: 80, maxHeight: 30),
+      constraints: const BoxConstraints(maxWidth: 100, maxHeight: 40),
       child: Text(
         type.text,
         style: TextStyle(
-          color: type.color,
+          color: white,
           fontSize: 13,
           fontFamily: "Poppins"
         ),

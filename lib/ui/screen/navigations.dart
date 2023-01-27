@@ -60,8 +60,8 @@ class _NavigationState extends State<Navigations> {
         case 2:
           _titlePage = "Profil";
           _screen = widget.type == UserType.SISWA
-              ? const StudentProfile()
-              : const TeacherProfile();
+              ? StudentProfile(userType: widget.type)
+              : TeacherProfile(type: widget.type);
           break;
       }
     });

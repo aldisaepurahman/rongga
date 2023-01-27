@@ -109,21 +109,21 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     bottom_sheet_profile_list = [
       BottomSheetCustomItem(
         icon: Icons.photo,
-        title: "Take Picture from Gallery",
+        title: "Ambil Gambar dari Galeri",
         onTap: () {
           Navigator.of(context).pop();
         },
       ),
       BottomSheetCustomItem(
         icon: Icons.camera_alt,
-        title: "Take Picture from Camera",
+        title: "Ambil Gambar dari Camera",
         onTap: () {
           Navigator.of(context).pop();
         },
       ),
       BottomSheetCustomItem(
         icon: Icons.delete_outline,
-        title: "Delete your profile picture",
+        title: "Hapus Foto Profil",
         onTap: () {
           Navigator.of(context).pop();
         },

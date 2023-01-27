@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/teacher_search_card.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
 import 'package:non_cognitive/utils/teacher_list_dummy.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class SearchTeacher extends StatefulWidget {
   const SearchTeacher({super.key});
@@ -28,7 +30,12 @@ class _SearchTeacher extends State<SearchTeacher> {
             name: item.name,
             image: item.photo,
             type: item.type,
-            onCheckDetailed: () {},
+            onCheckDetailed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const TeacherProfile(type: UserType.SISWA),
+                  ));
+            },
           )
       ],
     );

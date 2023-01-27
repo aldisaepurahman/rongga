@@ -7,9 +7,9 @@ import 'package:non_cognitive/ui/components/forms/text_input.dart';
 
 class StudentSearchCard extends StatefulWidget {
   final TextEditingController namaController;
-  final TextEditingController tahunController;
+  final TextEditingController rombelController;
   final VoidCallback? onPressedSubmit;
-  const StudentSearchCard({super.key, this.onPressedSubmit, required this.namaController, required this.tahunController});
+  const StudentSearchCard({super.key, this.onPressedSubmit, required this.namaController, required this.rombelController});
 
   @override
   StudentSearchState createState() => StudentSearchState();
@@ -39,14 +39,19 @@ class StudentSearchState extends State<StudentSearchCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextTypography(
-                  type: TextType.DESCRIPTION,
-                  text: "Nama Siswa",
+                SizedBox(
+                  width: 130,
+                  child: TextTypography(
+                    type: TextType.DESCRIPTION,
+                    text: "Nama Siswa",
+                  ),
                 ),
-                TextInputCustom(
-                  controller: widget.namaController,
-                  hint: "Masukkan Nama Siswa",
-                  type: TextInputCustomType.NORMAL
+                Expanded(
+                  child: TextInputCustom(
+                      controller: widget.namaController,
+                      hint: "Masukkan Nama Siswa",
+                      type: TextInputCustomType.NORMAL
+                  )
                 )
               ],
             )
@@ -56,14 +61,19 @@ class StudentSearchState extends State<StudentSearchCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextTypography(
-                    type: TextType.DESCRIPTION,
-                    text: "Tahun Masuk",
+                  SizedBox(
+                    width: 130,
+                    child: TextTypography(
+                      type: TextType.DESCRIPTION,
+                      text: "Nama Rombel",
+                    ),
                   ),
-                  TextInputCustom(
-                      controller: widget.tahunController,
-                      hint: "Masukkan Tahun Masuk",
-                      type: TextInputCustomType.NORMAL
+                  Expanded(
+                    child: TextInputCustom(
+                        controller: widget.rombelController,
+                        hint: "Misal: 8A",
+                        type: TextInputCustomType.NORMAL
+                    )
                   )
                 ],
               )
@@ -78,7 +88,7 @@ class StudentSearchState extends State<StudentSearchCard> {
                       tint: white,
                       type: ButtonType.MEDIUM,
                       content: "Cari",
-                      onPressed: () {},
+                      onPressed: widget.onPressedSubmit,
                   )
                 ],
               )

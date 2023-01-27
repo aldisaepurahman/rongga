@@ -63,7 +63,7 @@ class TeacherSearchState extends State<TeacherSearchCard> {
                       tint: white,
                       type: ButtonType.MEDIUM,
                       content: "Cari",
-                      onPressed: () {},
+                      onPressed: widget.onPressedSubmit,
                   )
                 ],
               )

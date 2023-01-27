@@ -42,6 +42,7 @@ class ButtonWidget extends StatelessWidget {
           ));
     } else if (type == ButtonType.FLOAT) {
       return FloatingActionButton(
+        heroTag: null,
         mini: miniButton ?? false,
         onPressed: onPressed,
         backgroundColor: background,
