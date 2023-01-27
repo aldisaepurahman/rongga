@@ -6,7 +6,9 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
+import 'package:non_cognitive/ui/screen/auth/complete_user_account.dart';
 import 'package:non_cognitive/ui/screen/auth/login.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -18,8 +20,11 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final idNumberController = TextEditingController();
   final nameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final verifyPasswordController = TextEditingController();
   String _userType = "";
+  String _genderType = "";
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +62,15 @@ class _RegisterState extends State<Register> {
             )
           ),
           Container(
+              margin: const EdgeInsets.only(top: 15),
+              child: TextInputCustom(
+                controller: emailController,
+                hint: "Email",
+                type: TextInputCustomType.WITH_ICON,
+                icon: Icons.email,
+              )
+          ),
+          Container(
             margin: const EdgeInsets.only(top: 15),
             child: TextInputCustom(
               controller: passwordController,
@@ -67,8 +81,36 @@ class _RegisterState extends State<Register> {
           ),
           Container(
               margin: const EdgeInsets.only(top: 15),
+              child: TextInputCustom(
+                controller: verifyPasswordController,
+                hint: "Verifikasi Password Anda",
+                type: TextInputCustomType.WITH_ICON,
+                icon: Icons.key,
+              )
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 15),
+            child: TextTypography(
+                type: TextType.LABEL_TITLE,
+                text: "Jenis Kelamin"
+            ),
+          ),
+          Container(
+              height: 30,
+              margin: const EdgeInsets.only(top: 15),
+              child: RadioButton(
+                type: RadioType.HORIZONTAL,
+                choiceList: const <String>["Laki-laki", "Perempuan"],
+                selectedChoice: _genderType,
+                onSelectedChoice: (value) {
+                  _genderType = value!;
+                },
+              )
+          ),
+          Container(
+              margin: const EdgeInsets.only(top: 15),
               child: TextTypography(
-                  type: TextType.DESCRIPTION,
+                  type: TextType.LABEL_TITLE,
                   text: "Anda adalah seorang"
               ),
           ),
@@ -92,7 +134,12 @@ class _RegisterState extends State<Register> {
               tint: white,
               content: "Daftar",
               onPressed: () {
-                if (idNumberController.text.isNotEmpty &&
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const CompleteUserAccount(type: UserType.SISWA),
+                    )
+                );
+                /*if (idNumberController.text.isNotEmpty &&
                 nameController.text.isNotEmpty && passwordController.text.isNotEmpty &&
                     _userType.isNotEmpty) {
                   Navigator.of(context).pushReplacement(
@@ -109,7 +156,7 @@ class _RegisterState extends State<Register> {
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
                       fontSize: 12.0);
-                }
+                }*/
               },
             ),
           ),

@@ -1,7 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
-enum TextType { HEADER, DESCRIPTION, DESCRIPTION_SPAN, LABEL, LABEL_TITLE, TITLE }
+enum TextType {
+  HEADER,
+  DESCRIPTION,
+  DESCRIPTION_SPAN,
+  MINI_DESCRIPTION,
+  LABEL,
+  LABEL_TITLE,
+  TITLE
+}
 
 class TextTypography extends StatelessWidget {
   final TextType type;
@@ -16,8 +24,8 @@ class TextTypography extends StatelessWidget {
       required this.text,
       this.jumbleText,
       this.align,
-      this.color
-   }) : super(key: key);
+      this.color})
+      : super(key: key);
 
   Map<TextType, double> fontSize = {
     TextType.HEADER: 20,
@@ -25,6 +33,7 @@ class TextTypography extends StatelessWidget {
     TextType.TITLE: 16,
     TextType.LABEL: 12,
     TextType.LABEL_TITLE: 14,
+    TextType.MINI_DESCRIPTION: 11,
   };
 
   @override
@@ -32,31 +41,26 @@ class TextTypography extends StatelessWidget {
     if (type == TextType.DESCRIPTION_SPAN) {
       return RichText(
           text: TextSpan(
-            style: TextStyle(
-              fontSize: 14,
-              fontFamily: "Poppins",
-              color: color ?? black
-            ),
-            children: [
-              TextSpan(text: text),
-              TextSpan(
+              style: TextStyle(
+                  fontSize: 14, fontFamily: "Poppins", color: color ?? black),
+              children: [
+            TextSpan(text: text),
+            TextSpan(
                 text: jumbleText,
-                style: const TextStyle(fontWeight: FontWeight.bold)
-              )
-            ]
-          )
-      );
+                style: const TextStyle(fontWeight: FontWeight.bold))
+          ]));
     }
 
     return Text(
       text,
       textAlign: align ?? TextAlign.start,
       style: TextStyle(
-        fontSize: fontSize[type],
-        fontFamily: "Poppins",
-        color: color ?? black,
-        fontWeight: type == TextType.DESCRIPTION ? FontWeight.normal : FontWeight.bold
-      ),
+          fontSize: fontSize[type],
+          fontFamily: "Poppins",
+          color: color ?? black,
+          fontWeight: type == TextType.DESCRIPTION
+              ? FontWeight.normal
+              : FontWeight.bold),
     );
   }
 }
