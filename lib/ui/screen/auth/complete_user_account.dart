@@ -5,7 +5,11 @@ import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
+import 'package:non_cognitive/ui/screen/auth/complete_student_info.dart';
+import 'package:non_cognitive/ui/screen/auth/complete_teacher_info.dart';
+import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class CompleteUserAccount extends StatefulWidget {
@@ -23,6 +27,31 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
   final addressController = TextEditingController();
 
   late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
+
+  void backWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Peringatan!",
+          content:
+          "Informasi yang anda masukkan tidak akan tersimpan. Anda yakin akan membatalkan proses melengkapi profil anda?",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => Navigations(type: widget.type, hasExpandedContents: false),
+                ));
+          },
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -177,7 +206,19 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          if (widget.type == UserType.SISWA) {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const CompleteStudentInfo(),
+                                ));
+                          } else {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const CompleteTeacherInfo(),
+                                ));
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             padding: const EdgeInsets.all(20)),
@@ -191,7 +232,19 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                       tint: white,
                       type: ButtonType.LARGE,
                       content: "Simpan",
-                      onPressed: () {},
+                      onPressed: () {
+                        if (widget.type == UserType.SISWA) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const CompleteStudentInfo(),
+                              ));
+                        } else {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const CompleteTeacherInfo(),
+                              ));
+                        }
+                      },
                     )
                   ],
                 ),
@@ -200,6 +253,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
           ),
         ),
         onWillPop: () async {
+          backWarningDialog();
           return false;
         },
     );

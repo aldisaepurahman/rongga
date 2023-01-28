@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/status_profile_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
+import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
@@ -20,6 +23,54 @@ class StudentProfile extends StatefulWidget {
 }
 
 class _StudentProfile extends State<StudentProfile> {
+  late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
+
+  void showChoiceDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Tunggu Dulu!",
+          content: "Apa anda yakin dengan pilihan anda?Setelah yakin, pilihan ini tidak dapat diubah kembali.",
+          path_image: "assets/images/questionmark.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    bottom_sheet_profile_list = [
+      BottomSheetCustomItem(
+        icon: Icons.upgrade,
+        title: "Naikkan Tingkat Siswa ke Tingkat Berikutnya",
+        onTap: () {
+          Navigator.of(context).pop();
+          showChoiceDialog();
+        },
+      ),
+      BottomSheetCustomItem(
+        icon: Icons.front_hand,
+        title: "Putuskan Siswa untuk Tinggal Kelas",
+        onTap: () {
+          Navigator.of(context).pop();
+          showChoiceDialog();
+        },
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.userType == UserType.GURU) {
@@ -82,21 +133,31 @@ class _StudentProfile extends State<StudentProfile> {
                 }
               },
             ),
-            if (type == UserType.SISWA)
-              const SizedBox(width: 20),
-            if (type == UserType.SISWA)
-              ButtonWidget(
-                background: green,
-                tint: green,
-                type: ButtonType.OUTLINED,
-                content: "Ubah Profil",
-                onPressed: () {
+            const SizedBox(width: 20),
+            ButtonWidget(
+              background: green,
+              tint: green,
+              type: ButtonType.OUTLINED,
+              content: type == UserType.SISWA ? "Ubah Profil" : "Ubah Status Siswa",
+              onPressed: () {
+                if (type == UserType.SISWA) {
                   Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const StudentProfileUpdate(),
                       ));
-                },
-              ),
+                } else {
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder( // <-- SEE HERE
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(25.0),
+                      ),
+                    ),
+                    builder: (context) => BottomSheetCustom(items: bottom_sheet_profile_list),
+                  );
+                }
+              },
+            ),
           ],
         ),
         const SizedBox(height: 20),

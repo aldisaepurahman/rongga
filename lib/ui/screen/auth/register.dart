@@ -23,8 +23,8 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final verifyPasswordController = TextEditingController();
-  String _userType = "";
-  String _genderType = "";
+  String _userType = "Siswa";
+  String _genderType = "Laki-laki";
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class _RegisterState extends State<Register> {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const CompleteUserAccount(type: UserType.SISWA),
+                      builder: (context) => const CompleteUserAccount(type: UserType.GURU),
                     )
                 );
                 /*if (idNumberController.text.isNotEmpty &&

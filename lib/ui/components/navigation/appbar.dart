@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
+import 'package:non_cognitive/ui/screen/auth/login.dart';
 
 class AppBarCustom extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -29,7 +31,29 @@ class AppBarCustom extends StatelessWidget with PreferredSizeWidget {
       actions: [
         IconButton(
           tooltip: "Logout",
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DialogDoubleButton(
+                    title: "Tunggu Dulu!",
+                    content: "Apa anda yakin ingin keluar dari akun anda?",
+                    path_image: "assets/images/questionmark.json",
+                    buttonLeft: "Tidak",
+                    buttonRight: "Ya",
+                    onPressedButtonLeft: () {
+                      Navigator.of(context).pop();
+                    },
+                    onPressedButtonRight: () {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ));
+                    },
+                  );
+                },
+              );
+            },
             icon: const Icon(Icons.logout)
         )
       ],

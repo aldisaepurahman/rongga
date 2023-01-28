@@ -1,8 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
-import 'package:non_cognitive/ui/components/navigation/bottombar.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/home_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/search_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
@@ -25,7 +25,7 @@ class Navigations extends StatefulWidget {
 class _NavigationState extends State<Navigations> {
   late Widget _screen;
   final ListQueue<int> _navigationQueue = ListQueue();
-  int _previousPageIndex = 0;
+  int _pageIndex = 0;
   String _titlePage = "";
 
   @override
@@ -36,6 +36,24 @@ class _NavigationState extends State<Navigations> {
         ? StudentHome(
             type: widget.type, expandedContents: widget.hasExpandedContents)
         : const TeacherHome();
+  }
+
+  void _changeBarIcon(int indexIcon) {
+    if (indexIcon == 0) {
+      _navigationQueue.clear();
+      _navigationQueue.addLast(indexIcon);
+    } else if (_navigationQueue.contains(indexIcon)) {
+      _navigationQueue.remove(indexIcon);
+      _navigationQueue.addLast(_pageIndex);
+    } else {
+      _navigationQueue.addLast(_pageIndex);
+    }
+
+    setState(() {
+      _pageIndex = indexIcon;
+    });
+
+    changeScreen(_pageIndex);
   }
 
   void changeScreen(int index) {
@@ -69,34 +87,63 @@ class _NavigationState extends State<Navigations> {
 
   @override
   Widget build(BuildContext context) {
-    /*return WillPopScope(
+    return WillPopScope(
         child: Scaffold(
           body: _screen,
           appBar: AppBarCustom(title: _titlePage, useBackButton: false),
-          bottomNavigationBar: BottomNavBar(
-            callback: changeScreen,
-              *//*currentPageIndex: (value) => _navigationQueue.addLast(value),
-              nextPageIndex: (value) => changeScreen(value),*//*
-          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem> [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_filled),
+                label: "Beranda",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: "Cari",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: "Profil",
+              ),
+            ],
+            currentIndex: _pageIndex,
+            onTap: _changeBarIcon,
+            unselectedLabelStyle: TextStyle(
+              fontFamily: "Poppins",
+              color: white,
+              fontSize: 12,
+            ),
+            selectedLabelStyle: TextStyle(
+                fontFamily: "Poppins",
+                color: orange,
+                fontSize: 12,
+                fontWeight: FontWeight.bold
+            ),
+            unselectedItemColor: white,
+            selectedItemColor: orange,
+            backgroundColor: skyBlue,
+          )
         ),
         onWillPop: () async {
-          *//*if (_navigationQueue.isEmpty) return true;
+          if (_navigationQueue.isEmpty || _pageIndex == 0) return true;
 
           setState(() {
-            _previousPageIndex = _navigationQueue.last;
+            _pageIndex = _navigationQueue.last;
             _navigationQueue.removeLast();
-          });*//*
+          });
+
+          changeScreen(_pageIndex);
           return false;
         },
-    );*/
-    return Scaffold(
+    );
+    /*return Scaffold(
       body: _screen,
       appBar: AppBarCustom(title: _titlePage, useBackButton: false),
       bottomNavigationBar: BottomNavBar(
-        callback: changeScreen,
-        /*currentPageIndex: (value) => _navigationQueue.addLast(value),
-              nextPageIndex: (value) => changeScreen(value),*/
+        onChangeIndex: (value) {
+          changeScreen(value);
+        },
       ),
-    );
+    );*/
   }
 }

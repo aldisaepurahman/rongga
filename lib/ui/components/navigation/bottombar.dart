@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final Function callback;
-  /*final ValueChanged<int> currentPageIndex;
-  final ValueChanged<int> nextPageIndex;*/
+  // final Function callback;
+  /*final ValueChanged<int> currentPageIndex;*/
+  final ValueChanged<int> onChangeIndex;
 
-  const BottomNavBar({super.key, required this.callback,
-    // required this.currentPageIndex, required this.nextPageIndex
+  const BottomNavBar({super.key,
+    // required this.callback,
+    required this.onChangeIndex,
+    // required this.nextPageIndex
   });
 
   @override
@@ -23,7 +25,7 @@ class _BottomNavBar extends State<BottomNavBar> {
       _selectedBarIcon = indexIcon;
     });
     // widget.nextPageIndex(indexIcon);
-    widget.callback(indexIcon);
+    widget.onChangeIndex(indexIcon);
   }
 
   @override

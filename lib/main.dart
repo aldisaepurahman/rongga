@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Non-Cognitive',
-      home: OnboardingPage(),
-      // home: Navigations(type: UserType.SISWA, hasExpandedContents: true),
+      // home: OnboardingPage(),
+      home: Navigations(type: UserType.GURU, hasExpandedContents: true),
     );
   }
 }
