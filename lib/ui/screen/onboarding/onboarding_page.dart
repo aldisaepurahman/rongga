@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
@@ -8,7 +10,9 @@ import 'package:non_cognitive/ui/screen/auth/register.dart';
 import 'package:non_cognitive/utils/onboarding_list.dart';
 
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
+  final bool isMobilePage;
+  final ValueChanged<int>? onButtonClicked;
+  const OnboardingPage({super.key, required this.isMobilePage, this.onButtonClicked});
 
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
@@ -22,6 +26,20 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   void initState() {
     super.initState();
+    if (!widget.isMobilePage) {
+      Timer.periodic(const Duration(seconds: 3), (Timer timer) {
+        if (currentIndex < 1) {
+          currentIndex++;
+        } else {
+          currentIndex = 0;
+        }
+        _controller.animateToPage(
+          currentIndex,
+          duration: const Duration(milliseconds: 350),
+          curve: Curves.easeIn,
+        );
+      });
+    }
   }
 
   @override
@@ -70,34 +88,40 @@ class _OnboardingPageState extends State<OnboardingPage> {
               },
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              contents.length,
-                  (index) => SliderCustom(currentIndex: currentIndex, index: index),
+          Padding(
+            padding: EdgeInsets.all(widget.isMobilePage ? 0 : 50),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                contents.length,
+                    (index) => SliderCustom(currentIndex: currentIndex, index: index),
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(50),
-            child: ButtonWidget(
-                background: green,
-                tint: white,
-                type: ButtonType.LARGE_WIDE,
-                content: currentIndex != contents.length-1 ? "Lanjut" : "Daftar Sekarang",
-                onPressed: () {
-                  if (currentIndex != contents.length-1) {
-                    _controller.nextPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.bounceIn
-                    );
-                  } else {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) => const Register(),
-                      )
-                    );
-                  }
-                },
+          Visibility(
+            visible: widget.isMobilePage,
+            child: Padding(
+                padding: const EdgeInsets.all(50),
+                child: ButtonWidget(
+                  background: green,
+                  tint: white,
+                  type: ButtonType.LARGE_WIDE,
+                  content: currentIndex != contents.length-1 ? "Lanjut" : "Daftar Sekarang",
+                  onPressed: () {
+                    if (currentIndex != contents.length-1) {
+                      _controller.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.bounceIn
+                      );
+                    }
+                    if (widget.isMobilePage) {
+                      widget.onButtonClicked!(currentIndex);
+                    }
+                    /*else {
+                      Navigator.of(context).pop();
+                    }*/
+                  },
+                )
             )
           )
         ],

@@ -11,7 +11,9 @@ import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  final bool isMobilePage;
+  final VoidCallback onTextClicked;
+  const Login({super.key, required this.isMobilePage, required this.onTextClicked});
 
   @override
   _LoginState createState() => _LoginState();
@@ -111,13 +113,8 @@ class _LoginState extends State<Login> {
                           text: "Daftar",
                           style: TextStyle(color: green),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const Register(),
-                                  )
-                              );
-                            })
+                            ..onTap = widget.onTextClicked
+                      )
                     ]),
               ),
             ),

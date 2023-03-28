@@ -1,1 +1,1 @@
-enum UserType { SISWA, GURU }
+enum UserType { SISWA, GURU, GURU_BK, WALI_KELAS, ADMIN }

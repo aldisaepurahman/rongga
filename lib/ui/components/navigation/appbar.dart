@@ -45,10 +45,10 @@ class AppBarCustom extends StatelessWidget with PreferredSizeWidget {
                       Navigator.of(context).pop();
                     },
                     onPressedButtonRight: () {
-                      Navigator.of(context).pushReplacement(
+                      /*Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => const Login(),
-                          ));
+                          ));*/
                     },
                   );
                 },

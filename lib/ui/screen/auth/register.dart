@@ -11,7 +11,9 @@ import 'package:non_cognitive/ui/screen/auth/login.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class Register extends StatefulWidget {
-  const Register({super.key});
+  final bool isMobilePage;
+  final VoidCallback onTextClicked;
+  const Register({super.key, required this.isMobilePage, required this.onTextClicked});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -176,13 +178,8 @@ class _RegisterState extends State<Register> {
                           text: "Masuk",
                           style: TextStyle(color: green),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const Login(),
-                                  )
-                              );
-                            })
+                            ..onTap = widget.onTextClicked
+                      )
                     ]),
               ),
             ),
