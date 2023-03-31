@@ -61,10 +61,10 @@ class _CompleteStudentInfo extends State<CompleteStudentInfo> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
+            //     ));
           },
         );
       },
@@ -85,10 +85,10 @@ class _CompleteStudentInfo extends State<CompleteStudentInfo> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
+            //     ));
           },
         );
       },

@@ -37,10 +37,10 @@ class _Questionnaire extends State<Questionnaire> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
+            //     ));
           },
         );
       },
@@ -61,10 +61,10 @@ class _Questionnaire extends State<Questionnaire> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: true),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: true),
+            //     ));
           },
         );
       },

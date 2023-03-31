@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
-enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, OUTLINED_SMALL, FLOAT }
+enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, OUTLINED_SMALL, FLOAT, BACK }
 
 class ButtonWidget extends StatelessWidget {
   final Color background;
@@ -48,6 +48,21 @@ class ButtonWidget extends StatelessWidget {
         backgroundColor: background,
         foregroundColor: tint,
         child: Icon(icon),
+      );
+    } else if (type == ButtonType.BACK) {
+      return Container(
+        decoration: BoxDecoration(
+          color: tint,
+          shape: BoxShape.circle,
+        ),
+        child: IconButton(
+          style: IconButton.styleFrom(
+            backgroundColor: background,
+          ),
+          onPressed: onPressed,
+          icon: const Icon(Icons.arrow_back_rounded),
+          iconSize: 25,
+        ),
       );
     }
 

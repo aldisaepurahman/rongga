@@ -51,10 +51,10 @@ class _CompleteTeacherInfo extends State<CompleteTeacherInfo> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.GURU, hasExpandedContents: false),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.GURU, hasExpandedContents: false),
+            //     ));
           },
         );
       },
@@ -75,10 +75,10 @@ class _CompleteTeacherInfo extends State<CompleteTeacherInfo> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.GURU, hasExpandedContents: false),
-                ));
+            // Navigator.of(context).pushReplacement(
+            //     MaterialPageRoute(
+            //       builder: (context) => const Navigations(type: UserType.GURU, hasExpandedContents: false),
+            //     ));
           },
         );
       },

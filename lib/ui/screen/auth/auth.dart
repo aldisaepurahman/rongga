@@ -19,6 +19,12 @@ class _AuthenticatePage extends State<AuthenticatePage> {
   bool visible = true;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _showMobile = MediaQuery.of(context).size.width < screenMd;
 

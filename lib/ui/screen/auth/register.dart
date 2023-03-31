@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const CompleteUserAccount(type: UserType.GURU),
+                      builder: (context) => const CompleteUserAccount(type: UserType.SISWA),
                     )
                 );
                 /*if (idNumberController.text.isNotEmpty &&

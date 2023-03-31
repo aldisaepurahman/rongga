@@ -11,6 +11,7 @@ import 'package:non_cognitive/ui/components/forms/text_input.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/screen/auth/complete_student_info.dart';
 import 'package:non_cognitive/ui/screen/auth/complete_teacher_info.dart';
+import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
@@ -93,10 +94,12 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            /*Navigator.of(context).pushReplacement(
+            if (widget.type == UserType.SISWA) {
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => Navigations(type: widget.type, hasExpandedContents: false),
-                ));*/
+                  builder: (context) => StudentHome(type: widget.type, expandedContents: false),
+                ));
+            }
           },
         );
       },
@@ -117,10 +120,12 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
             Navigator.of(context).pop();
           },
           onPressedButtonRight: () {
-            /*Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => const Navigations(type: UserType.SISWA, hasExpandedContents: false),
-                ));*/
+            if (widget.type == UserType.SISWA) {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => StudentHome(type: widget.type, expandedContents: false),
+                  ));
+            }
           },
         );
       },
@@ -706,6 +711,17 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                           TextButton(
                               onPressed: () {
                                 submitWarningDialog(2);
+                                /*if (widget.type == UserType.SISWA) {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) => const CompleteStudentInfo(),
+                                            ));
+                                      } else {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                              builder: (context) => const CompleteTeacherInfo(),
+                                            ));
+                                      }*/
                               },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
@@ -722,17 +738,6 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                             content: "Simpan",
                             onPressed: () {
                               submitWarningDialog(1);
-                              /*if (widget.type == UserType.SISWA) {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => const CompleteStudentInfo(),
-                                    ));
-                              } else {
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                      builder: (context) => const CompleteTeacherInfo(),
-                                    ));
-                              }*/
                             },
                           )
                         ],

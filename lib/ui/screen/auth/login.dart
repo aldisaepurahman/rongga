@@ -7,6 +7,7 @@ import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
 import 'package:non_cognitive/ui/screen/auth/register.dart';
+import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
@@ -78,10 +79,7 @@ class _LoginState extends State<Login> {
                       fontSize: 12.0);
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const Navigations(
-                            type: UserType.SISWA,
-                            hasExpandedContents: false
-                        ),
+                        builder: (context) => const StudentHome(type: UserType.SISWA, expandedContents: false)
                       )
                   );
                 } else {
