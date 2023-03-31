@@ -6,8 +6,9 @@ class MainLayout extends StatefulWidget {
   final UserType type;
   final String menu_name;
   final Widget child;
+  final Widget? floatingButton;
 
-  const MainLayout({super.key, required this.type, required this.menu_name, required this.child});
+  const MainLayout({super.key, required this.type, required this.menu_name, required this.child, this.floatingButton});
 
   @override
   State<StatefulWidget> createState() => _MainLayout();
@@ -25,11 +26,9 @@ class _MainLayout extends State<MainLayout> {
                 child: Column(
                   children: [
                     Expanded(
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: widget.child,
-                          )
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: widget.child,
                         )
                     )
                   ],
@@ -38,6 +37,7 @@ class _MainLayout extends State<MainLayout> {
           ],
         ),
       ),
+      floatingActionButton: widget.floatingButton ?? const SizedBox(height: 0),
     );
   }
 

@@ -12,6 +12,7 @@ import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/screen/main_menu/change_password.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class TeacherProfileUpdate extends StatefulWidget {
   const TeacherProfileUpdate({super.key});
@@ -286,7 +287,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.of(context).push(
-                                  MaterialPageRoute(builder: (context) => const ChangePassword())
+                                  MaterialPageRoute(builder: (context) => const ChangePassword(type: UserType.GURU))
                               );
                             })
                     ]),

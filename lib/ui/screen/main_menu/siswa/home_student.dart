@@ -35,41 +35,36 @@ class _StudentHome extends State<StudentHome> {
     return MainLayout(
         type: widget.type,
         menu_name: "Beranda",
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: ListView(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (widget.type != UserType.SISWA)
-                  Expanded(
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ButtonWidget(
-                            background: gray,
-                            tint: lightGray,
-                            type: ButtonType.BACK,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      ),
-                    )
+                  Container(
+                    margin: const EdgeInsets.only(top: 25, bottom: 15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ButtonWidget(
+                          background: gray,
+                          tint: lightGray,
+                          type: ButtonType.BACK,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
-                    child: TextTypography(
+                Container(
+                  margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
+                  child: TextTypography(
                       text: "Statistik",
                       type: TextType.HEADER
-                    ),
-                  )
+                  ),
                 )
               ],
             ),

@@ -5,10 +5,12 @@ import 'package:non_cognitive/ui/components/card/status_profile_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
+import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
 import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
@@ -73,23 +75,51 @@ class _StudentProfile extends State<StudentProfile> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userType == UserType.GURU) {
-      return Scaffold(
-        appBar: AppBarCustom(
-          title: "Profil Siswa",
-          useBackButton: true,
-          onBackPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        body: _renderPage(widget.userType),
-      );
-    }
+    final _showMobile = MediaQuery.of(context).size.width < screenMd;
 
-    return _renderPage(widget.userType);
+    return MainLayout(
+        type: widget.userType,
+        menu_name: "Profil",
+        child: ListView(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.userType != UserType.SISWA)
+                  Container(
+                    margin: const EdgeInsets.only(top: 25, bottom: 15),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ButtonWidget(
+                          background: gray,
+                          tint: lightGray,
+                          type: ButtonType.BACK,
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                Container(
+                  margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
+                  child: TextTypography(
+                      text: "Profil Siswa",
+                      type: TextType.HEADER
+                  ),
+                )
+              ],
+            ),
+            _renderPage(widget.userType, _showMobile)
+          ],
+        )
+    );
   }
 
-  ListView _renderPage(UserType type) {
+  ListView _renderPage(UserType type, bool isMobile) {
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 25),
@@ -97,18 +127,20 @@ class _StudentProfile extends State<StudentProfile> {
         if (type == UserType.SISWA)
           Container(
             margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
-            child: Center(
+            child: isMobile ? Center(
               child: TextTypography(
                 type: TextType.DESCRIPTION,
                 text: "Anda dapat mengubah profil anda pada kolom inputan dibawah",
-                align: TextAlign.center,
               ),
+            ) : TextTypography(
+              type: TextType.DESCRIPTION,
+              text: "Anda dapat mengubah profil anda pada kolom inputan dibawah",
             ),
           ),
-        const Center(
+        Center(
           child: CircleAvatarCustom(
               image: "",
-              radius: 50),
+              radius: isMobile ? 50: 80),
         ),
         const SizedBox(height: 20),
         Row(
@@ -118,17 +150,17 @@ class _StudentProfile extends State<StudentProfile> {
               background: green,
               tint: white,
               type: ButtonType.MEDIUM,
-              content: type == UserType.SISWA ? "Mulai Tes" : "Cek Hasil Tes",
+              content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
               onPressed: () {
                 if (type == UserType.SISWA) {
-                  Navigator.of(context).pushReplacement(
+                  /*Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const Questionnaire(),
-                      ));
+                      ));*/
                 } else {
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => StudentHome(type: type, expandedContents: false),
+                        builder: (context) => StudentHome(type: type, expandedContents: true),
                       ));
                 }
               },
@@ -138,7 +170,7 @@ class _StudentProfile extends State<StudentProfile> {
               background: green,
               tint: green,
               type: ButtonType.OUTLINED,
-              content: type == UserType.SISWA ? "Ubah Profil" : "Ubah Status Siswa",
+              content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
               onPressed: () {
                 if (type == UserType.SISWA) {
                   Navigator.of(context).push(

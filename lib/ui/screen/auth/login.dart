@@ -79,7 +79,7 @@ class _LoginState extends State<Login> {
                       fontSize: 12.0);
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const StudentHome(type: UserType.SISWA, expandedContents: false)
+                        builder: (context) => const StudentHome(type: UserType.SISWA, expandedContents: true)
                       )
                   );
                 } else {

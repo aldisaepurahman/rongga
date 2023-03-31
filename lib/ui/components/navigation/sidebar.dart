@@ -43,14 +43,14 @@ class _SidebarCustom extends State<SidebarCustom> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: widget.type == UserType.SISWA
-                  ? studentMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name)).toList()
+                  ? studentMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name, type: widget.type)).toList()
                   : widget.type == UserType.GURU_BK
-                    ? guruBKMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name)).toList()
+                    ? guruBKMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name, type: widget.type)).toList()
                     : widget.type == UserType.WALI_KELAS
-                      ? waliKelasMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name)).toList()
+                      ? waliKelasMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name, type: widget.type)).toList()
                       : widget.type == UserType.GURU
-                        ? guruMapelMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name)).toList()
-                        : adminMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name)).toList(),
+                        ? guruMapelMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name, type: widget.type)).toList()
+                        : adminMenu.map((e) => SidebarMenuCustom(item: e, isMobilePage: _showMobile, menu_name: widget.menu_name, type: widget.type)).toList(),
               )
           )
         ],
