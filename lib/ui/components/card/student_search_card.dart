@@ -20,6 +20,7 @@ class StudentSearchState extends State<StudentSearchCard> {
   Widget build(BuildContext context) {
     return CardContainer(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextTypography(
             type: TextType.TITLE,

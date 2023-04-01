@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/sidebar_menu_item.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/screen/auth/auth.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/home_teacher.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/search_student.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/search_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
@@ -75,7 +78,8 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
       if (menu_name == "Beranda") {
         return () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => StudentHome(type: type, expandedContents: false))
+              MaterialPageRoute(builder: (context) =>
+                  StudentHome(type: type, expandedContents: false))
           );
         };
       }
@@ -89,7 +93,31 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
       else if (menu_name == "Profil") {
         return () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => StudentProfile(userType: type))
+              MaterialPageRoute(
+                  builder: (context) => StudentProfile(userType: type))
+          );
+        };
+      }
+    } else if (widget.type == UserType.GURU || widget.type == UserType.GURU_BK || widget.type == UserType.WALI_KELAS) {
+      if (menu_name == "Beranda") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+                  TeacherHome(type: type))
+          );
+        };
+      } else if (menu_name == "Cari Siswa") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => SearchStudent(type: type))
+          );
+        };
+      }
+      else if (menu_name == "Profil") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => TeacherProfile(type: type))
           );
         };
       }

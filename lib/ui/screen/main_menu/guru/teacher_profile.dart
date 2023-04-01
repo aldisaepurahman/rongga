@@ -22,19 +22,6 @@ class TeacherProfile extends StatefulWidget {
 class _TeacherProfile extends State<TeacherProfile> {
   @override
   Widget build(BuildContext context) {
-    /*if (widget.type == UserType.SISWA) {
-      return Scaffold(
-        appBar: AppBarCustom(
-          title: "Profil Guru",
-          useBackButton: true,
-          onBackPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        body: _renderPage(),
-      );
-    }
-    return _renderPage();*/
     final _showMobile = MediaQuery.of(context).size.width < screenMd;
 
     return MainLayout(
@@ -46,7 +33,7 @@ class _TeacherProfile extends State<TeacherProfile> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (widget.type != UserType.GURU)
+                if (widget.type != UserType.GURU && widget.type != UserType.GURU_BK && widget.type != UserType.WALI_KELAS)
                   Container(
                     margin: const EdgeInsets.only(top: 25, bottom: 15),
                     child: Column(
@@ -101,7 +88,7 @@ class _TeacherProfile extends State<TeacherProfile> {
               radius: isMobile ? 50 : 80),
         ),
         const SizedBox(height: 20),
-        if (widget.type == UserType.GURU)
+        if (widget.type == UserType.GURU || widget.type == UserType.GURU_BK || widget.type == UserType.WALI_KELAS)
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -113,7 +100,7 @@ class _TeacherProfile extends State<TeacherProfile> {
                 onPressed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const TeacherProfileUpdate(),
+                        builder: (context) => TeacherProfileUpdate(type: widget.type),
                       ));
                 },
               ),
