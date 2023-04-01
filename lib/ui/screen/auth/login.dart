@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
                       fontSize: 12.0);
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const TeacherHome(type: UserType.GURU)
+                        builder: (context) => const TeacherHome(type: UserType.ADMIN)
                       )
                   );
                 } else {

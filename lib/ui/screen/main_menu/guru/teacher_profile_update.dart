@@ -134,25 +134,6 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    /*return Scaffold(
-      appBar: AppBarCustom(
-        title: "Update Profil",
-        useBackButton: true,
-        onBackPressed: () {
-          backWarningDialog();
-        },
-      ),
-      body: ,
-      floatingActionButton: ButtonWidget(
-        background: orange,
-        tint: black,
-        type: ButtonType.FLOAT,
-        icon: Icons.save,
-        onPressed: () {
-          submitWarningDialog();
-        },
-      ),
-    );*/
     final _showMobile = MediaQuery.of(context).size.width < screenMd;
 
     return MainLayout(

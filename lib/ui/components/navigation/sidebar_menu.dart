@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/sidebar_menu_item.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/screen/auth/auth.dart';
+import 'package:non_cognitive/ui/screen/main_menu/admin_sekolah/admin_rombel_list.dart';
+import 'package:non_cognitive/ui/screen/main_menu/admin_sekolah/admin_tahun_ajaran.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/home_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/search_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
@@ -100,7 +102,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           );
         };
       }
-    } else if (widget.type == UserType.GURU || widget.type == UserType.GURU_BK || widget.type == UserType.WALI_KELAS) {
+    } else if (type == UserType.GURU || type == UserType.GURU_BK || type == UserType.WALI_KELAS) {
       if (menu_name == "Beranda") {
         return () {
           Navigator.of(context).push(
@@ -136,6 +138,27 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => const RombelCheck())
+          );
+        };
+      }
+    } else if (type == UserType.ADMIN) {
+      if (menu_name == "Beranda") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+                  TeacherHome(type: type))
+          );
+        };
+      } else if (menu_name == "Tahun Ajaran") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AdminTahunAjaran())
+          );
+        };
+      } else if (menu_name == "Rombel Sekolah") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => const AdminRombelList())
           );
         };
       }
