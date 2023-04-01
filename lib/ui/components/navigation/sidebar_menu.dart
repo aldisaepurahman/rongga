@@ -5,6 +5,7 @@ import 'package:non_cognitive/ui/screen/auth/auth.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/home_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/search_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru_bk/create_rombel.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/search_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
@@ -118,6 +119,14 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => TeacherProfile(type: type))
+          );
+        };
+      }
+      else if (menu_name == "Buat Rombel") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => CreateRombel(type: type, extendedContents: false))
           );
         };
       }

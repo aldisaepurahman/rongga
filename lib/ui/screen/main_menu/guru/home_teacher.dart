@@ -6,7 +6,10 @@ import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
+import 'package:non_cognitive/ui/components/table/rombel_style.dart';
+import 'package:non_cognitive/ui/components/table/table_column.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
+import 'package:non_cognitive/utils/table_assets.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class TeacherHome extends StatefulWidget {
@@ -146,7 +149,7 @@ class _TeacherHome extends State<TeacherHome> {
                   ],
                 )
             ),
-            if (widget.type == UserType.WALI_KELAS)
+            if (widget.type == UserType.WALI_KELAS) ...[
               CardContainer(
                   child: Column(
                     children: [
@@ -164,6 +167,22 @@ class _TeacherHome extends State<TeacherHome> {
                           )),
                     ],
                   )),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 25),
+                child: PaginatedDataTable(
+                  dataRowHeight: 70,
+                  columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
+                  source: RombelStyleTableData(
+                      context: context,
+                      content: student_style_list
+                  ),
+                  rowsPerPage: 5,
+                  columnSpacing: 0,
+                  horizontalMargin: 0,
+                  showCheckboxColumn: false,
+                ),
+              )
+            ]
           ],
         )
     );
