@@ -95,10 +95,10 @@ class _StudentHome extends State<StudentHome> {
                       type: ButtonType.LARGE,
                       content: "Mulai Tes",
                       onPressed: () {
-                        /*Navigator.of(context).pushReplacement(
+                        Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (context) => const Questionnaire(),
-                            ));*/
+                            ));
                       },
                     )
                   ],

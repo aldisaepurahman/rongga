@@ -153,10 +153,10 @@ class _StudentProfile extends State<StudentProfile> {
               content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
               onPressed: () {
                 if (type == UserType.SISWA) {
-                  /*Navigator.of(context).pushReplacement(
+                  Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => const Questionnaire(),
-                      ));*/
+                      ));
                 } else {
                   Navigator.of(context).push(
                       MaterialPageRoute(
