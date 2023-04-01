@@ -11,6 +11,7 @@ import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_score_input.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
 import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
@@ -178,15 +179,10 @@ class _StudentProfile extends State<StudentProfile> {
                         builder: (context) => const StudentProfileUpdate(),
                       ));
                 } else {
-                  showModalBottomSheet(
-                    context: context,
-                    shape: const RoundedRectangleBorder( // <-- SEE HERE
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(25.0),
-                      ),
-                    ),
-                    builder: (context) => BottomSheetCustom(items: bottom_sheet_profile_list),
-                  );
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TeacherScoreInput(type: type),
+                      ));
                 }
               },
             ),

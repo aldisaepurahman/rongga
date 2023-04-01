@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
-enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, OUTLINED_SMALL, FLOAT, BACK }
+enum ButtonType { SMALL, MEDIUM, LARGE, LARGE_WIDE, OUTLINED, OUTLINED_SMALL, FLOAT, BACK, ICON_ONLY }
 
 class ButtonWidget extends StatelessWidget {
   final Color background;
@@ -63,6 +63,18 @@ class ButtonWidget extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_rounded),
           iconSize: 25,
         ),
+      );
+    } else if (type == ButtonType.ICON_ONLY) {
+      return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: background,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)
+              ),
+              minimumSize: const Size(45, 45)
+          ),
+          onPressed: onPressed,
+          child: Icon(icon, color: tint)
       );
     }
 

@@ -9,6 +9,7 @@ import 'package:non_cognitive/ui/screen/main_menu/guru_bk/create_rombel.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/search_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
+import 'package:non_cognitive/ui/screen/main_menu/wali_kelas/rombel_check.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class SidebarMenuCustom extends StatefulWidget {
@@ -127,6 +128,14 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => CreateRombel(type: type, extendedContents: false))
+          );
+        };
+      }
+      else if (menu_name == "Rombel Saya") {
+        return () {
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => const RombelCheck())
           );
         };
       }

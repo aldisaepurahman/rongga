@@ -53,7 +53,7 @@ class _SearchStudent extends State<SearchStudent> {
                 onCheckDetailed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const StudentProfile(userType: UserType.GURU),
+                        builder: (context) => StudentProfile(userType: widget.type),
                       ));
                 },
               )
