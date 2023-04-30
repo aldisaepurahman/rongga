@@ -6,6 +6,7 @@ import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
 
 class ItemSearchCard extends StatelessWidget {
   final String name;
@@ -33,7 +34,8 @@ class ItemSearchCard extends StatelessWidget {
           Row(
             children: [
               CircleAvatarCustom(
-                  image: image,
+                  path: image,
+                  isWeb: kIsWeb,
                   radius: 30),
               const SizedBox(width: 30),
               Expanded(
@@ -53,8 +55,8 @@ class ItemSearchCard extends StatelessWidget {
                               type: TextType.DESCRIPTION,
                               text: id_number,
                             ),
-                            if (type == UserType.SISWA)
-                              Badges(type: badgesType!)
+                            /*if (type == UserType.SISWA)
+                              Badges(type: badgesType!)*/
                           ],
                         )
                     ),

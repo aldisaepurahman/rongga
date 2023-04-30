@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_cognitive/data/bloc/rongga_state.dart';
+import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
+import 'package:non_cognitive/data/bloc/student/student_event.dart';
+import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/teacher_search_card.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
@@ -17,6 +22,18 @@ class SearchTeacher extends StatefulWidget {
 class _SearchTeacher extends State<SearchTeacher> {
   final namaController = TextEditingController();
 
+  List<Teacher> list_teacher = <Teacher>[];
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      BlocProvider.of<StudentBloc>(context)
+          .add(TeacherOnSearch(id_sekolah: 1, nama: ""));
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MainLayout(
@@ -26,31 +43,63 @@ class _SearchTeacher extends State<SearchTeacher> {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
-              child: TextTypography(
-                  text: "Cari Guru",
-                  type: TextType.HEADER
-              ),
+              child: TextTypography(text: "Cari Guru", type: TextType.HEADER),
             ),
             TeacherSearchCard(
               namaController: namaController,
-              onPressedSubmit: () {},
+              onPressedSubmit: () {
+                BlocProvider.of<StudentBloc>(context)
+                    .add(TeacherOnSearch(id_sekolah: 1, nama: namaController.text));
+              },
             ),
-            for (var item in teachers)
-              ItemSearchCard(
-                id_number: item.idNumber,
-                name: item.name,
-                image: item.photo,
-                type: item.type,
-                onCheckDetailed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const TeacherProfile(type: UserType.SISWA),
-                      ));
-                },
-              )
+            BlocConsumer<StudentBloc, RonggaState>(
+              listener: (_, state) {
+                if (state is SuccessState) {
+                  list_teacher.clear();
+                  list_teacher = state.datastore;
+                }
+              },
+              builder: (_, state) {
+                if (state is LoadingState) {
+                  return const Padding(
+                    padding: EdgeInsets.all(24),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else if (state is FailureState) {
+                  return const Padding(
+                    padding: EdgeInsets.all(24),
+                    child: Center(
+                        child: Text(
+                            "Data gagal ditampilkan, terjadi error pada sistem!")),
+                  );
+                } else if (state is SuccessState) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: list_teacher.length,
+                    itemBuilder: (context, index) {
+                      return ItemSearchCard(
+                        id_number: list_teacher[index].idNumber ?? "",
+                        name: list_teacher[index].name ?? "",
+                        image: list_teacher[index].photo != null ? list_teacher[index].photo! : "assets/images/no_image.png",
+                        type: list_teacher[index].type ?? UserType.GURU,
+                        onCheckDetailed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                TeacherProfile(type: UserType.SISWA, teacher: list_teacher[index]),
+                          ));
+                        },
+                      );
+                    },
+                  );
+                }
+                return const Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Center(child: Text("Tidak Ada Data")),
+                );
+              },
+            )
           ],
-        )
-    );
+        ));
   }
-
 }

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
+import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/status_profile_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
@@ -16,10 +20,12 @@ import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile_update.dart';
 import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentProfile extends StatefulWidget {
   final UserType userType;
-  const StudentProfile({super.key, required this.userType});
+  final Student? student;
+  const StudentProfile({super.key, required this.userType, this.student});
 
   @override
   State<StudentProfile> createState() => _StudentProfile();
@@ -27,6 +33,24 @@ class StudentProfile extends StatefulWidget {
 
 class _StudentProfile extends State<StudentProfile> {
   late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Student _student = Student(
+      idNumber: "",
+      name: "",
+      email: "",
+      password: "",
+      gender: "",
+      no_telp: "",
+      photo: "",
+      address: "",
+      type: UserType.SISWA,
+      id_sekolah: 0,
+      id_tahun_ajaran: 0,
+      tahun_ajaran: '',
+      token: ''
+  );
 
   void showChoiceDialog() {
     showDialog(
@@ -50,9 +74,23 @@ class _StudentProfile extends State<StudentProfile> {
     );
   }
 
+  void initProfile() async {
+    final SharedPreferences prefs = await _prefs;
+    final String user = prefs.getString("user") ?? "";
+
+    setState(() {
+      if (widget.student != null) {
+        _student = widget.student!;
+      } else {
+        _student = Student.fromJson(jsonDecode(user));
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    initProfile();
 
     bottom_sheet_profile_list = [
       BottomSheetCustomItem(
@@ -114,13 +152,13 @@ class _StudentProfile extends State<StudentProfile> {
                 )
               ],
             ),
-            _renderPage(widget.userType, _showMobile)
+            _renderPage(widget.userType, _showMobile, _student)
           ],
         )
     );
   }
 
-  ListView _renderPage(UserType type, bool isMobile) {
+  ListView _renderPage(UserType type, bool isMobile, Student student) {
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 25),
@@ -140,7 +178,8 @@ class _StudentProfile extends State<StudentProfile> {
           ),
         Center(
           child: CircleAvatarCustom(
-              image: "",
+              path: "assets/images/no_image.png",
+              isWeb: kIsWeb,
               radius: isMobile ? 50: 80),
         ),
         const SizedBox(height: 20),
@@ -176,7 +215,7 @@ class _StudentProfile extends State<StudentProfile> {
                 if (type == UserType.SISWA) {
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const StudentProfileUpdate(),
+                        builder: (context) => StudentProfileUpdate(student: student),
                       ));
                 } else {
                   Navigator.of(context).push(
@@ -189,8 +228,8 @@ class _StudentProfile extends State<StudentProfile> {
           ],
         ),
         const SizedBox(height: 20),
-        const BiodataCard(),
-        const StatusProfileCard()
+        BiodataCard(user_data: student),
+        StatusProfileCard(type: UserType.SISWA, student_data: student)
       ],
     );
   }

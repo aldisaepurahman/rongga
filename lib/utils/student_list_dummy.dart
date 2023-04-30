@@ -10,8 +10,13 @@ final students = [
       gender: "Perempuan",
       no_telp: "0825627891982",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-      studyStyle: "Kinestetik"
+      id_sekolah: 1,
+      studyStyle: "Kinestetik",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
   Student(
       idNumber: "1986204282",
@@ -21,8 +26,13 @@ final students = [
       gender: "Laki-laki",
       no_telp: "089962788982",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-      studyStyle: "Visual"
+      id_sekolah: 1,
+      studyStyle: "Visual",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
   Student(
       idNumber: "19973790013",
@@ -32,8 +42,13 @@ final students = [
       gender: "Laki-laki",
       no_telp: "088329370012",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-      studyStyle: "Visual"
+      id_sekolah: 1,
+      studyStyle: "Visual",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
   Student(
       idNumber: "199668292700",
@@ -43,8 +58,13 @@ final students = [
       gender: "Perempuan",
       no_telp: "087729269919",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-      studyStyle: "Auditori"
+      id_sekolah: 1,
+      studyStyle: "Auditori",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
   Student(
       idNumber: "198819720026",
@@ -54,8 +74,13 @@ final students = [
       gender: "Laki-laki",
       no_telp: "085729720019",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-    studyStyle: "Auditori"
+      id_sekolah: 1,
+    studyStyle: "Auditori",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
   Student(
       idNumber: "1990262799128",
@@ -65,7 +90,12 @@ final students = [
       gender: "Perempuan",
       no_telp: "082562781193",
       photo: "",
+      address: "Jl. Jalan",
       type: UserType.SISWA,
-      studyStyle: "Kinestetik"
+      id_sekolah: 1,
+      studyStyle: "Kinestetik",
+    id_tahun_ajaran: 1,
+    tahun_ajaran: '2022/2023',
+    token: '',
   ),
 ];

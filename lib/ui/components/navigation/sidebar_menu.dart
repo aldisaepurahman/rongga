@@ -102,7 +102,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           );
         };
       }
-    } else if (type == UserType.GURU || type == UserType.GURU_BK || type == UserType.WALI_KELAS) {
+    } else if (type == UserType.GURU || type == UserType.GURU_BK || type == UserType.WALI_KELAS || type == UserType.GURU_BK_WALI_KELAS) {
       if (menu_name == "Beranda") {
         return () {
           Navigator.of(context).push(
@@ -137,7 +137,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
         return () {
           Navigator.of(context).push(
               MaterialPageRoute(
-                  builder: (context) => const RombelCheck())
+                  builder: (context) => RombelCheck(type: type))
           );
         };
       }

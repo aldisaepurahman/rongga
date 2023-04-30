@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/student.dart';
+import 'package:non_cognitive/data/model/users.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/item_list/status_profile_item_list.dart';
+import 'package:non_cognitive/utils/user_type.dart';
+
+import '../../../data/model/teacher.dart';
 
 class StatusProfileCard extends StatelessWidget {
-  const StatusProfileCard({super.key});
+  final Student? student_data;
+  final Teacher? teacher_data;
+  final UserType type;
+  const StatusProfileCard({super.key, this.student_data, this.teacher_data, required this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -14,28 +22,41 @@ class StatusProfileCard extends StatelessWidget {
           children: [
             TextTypography(
               type: TextType.TITLE,
-              text: "Status Siswa",
+              text: (type == UserType.SISWA) ? "Status Siswa" : "Status Guru",
             ),
             const SizedBox(height: 15),
-            const StatusProfileItemList(
-              label: "Status Awal",
-              description: "Peserta didik baru"
-            ),
-            const SizedBox(height: 15),
-            const StatusProfileItemList(
-                label: "Tahun Masuk",
-                description: "2022"
-            ),
-            const SizedBox(height: 15),
-            const StatusProfileItemList(
-                label: "Tingkat Kelas",
-                description: "VII (Tujuh)"
-            ),
-            const SizedBox(height: 15),
-            const StatusProfileItemList(
-                label: "Rombel Kelas",
-                description: "7C"
-            ),
+            if (type == UserType.SISWA) ...[
+              StatusProfileItemList(
+                  label: "Status Awal",
+                  description: (student_data?.status_siswa == 1) ? "Peserta didik baru" : "Peserta didik pindahan dari sekolah lain"
+              ),
+              const SizedBox(height: 15),
+              StatusProfileItemList(
+                  label: "Tahun Masuk",
+                  description: student_data?.tahun_masuk ?? ""
+              ),
+              const SizedBox(height: 15),
+              StatusProfileItemList(
+                  label: "Tingkat Kelas",
+                  description: student_data?.deskripsi ?? ""
+              ),
+              const SizedBox(height: 15),
+              StatusProfileItemList(
+                  label: "Rombel Kelas",
+                  description: student_data?.rombel ?? ""
+              )
+            ]
+            else ... [
+              StatusProfileItemList(
+                  label: "Status Awal",
+                  description: (teacher_data?.status_kerja == 1) ? "Guru tetap" : "Guru honorer"
+              ),
+              const SizedBox(height: 15),
+              StatusProfileItemList(
+                  label: "Spesialisasi Mata Pelajaran",
+                  description: teacher_data?.spesialisasi ?? ""
+              ),
+            ],
           ],
         )
     );

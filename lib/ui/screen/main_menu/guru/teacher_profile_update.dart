@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
+import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
@@ -18,7 +20,8 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class TeacherProfileUpdate extends StatefulWidget {
   final UserType type;
-  const TeacherProfileUpdate({super.key, required this.type});
+  final Teacher teacher;
+  const TeacherProfileUpdate({super.key, required this.type, required this.teacher});
 
   @override
   State<StatefulWidget> createState() => _TeacherProfileUpdate();
@@ -38,25 +41,31 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
     "Pendidikan Pancasila dan Kewarganegaraan",
     "Bahasa Indonesia",
     "Matematika",
+    "Bahasa Inggris",
     "Ilmu Pengetahuan Alam",
     "Ilmu Pengetahuan Sosial",
-    "Bahasa Inggris",
     "Seni Budaya dan Prakarya",
-    "Bahasa Daerah",
     "Pendidikan Jasmani, Olahraga dan Kesehatan",
+    "Bahasa Daerah",
     "Bimbingan dan Konseling"
   ];
 
   late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
 
-  final idNumberController = TextEditingController(text: "198242749");
+  /*final idNumberController = TextEditingController(text: "198242749");
   final nameController = TextEditingController(text: "Rahman Aji");
-  final emailController = TextEditingController(text: "ajirahman@gmail.com");
+  final emailController = TextEditingController(text: "ajirahman@gmail.com");*/
   String _genderType = "Laki-laki";
-  final telpController = TextEditingController(text: "0895635117001");
-  final addressController = TextEditingController(text: "Jl. Nusa Persada Jakarta");
+  /*final telpController = TextEditingController(text: "0895635117001");
+  final addressController = TextEditingController(text: "Jl. Nusa Persada Jakarta");*/
   String _ahliMapel = "Pendidikan Agama dan Budi Pekerti";
   String _statusKerja = "Guru Tetap";
+
+  late TextEditingController idNumberController;
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController telpController;
+  late TextEditingController addressController;
 
   void backWarningDialog() {
     showDialog(
@@ -130,6 +139,16 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
           color: red
       ),
     ];
+
+    idNumberController = TextEditingController(text: widget.teacher.idNumber);
+    nameController = TextEditingController(text: widget.teacher.name);
+    emailController = TextEditingController(text: widget.teacher.email);
+    telpController = TextEditingController(text: widget.teacher.no_telp);
+    addressController = TextEditingController(text: widget.teacher.address);
+
+    _genderType = widget.teacher.gender!;
+    _ahliMapel = widget.teacher.spesialisasi!;
+    _statusKerja = statusGuruList[widget.teacher.status_kerja!-1];
   }
 
   @override
@@ -186,7 +205,8 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                 child: Stack(
                   children: [
                     CircleAvatarCustom(
-                        image: "",
+                        path: "assets/images/no_image.png",
+                        isWeb: kIsWeb,
                         radius: _showMobile ? 50 : 80),
                     Positioned(
                         right: 0,

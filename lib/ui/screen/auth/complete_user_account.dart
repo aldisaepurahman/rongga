@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
@@ -206,7 +207,8 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                 child: Stack(
                                   children: [
                                     const CircleAvatarCustom(
-                                        image: "",
+                                        path: "assets/images/no_image.png",
+                                        isWeb: kIsWeb,
                                         radius: 80),
                                     Positioned(
                                         right: 0,
@@ -491,7 +493,8 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                         child: Stack(
                           children: [
                             const CircleAvatarCustom(
-                                image: "",
+                                path: "assets/images/no_image.png",
+                                isWeb: kIsWeb,
                                 radius: 50),
                             Positioned(
                                 right: 0,

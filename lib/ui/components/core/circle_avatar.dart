@@ -1,18 +1,35 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CircleAvatarCustom extends StatelessWidget {
-  final String image;
+class CircleAvatarCustom extends StatefulWidget {
+  final File? image;
+  final String? fromNetwork;
+  final String? path;
+  final Uint8List? webPreview;
   final double radius;
+  final bool isWeb;
 
   const CircleAvatarCustom(
-      {super.key, required this.image, required this.radius});
+      {super.key, this.image, required this.radius, this.path, this.fromNetwork, required this.isWeb, this.webPreview});
+
+  @override
+  State<StatefulWidget> createState() => _CircleAvatarCustom();
+}
+
+class _CircleAvatarCustom extends State<CircleAvatarCustom> {
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
         backgroundColor: Colors.transparent,
-        radius: radius,
-      backgroundImage: AssetImage(image.isNotEmpty ? image : "assets/images/no_image.png"),
+        radius: widget.radius,
+      child: (widget.isWeb && widget.webPreview != null)
+          ? Image.memory(widget.webPreview!)
+            :(widget.image != null) ? Image.file(widget.image!)
+              : (widget.fromNetwork != null && widget.fromNetwork!.isNotEmpty)
+                ? Image.network(widget.fromNetwork!) : Image.asset(widget.path!),
     );
   }
 

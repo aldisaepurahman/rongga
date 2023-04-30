@@ -102,7 +102,7 @@ class _RombelCard extends State<RombelCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if (widget.type == UserType.GURU_BK && widget.isEmpty)...[
+                  if ((widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS) && widget.isEmpty)...[
                     ButtonWidget(
                       background: orange,
                       tint: black,

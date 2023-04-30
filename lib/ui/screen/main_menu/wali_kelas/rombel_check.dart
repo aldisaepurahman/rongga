@@ -14,7 +14,8 @@ import 'package:non_cognitive/utils/table_assets.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 
 class RombelCheck extends StatefulWidget {
-  const RombelCheck({super.key});
+  final UserType type;
+  const RombelCheck({super.key, required this.type});
 
   @override
   State<StatefulWidget> createState() => _RombelCheck();
@@ -95,7 +96,7 @@ class _RombelCheck extends State<RombelCheck> {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
-        type: UserType.WALI_KELAS,
+        type: widget.type,
         menu_name: "Rombel Saya",
         floatingButton: ButtonWidget(
           background: orange,

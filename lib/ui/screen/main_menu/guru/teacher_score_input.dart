@@ -89,7 +89,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
                 )
               ],
             ),
-            const BiodataCard(),
+            // const BiodataCard(),
             Container(
               margin: const EdgeInsets.only(top: 25),
               child: TextTypography(
