@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -74,9 +75,14 @@ class _StudentProfile extends State<StudentProfile> {
     );
   }
 
+  FutureOr onBackPage(dynamic value) {
+    initProfile();
+  }
+
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
+    print("infokan $user");
 
     setState(() {
       if (widget.student != null) {
@@ -178,6 +184,7 @@ class _StudentProfile extends State<StudentProfile> {
           ),
         Center(
           child: CircleAvatarCustom(
+            fromNetwork: student.photo,
               path: "assets/images/no_image.png",
               isWeb: kIsWeb,
               radius: isMobile ? 50: 80),
@@ -213,10 +220,10 @@ class _StudentProfile extends State<StudentProfile> {
               content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
               onPressed: () {
                 if (type == UserType.SISWA) {
-                  Navigator.of(context).push(
+                  Navigator.push(context,
                       MaterialPageRoute(
                         builder: (context) => StudentProfileUpdate(student: student),
-                      ));
+                      )).then(onBackPage);
                 } else {
                   Navigator.of(context).push(
                       MaterialPageRoute(

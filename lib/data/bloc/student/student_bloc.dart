@@ -9,6 +9,7 @@ class StudentBloc extends Bloc<Events, RonggaState> {
   StudentBloc() : super(EmptyState()) {
     on<TeacherOnSearch>(_searchTeacher);
     on<StudentUpdateProfile>(_editStudent);
+    on<ResetEvent>(_resetPage);
   }
 
   Future<void> _searchTeacher(TeacherOnSearch event, Emitter<RonggaState> emit) async {
@@ -39,5 +40,9 @@ class StudentBloc extends Bloc<Events, RonggaState> {
     } catch (error) {
       emit(FailureState(error.toString()));
     }
+  }
+
+  Future<void> _resetPage(Events event, Emitter<RonggaState> emit) async {
+    emit(EmptyState());
   }
 }

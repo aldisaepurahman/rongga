@@ -44,8 +44,8 @@ class Student extends Users {
     password = json['password'];
     gender = json['gender'];
     no_telp = json['no_telp'];
-    photo = json['photo'].isNotEmpty ? "http://localhost:3000/public/images/${json['photo']}" : "";
     address = json['alamat'];
+    photo = json['photo'].isNotEmpty ? json['photo'] : "";
     type = UserType.SISWA;
     id_sekolah = json['id_sekolah'];
     id_siswa = json['id_siswa'];

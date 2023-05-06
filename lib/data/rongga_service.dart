@@ -82,14 +82,9 @@ class RonggaService {
     try {
       FormData data = FormData.fromMap(request);
 
-      print("Infos: ${request.toString()}");
-
       final response = await _dio.put(
         "$_baseUrl/editStudent",
-        data: data,
-        options: Options(headers: {
-          'Content-Type': 'multipart/form-data'
-        })
+        data: data
       );
 
       print("Info: ${response.toString()}");

@@ -1,10 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:html' as html;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:intl/intl.dart';
+import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_event.dart';
@@ -29,6 +34,7 @@ import 'package:non_cognitive/utils/user_type.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentProfileUpdate extends StatefulWidget {
   final Student student;
@@ -44,6 +50,12 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     "VII (Tujuh)": 1,
     "VIII (Delapan)": 2,
     "IX (Sembilan)": 3,
+  };
+
+  final Map<String, int> tingkatKelasNumOpt = {
+    "VII (Tujuh)": 7,
+    "VIII (Delapan)": 8,
+    "IX (Sembilan)": 9,
   };
 
   final List<String> tingkatKelasList = [
@@ -97,6 +109,34 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   Uint8List? webImage;
   bool isSubmitted = false;
   Map<String, dynamic> student_data = {};
+  String filenames = "";
+  int method = 0;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void deletePhotoWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Tunggu, ya!",
+          content:
+          "Kamu yakin ingin menghapus foto profilmu?",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            isSubmitted = true;
+            validateAndSend(2);
+          },
+        );
+      },
+    );
+  }
 
   void backWarningDialog() {
     showDialog(
@@ -137,7 +177,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
           onPressedButtonRight: () {
             Navigator.of(context).pop();
             isSubmitted = true;
-            validateAndSend();
+            validateAndSend(1);
             // Navigator.of(context).pop();
           },
         );
@@ -145,7 +185,40 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     );
   }
 
-  void validateAndSend() async {
+  Future<void> _saveSession() async {
+    final SharedPreferences prefs = await _prefs;
+
+    prefs.remove("user");
+
+    var users = {
+      "id": widget.student!.id_users,
+      "no_induk": idNumberController.text,
+      "nama": nameController.text,
+      "email": emailController.text,
+      "password": widget.student!.password,
+      "gender": _genderType,
+      "no_telp": telpController.text,
+      "photo": (method == 1) ? (filenames.isNotEmpty) ? "${widget.student!.id_users}_$filenames" : widget.student!.photo : "",
+      "alamat": addressController.text,
+      "id_sekolah": widget.student!.id_sekolah,
+      "id_siswa": widget.student!.id_siswa,
+      "tahun_masuk": tahunController.text,
+      "status_awal_siswa": statusSiswaOpt[_statusSiswa],
+      'tingkat': tingkatKelasNumOpt[_tingkatSiswa],
+      'deskripsi': _tingkatSiswa,
+      'rombel': widget.student!.tingkat != tingkatKelasNumOpt[_tingkatSiswa] ? "" : widget.student!.rombel,
+      'id_tahun_ajaran': widget.student!.id_tahun_ajaran,
+      'tahun_ajaran': widget.student!.tahun_ajaran,
+      'token': widget.student!.token
+    };
+
+    prefs.setString("user", jsonEncode(users));
+  }
+
+  void validateAndSend(int method) async {
+    filenames = (method == 1 && (webImage != null || imageFile != null)) ? "${widget.student!.id_users}_${DateFormat('ddMMyyyy_hhmmss').format(DateTime.now())}.jpg" : "";
+    this.method = method;
+
     student_data = {
       "id": widget.student!.id_users,
       "no_induk": idNumberController.text,
@@ -153,14 +226,27 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
       "email": emailController.text,
       "gender": _genderType,
       "telp": telpController.text,
-      "photo": (kIsWeb) ? await MultipartFile.fromBytes(webImage!, filename: path.basename(imageFile!.path)) : await MultipartFile.fromFile(imageFile!.path, filename: path.basename(imageFile!.path)),
+      "tempPhoto": widget.student!.photo,
       "alamat": addressController.text,
       "status_siswa": statusSiswaOpt[_statusSiswa],
       "id_tingkat_siswa": tingkatKelasOpt[_tingkatSiswa],
-      "tahun_masuk": tahunController.text
+      "tahun_masuk": tahunController.text,
+      "method": method
     };
 
-    BlocProvider.of<StudentBloc>(context).add(StudentUpdateProfile(student: student_data));
+    if ((webImage != null || imageFile != null) && (method != 2)) {
+      student_data["photo"] = (kIsWeb) ? await MultipartFile.fromBytes(webImage!, filename: filenames) : await MultipartFile.fromFile(imageFile!.path, filename: filenames);
+    }
+    print(student_data.toString());
+
+    if (student_data["no_induk"].isNotEmpty && student_data["email"].isNotEmpty && student_data["nama"].isNotEmpty
+    && student_data["gender"].isNotEmpty && student_data["status_siswa"] > 0 && student_data["id_tingkat_siswa"] > 0
+    && student_data["tahun_masuk"].isNotEmpty) {
+      BlocProvider.of<StudentBloc>(context).add(StudentUpdateProfile(student: student_data));
+    }
+     else {
+      showSubmitDialog(4);
+    }
   }
 
   void showSubmitDialog(int dialogType) {
@@ -180,13 +266,20 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
       builder: (context) {
         if (dialogType == 2) {
           Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<StudentBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<StudentBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          });
+        } else if (dialogType == 4) {
+          Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<StudentBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
           });
         }
@@ -210,15 +303,11 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
         });
       }
     } else if (kIsWeb) {
-      XFile? pickedFile = await ImagePicker().pickImage(
-        source: source,
-      );
+      final pickedFile = await ImagePickerWeb.getImageAsBytes();
 
       if (pickedFile != null) {
-        var f = await pickedFile.readAsBytes();
         setState(() {
-          imageFile = File(pickedFile.path);
-          webImage = f;
+          webImage = pickedFile;
         });
       }
     }
@@ -227,6 +316,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<StudentBloc>(context).add(ResetEvent());
 
     bottom_sheet_profile_list = [
       BottomSheetCustomItem(
@@ -249,6 +339,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
           title: "Hapus Foto Profil",
           onTap: () {
             Navigator.of(context).pop();
+            deletePhotoWarningDialog();
           },
           color: red),
     ];
@@ -265,6 +356,11 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     _statusSiswa = statusSiswaList[widget.student.status_siswa! - 1];
     _tingkatSiswa = widget.student.deskripsi!;
     _imagePath = widget.student.photo!;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -362,15 +458,15 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         showSubmitDialog(1);
                       });
                     }
-                  } else if (state is FailureState) {
+                  } if (state is FailureState) {
                     isSubmitted = !isSubmitted;
                     Future.delayed(const Duration(seconds: 1), () {
                       showSubmitDialog(3);
                     });
-                  } else if (state is SuccessState) {
+                  } if (state is SuccessState) {
                     isSubmitted = !isSubmitted;
                     if (state.datastore) {
-                      // _saveSession(state.datastore);
+                      _saveSession();
                       Future.delayed(const Duration(seconds: 1), () {
                         showSubmitDialog(2);
                       });

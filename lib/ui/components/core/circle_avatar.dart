@@ -19,17 +19,24 @@ class CircleAvatarCustom extends StatefulWidget {
 }
 
 class _CircleAvatarCustom extends State<CircleAvatarCustom> {
-
   @override
   Widget build(BuildContext context) {
+    print((widget.fromNetwork != null && widget.fromNetwork!.isNotEmpty) ? widget.fromNetwork! : "");
+
     return CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: widget.radius,
-      child: (widget.isWeb && widget.webPreview != null)
-          ? Image.memory(widget.webPreview!)
-            :(widget.image != null) ? Image.file(widget.image!)
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        radius: widget.radius-2,
+        child: ClipOval(
+          child: (widget.isWeb && widget.webPreview != null)
+              ? Image.memory(widget.webPreview!)
+              :(widget.image != null) ? Image.file(widget.image!)
               : (widget.fromNetwork != null && widget.fromNetwork!.isNotEmpty)
-                ? Image.network(widget.fromNetwork!) : Image.asset(widget.path!),
+              ? Image.network("http://localhost:3000/public/images/${widget.fromNetwork!}") : Image.asset(widget.path!),
+        ),
+      ),
     );
   }
 
