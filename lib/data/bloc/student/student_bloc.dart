@@ -35,7 +35,7 @@ class StudentBloc extends Bloc<Events, RonggaState> {
       emit(LoadingState());
       final RonggaService service = RonggaService();
       await service.editStudent(event.student).then((status) {
-        emit(SuccessState(status.datastore));
+        emit(CrudState(status.datastore));
       });
     } catch (error) {
       emit(FailureState(error.toString()));

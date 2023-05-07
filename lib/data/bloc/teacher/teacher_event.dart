@@ -7,3 +7,9 @@ class StudentOnSearch extends Events {
 
   StudentOnSearch({required this.id_sekolah, required this.nama, required this.rombel});
 }
+
+class TeacherUpdateProfile extends Events {
+  final Map<String, dynamic> teacher;
+
+  TeacherUpdateProfile({required this.teacher});
+}

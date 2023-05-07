@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -45,9 +46,14 @@ class _TeacherProfile extends State<TeacherProfile> {
       token: ''
   );
 
+  FutureOr onBackPage(dynamic value) {
+    initProfile();
+  }
+
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
+    print("infokan $user");
 
     setState(() {
       if (widget.teacher != null) {
@@ -129,6 +135,7 @@ class _TeacherProfile extends State<TeacherProfile> {
           ),
         Center(
           child: CircleAvatarCustom(
+              fromNetwork: teacher.photo,
               path: "assets/images/no_image.png",
               isWeb: kIsWeb,
               radius: isMobile ? 50 : 80),
@@ -147,10 +154,10 @@ class _TeacherProfile extends State<TeacherProfile> {
                 type: ButtonType.OUTLINED,
                 content: "Ubah Profil",
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.push(context, MaterialPageRoute(
                     builder: (context) =>
                         TeacherProfileUpdate(type: widget.type, teacher: teacher),
-                  ));
+                  )).then(onBackPage);
                 },
               ),
             ],

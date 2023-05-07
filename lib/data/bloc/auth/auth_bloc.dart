@@ -7,6 +7,8 @@ import 'package:non_cognitive/data/rongga_service.dart';
 class AuthBloc extends Bloc<Events, RonggaState> {
   AuthBloc() : super(EmptyState()) {
     on<AuthLogin>(_login);
+    on<AuthChangePassword>(_changePassword);
+    on<ResetEvent>(_resetPage);
   }
 
   Future<void> _login(AuthLogin event, Emitter<RonggaState> emit) async {
@@ -25,5 +27,21 @@ class AuthBloc extends Bloc<Events, RonggaState> {
     } catch (error) {
       emit(FailureState(error.toString()));
     }
+  }
+
+  Future<void> _changePassword(AuthChangePassword event, Emitter<RonggaState> emit) async {
+    try {
+      emit(LoadingState());
+      final RonggaService service = RonggaService();
+      await service.changePassword({"id": event.id_user, "password": event.password}).then((status) {
+        emit(CrudState(status.datastore));
+      });
+    } catch (error) {
+      emit(FailureState(error.toString()));
+    }
+  }
+
+  Future<void> _resetPage(Events event, Emitter<RonggaState> emit) async {
+    emit(EmptyState());
   }
 }

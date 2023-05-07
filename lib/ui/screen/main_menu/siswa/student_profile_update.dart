@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:html' as html;
 
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
@@ -27,12 +26,9 @@ import 'package:non_cognitive/ui/components/dialog/loading_dialog.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
-import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/change_password.dart';
 import 'package:non_cognitive/utils/user_type.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
 import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -328,13 +324,6 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
         },
       ),
       BottomSheetCustomItem(
-        icon: Icons.camera_alt,
-        title: "Ambil Gambar dari Camera",
-        onTap: () {
-          Navigator.of(context).pop();
-        },
-      ),
-      BottomSheetCustomItem(
           icon: Icons.delete_outline,
           title: "Hapus Foto Profil",
           onTap: () {
@@ -343,6 +332,16 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
           },
           color: red),
     ];
+
+    if (!kIsWeb) {
+      bottom_sheet_profile_list.insert(1, BottomSheetCustomItem(
+        icon: Icons.camera_alt,
+        title: "Ambil Gambar dari Camera",
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+      ));
+    }
 
     idNumberController = TextEditingController(text: widget.student.idNumber);
     nameController = TextEditingController(text: widget.student.name);
@@ -463,7 +462,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                     Future.delayed(const Duration(seconds: 1), () {
                       showSubmitDialog(3);
                     });
-                  } if (state is SuccessState) {
+                  } if (state is CrudState) {
                     isSubmitted = !isSubmitted;
                     if (state.datastore) {
                       _saveSession();
@@ -581,7 +580,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         ..onTap = () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  const ChangePassword(type: UserType.SISWA)));
+                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!)));
                         })
                 ]),
           ),
@@ -798,7 +797,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         ..onTap = () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  const ChangePassword(type: UserType.SISWA)));
+                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!)));
                         })
                 ]),
           ),

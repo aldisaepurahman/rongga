@@ -19,6 +19,15 @@ class SuccessState extends RonggaState {
   List<Object> get props => [datastore];
 }
 
+class CrudState extends RonggaState {
+  final bool datastore;
+
+  const CrudState(this.datastore);
+
+  @override
+  List<Object> get props => [datastore];
+}
+
 class FailureState extends RonggaState {
   final String error;
 

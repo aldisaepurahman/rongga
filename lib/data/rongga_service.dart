@@ -98,4 +98,40 @@ class RonggaService {
       return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
+
+  Future<ServiceStatus> editTeacher(Map<String, dynamic> request) async {
+    try {
+      FormData data = FormData.fromMap(request);
+
+      final response = await _dio.put(
+          "$_baseUrl/editTeacher",
+          data: data
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> changePassword(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.put(
+          "$_baseUrl/changePassword",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
 }

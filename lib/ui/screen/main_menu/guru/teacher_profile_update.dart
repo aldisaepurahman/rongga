@@ -1,6 +1,18 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:intl/intl.dart';
+import 'package:non_cognitive/data/bloc/events.dart';
+import 'package:non_cognitive/data/bloc/rongga_state.dart';
+import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
+import 'package:non_cognitive/data/bloc/teacher/teacher_event.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
@@ -10,6 +22,8 @@ import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_no_button.dart';
+import 'package:non_cognitive/ui/components/dialog/loading_dialog.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
@@ -17,6 +31,7 @@ import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/change_password.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TeacherProfileUpdate extends StatefulWidget {
   final UserType type;
@@ -36,6 +51,11 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
 
   final List<String> statusGuruList = ["Guru Tetap", "Guru Honorer"];
 
+  final Map<String, int> statusGuruOpt = {
+    "Guru Tetap": 1,
+    "Guru Honorer": 2
+  };
+
   final List<String> mapelList = [
     "Pendidikan Agama dan Budi Pekerti",
     "Pendidikan Pancasila dan Kewarganegaraan",
@@ -50,6 +70,34 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
     "Bimbingan dan Konseling"
   ];
 
+  final Map<String, int> mapelOpt = {
+    "Pendidikan Agama dan Budi Pekerti": 10,
+    "Pendidikan Pancasila dan Kewarganegaraan": 11,
+    "Bahasa Indonesia": 12,
+    "Matematika": 13,
+    "Bahasa Inggris": 14,
+    "Ilmu Pengetahuan Alam": 15,
+    "Ilmu Pengetahuan Sosial": 16,
+    "Seni Budaya dan Prakarya": 17,
+    "Pendidikan Jasmani, Olahraga dan Kesehatan": 18,
+    "Bahasa Daerah": 20,
+    "Bimbingan dan Konseling": 21
+  };
+
+  final Map<String, String> kelompokMapelOpt = {
+    "Pendidikan Agama dan Budi Pekerti": "A (Umum)",
+    "Pendidikan Pancasila dan Kewarganegaraan": "A (Umum)",
+    "Bahasa Indonesia": "A (Umum)",
+    "Matematika": "A (Umum)",
+    "Bahasa Inggris": "A (Umum)",
+    "Ilmu Pengetahuan Alam": "A (Umum)",
+    "Ilmu Pengetahuan Sosial": "A (Umum)",
+    "Seni Budaya dan Prakarya": "B (Umum)",
+    "Pendidikan Jasmani, Olahraga dan Kesehatan": "B (Umum)",
+    "Bahasa Daerah": "B (Umum)",
+    "Bimbingan dan Konseling": "C (Khusus)"
+  };
+
   late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
 
   /*final idNumberController = TextEditingController(text: "198242749");
@@ -60,12 +108,46 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
   final addressController = TextEditingController(text: "Jl. Nusa Persada Jakarta");*/
   String _ahliMapel = "Pendidikan Agama dan Budi Pekerti";
   String _statusKerja = "Guru Tetap";
+  String _imagePath = "";
 
   late TextEditingController idNumberController;
   late TextEditingController nameController;
   late TextEditingController emailController;
   late TextEditingController telpController;
   late TextEditingController addressController;
+
+  File? imageFile;
+  Uint8List? webImage;
+  bool isSubmitted = false;
+  Map<String, dynamic> teacher_data = {};
+  String filenames = "";
+  int method = 0;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void deletePhotoWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Tunggu, ya!",
+          content:
+          "Kamu yakin ingin menghapus foto profilmu?",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            isSubmitted = true;
+            validateAndSend(2);
+          },
+        );
+      },
+    );
+  }
 
   void backWarningDialog() {
     showDialog(
@@ -104,16 +186,143 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
           },
           onPressedButtonRight: () {
             Navigator.of(context).pop();
-            Navigator.of(context).pop();
+            isSubmitted = true;
+            validateAndSend(1);
           },
         );
       },
     );
   }
 
+  Future<void> _saveSession() async {
+    final SharedPreferences prefs = await _prefs;
+
+    prefs.remove("user");
+
+    var users = {
+      "id": widget.teacher!.id_users,
+      "no_induk": idNumberController.text,
+      "nama": nameController.text,
+      "email": emailController.text,
+      "password": widget.teacher!.password,
+      "gender": _genderType,
+      "no_telp": telpController.text,
+      "photo": (method == 1) ? (filenames.isNotEmpty) ? "${widget.teacher!.id_users}_$filenames" : widget.teacher!.photo : "",
+      "alamat": addressController.text,
+      "id_sekolah": widget.teacher!.id_sekolah,
+      "id_guru": widget.teacher!.id_guru,
+      "status_ikatan_kerja": statusGuruOpt[_statusKerja],
+      'spesialisasi': _ahliMapel,
+      'kelompok_mapel': widget.teacher!.kelompok_mapel != kelompokMapelOpt[_ahliMapel] ? kelompokMapelOpt[_ahliMapel] : widget.teacher!.kelompok_mapel,
+      'wali_kelas': widget.teacher!.wali_kelas,
+      'id_tahun_ajaran': widget.teacher!.id_tahun_ajaran,
+      'tahun_ajaran': widget.teacher!.tahun_ajaran,
+      'token': widget.teacher!.token
+    };
+
+    prefs.setString("user", jsonEncode(users));
+  }
+
+  void validateAndSend(int method) async {
+    filenames = (method == 1 && (webImage != null || imageFile != null)) ? "${widget.teacher!.id_users}_${DateFormat('ddMMyyyy_hhmmss').format(DateTime.now())}.jpg" : "";
+    this.method = method;
+
+    teacher_data = {
+      "id": widget.teacher!.id_users,
+      "no_induk": idNumberController.text,
+      "nama": nameController.text,
+      "email": emailController.text,
+      "gender": _genderType,
+      "telp": telpController.text,
+      "tempPhoto": widget.teacher!.photo,
+      "alamat": addressController.text,
+      "status_kerja": statusGuruOpt[_statusKerja],
+      "id_mapel": mapelOpt[_ahliMapel],
+      "method": method
+    };
+
+    if ((webImage != null || imageFile != null) && (method != 2)) {
+      teacher_data["photo"] = (kIsWeb) ? await MultipartFile.fromBytes(webImage!, filename: filenames) : await MultipartFile.fromFile(imageFile!.path, filename: filenames);
+    }
+    print(teacher_data.toString());
+
+    if (teacher_data["no_induk"].isNotEmpty && teacher_data["email"].isNotEmpty && teacher_data["nama"].isNotEmpty
+        && teacher_data["gender"].isNotEmpty && teacher_data["status_kerja"] > 0 && teacher_data["id_mapel"] > 0) {
+      BlocProvider.of<TeacherBloc>(context).add(TeacherUpdateProfile(teacher: teacher_data));
+    }
+    else {
+      showSubmitDialog(4);
+    }
+  }
+
+  void showSubmitDialog(int dialogType) {
+    String imgPath = (dialogType > 1)
+        ? (dialogType == 2)
+        ? "assets/images/success.json"
+        : "assets/images/incorrect.json"
+        : "assets/images/loading_icon.json";
+    String content = (dialogType > 1)
+        ? (dialogType == 2)
+        ? "Hore, profilmu sudah berhasil diperbarui."
+        : "Duh, pastiin semua data terisi serta format foto yang digunakan harus JPG/PNG."
+        : "";
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        if (dialogType == 2) {
+          Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<TeacherBloc>(context).add(ResetEvent());
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          });
+        } else if (dialogType == 3) {
+          Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<TeacherBloc>(context).add(ResetEvent());
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          });
+        } else if (dialogType == 4) {
+          Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<TeacherBloc>(context).add(ResetEvent());
+            Navigator.of(context).pop();
+          });
+        }
+        if (dialogType > 1) {
+          return DialogNoButton(path_image: imgPath, content: content);
+        }
+        return LoadingDialog(path_image: imgPath);
+      },
+    );
+  }
+
+  void _getProfilePhoto(ImageSource source) async {
+    if (!kIsWeb) {
+      XFile? pickedFile = await ImagePicker().pickImage(
+        source: source,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          imageFile = File(pickedFile.path);
+        });
+      }
+    } else if (kIsWeb) {
+      final pickedFile = await ImagePickerWeb.getImageAsBytes();
+
+      if (pickedFile != null) {
+        setState(() {
+          webImage = pickedFile;
+        });
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<TeacherBloc>(context).add(ResetEvent());
 
     bottom_sheet_profile_list = [
       BottomSheetCustomItem(
@@ -121,13 +330,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
         title: "Ambil Gambar dari Galeri",
         onTap: () {
           Navigator.of(context).pop();
-        },
-      ),
-      BottomSheetCustomItem(
-        icon: Icons.camera_alt,
-        title: "Ambil Gambar dari Camera",
-        onTap: () {
-          Navigator.of(context).pop();
+          _getProfilePhoto(ImageSource.gallery);
         },
       ),
       BottomSheetCustomItem(
@@ -135,10 +338,21 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
           title: "Hapus Foto Profil",
           onTap: () {
             Navigator.of(context).pop();
+            deletePhotoWarningDialog();
           },
           color: red
       ),
     ];
+
+    if (!kIsWeb) {
+      bottom_sheet_profile_list.insert(1, BottomSheetCustomItem(
+        icon: Icons.camera_alt,
+        title: "Ambil Gambar dari Camera",
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+      ));
+    }
 
     idNumberController = TextEditingController(text: widget.teacher.idNumber);
     nameController = TextEditingController(text: widget.teacher.name);
@@ -149,6 +363,12 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
     _genderType = widget.teacher.gender!;
     _ahliMapel = widget.teacher.spesialisasi!;
     _statusKerja = statusGuruList[widget.teacher.status_kerja!-1];
+    _imagePath = widget.teacher.photo!;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -205,7 +425,10 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                 child: Stack(
                   children: [
                     CircleAvatarCustom(
+                        image: imageFile,
+                        fromNetwork: _imagePath,
                         path: "assets/images/no_image.png",
+                        webPreview: webImage,
                         isWeb: kIsWeb,
                         radius: _showMobile ? 50 : 80),
                     Positioned(
@@ -236,7 +459,37 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
               if (_showMobile)
                 _renderMobile()
               else
-                _renderWeb()
+                _renderWeb(),
+              BlocConsumer<TeacherBloc, RonggaState>(
+                listener: (_, state) {},
+                builder: (_, state) {
+                  if (state is LoadingState) {
+                    if (isSubmitted) {
+                      Future.delayed(const Duration(seconds: 1), () {
+                        showSubmitDialog(1);
+                      });
+                    }
+                  } if (state is FailureState) {
+                    isSubmitted = !isSubmitted;
+                    Future.delayed(const Duration(seconds: 1), () {
+                      showSubmitDialog(3);
+                    });
+                  } if (state is CrudState) {
+                    isSubmitted = !isSubmitted;
+                    if (state.datastore) {
+                      _saveSession();
+                      Future.delayed(const Duration(seconds: 1), () {
+                        showSubmitDialog(2);
+                      });
+                    } else {
+                      Future.delayed(const Duration(seconds: 1), () {
+                        showSubmitDialog(3);
+                      });
+                    }
+                  }
+                  return const SizedBox(width: 0);
+                },
+              )
             ]
         )
     );
@@ -359,7 +612,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ChangePassword(type: UserType.GURU))
+                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!))
                           );
                         })
                 ]),
@@ -595,7 +848,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => const ChangePassword(type: UserType.GURU))
+                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!))
                           );
                         })
                 ]),

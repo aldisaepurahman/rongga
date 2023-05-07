@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_event.dart';
+import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
@@ -75,6 +76,7 @@ class _LoginState extends State<Login> {
       builder: (context) {
         if (dialogType == 2) {
           Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             if (user?.type == UserType.SISWA) {
               Navigator.of(context).push(MaterialPageRoute(
@@ -88,6 +90,7 @@ class _LoginState extends State<Login> {
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
+            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           });
