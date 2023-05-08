@@ -8,6 +8,7 @@ class AuthBloc extends Bloc<Events, RonggaState> {
   AuthBloc() : super(EmptyState()) {
     on<AuthLogin>(_login);
     on<AuthChangePassword>(_changePassword);
+    on<AuthRegister>(_register);
     on<ResetEvent>(_resetPage);
   }
 
@@ -34,6 +35,18 @@ class AuthBloc extends Bloc<Events, RonggaState> {
       emit(LoadingState());
       final RonggaService service = RonggaService();
       await service.changePassword({"id": event.id_user, "password": event.password}).then((status) {
+        emit(CrudState(status.datastore));
+      });
+    } catch (error) {
+      emit(FailureState(error.toString()));
+    }
+  }
+
+  Future<void> _register(AuthRegister event, Emitter<RonggaState> emit) async {
+    try {
+      emit(LoadingState());
+      final RonggaService service = RonggaService();
+      await service.register(event.user).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

@@ -36,6 +36,25 @@ class RonggaService {
     }
   }
 
+  Future<ServiceStatus> register(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/auth/api/v1/register",
+          data: request
+      );
+
+      print("Info: ${response.toString()}");
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
   Future<ServiceStatus> searchTeacher(Map<String, dynamic> request) async {
     try {
       final response = await _dio.post(

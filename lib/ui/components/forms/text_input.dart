@@ -32,7 +32,7 @@ class TextInputState extends State<TextInputCustom> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      obscureText: widget.hint == "Password" ? true : false,
+      obscureText: widget.hint.contains("Password") ? true : false,
       controller: widget.controller,
       style: const TextStyle(
         fontFamily: "Poppins"

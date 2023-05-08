@@ -18,7 +18,8 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class CompleteUserAccount extends StatefulWidget {
   final UserType type;
-  const CompleteUserAccount({super.key, required this.type});
+  final String no_induk;
+  const CompleteUserAccount({super.key, required this.type, required this.no_induk});
 
   @override
   State<CompleteUserAccount> createState() => _CompleteUserAccount();

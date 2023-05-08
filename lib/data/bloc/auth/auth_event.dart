@@ -13,3 +13,9 @@ class AuthChangePassword extends Events {
 
   AuthChangePassword({required this.id_user, required this.password});
 }
+
+class AuthRegister extends Events {
+  final Map<String, dynamic> user;
+
+  AuthRegister({required this.user});
+}
