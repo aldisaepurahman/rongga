@@ -41,7 +41,7 @@ class TahunAjaranTableData extends DataTableSource {
             child: Container(
               child: TextTypography(
                 type: TextType.LABEL_TITLE,
-                text: content[index].thnAjaran + " - " + content[index].semester,
+                text: content[index].thnAjaran! + " - " + content[index].semester!,
               ),
             ),
           )),
@@ -51,16 +51,18 @@ class TahunAjaranTableData extends DataTableSource {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ButtonWidget(
-                      background: skyBlue,
-                      tint: white,
-                      type: ButtonType.ICON_ONLY,
-                      icon: Icons.check,
-                      onPressed: () {
-                        onTahunAjaranActive(content[index]);
-                      },
-                    ),
-                    const SizedBox(width: 20),
+                    if (!content[index].active!)...[
+                      ButtonWidget(
+                        background: skyBlue,
+                        tint: white,
+                        type: ButtonType.ICON_ONLY,
+                        icon: Icons.check,
+                        onPressed: () {
+                          onTahunAjaranActive(content[index]);
+                        },
+                      ),
+                      const SizedBox(width: 20)
+                    ],
                     ButtonWidget(
                       background: orange,
                       tint: black,

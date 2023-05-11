@@ -2,11 +2,11 @@ import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/tahun_ajaran.dart';
 
 List<TahunAjaran> thn_ajaran_list = [
-  TahunAjaran(id_thn_ajaran: "1", thnAjaran: "2022/2023", semester: "Genap", active: true),
-  TahunAjaran(id_thn_ajaran: "2", thnAjaran: "2022/2023", semester: "Ganjil", active: false),
-  TahunAjaran(id_thn_ajaran: "3", thnAjaran: "2021/2022", semester: "Genap", active: false),
-  TahunAjaran(id_thn_ajaran: "4", thnAjaran: "2021/2022", semester: "Ganjil", active: false),
-  TahunAjaran(id_thn_ajaran: "5", thnAjaran: "2020/2021", semester: "Genap", active: false),
+  TahunAjaran(id_thn_ajaran: 1, thnAjaran: "2022/2023", semester: "Genap", active: true),
+  TahunAjaran(id_thn_ajaran: 2, thnAjaran: "2022/2023", semester: "Ganjil", active: false),
+  TahunAjaran(id_thn_ajaran: 3, thnAjaran: "2021/2022", semester: "Genap", active: false),
+  TahunAjaran(id_thn_ajaran: 4, thnAjaran: "2021/2022", semester: "Ganjil", active: false),
+  TahunAjaran(id_thn_ajaran: 5, thnAjaran: "2020/2021", semester: "Genap", active: false),
 ];
 
 List<RombelSekolah> rombel_list = [

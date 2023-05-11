@@ -1,7 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_bloc.dart';
+import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_delact_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
+import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
+import 'package:non_cognitive/data/bloc/auth/register_bloc.dart';
+import 'package:non_cognitive/data/bloc/auth/register_detail_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
 import 'package:non_cognitive/ui/screen/auth/auth.dart';
@@ -15,6 +20,11 @@ void main() {
       BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
       BlocProvider<TeacherBloc>(create: (context) => TeacherBloc()),
       BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
+      BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
+      BlocProvider<RegisterBloc>(create: (context) => RegisterBloc()),
+      BlocProvider<RegisterDetailBloc>(create: (context) => RegisterDetailBloc()),
+      BlocProvider<TahunAjaranBloc>(create: (context) => TahunAjaranBloc()),
+      BlocProvider<TahunAjaranDelActBloc>(create: (context) => TahunAjaranDelActBloc()),
     ],
     child: const MyApp(),
   ));

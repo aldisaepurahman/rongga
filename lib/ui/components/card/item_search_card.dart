@@ -34,7 +34,8 @@ class ItemSearchCard extends StatelessWidget {
           Row(
             children: [
               CircleAvatarCustom(
-                  path: image,
+                  fromNetwork: image,
+                  path: "assets/images/no_image.png",
                   isWeb: kIsWeb,
                   radius: 30),
               const SizedBox(width: 30),

@@ -57,7 +57,6 @@ class Users {
       "no_telp": this.no_telp,
       "photo": this.photo,
       "alamat": this.address,
-      "tipe_pengguna": this.type,
       "id_sekolah": this.id_sekolah,
       'id_tahun_ajaran': this.id_tahun_ajaran,
       'tahun_ajaran': this.tahun_ajaran,

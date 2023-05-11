@@ -227,7 +227,7 @@ class _StudentProfile extends State<StudentProfile> {
                 } else {
                   Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => TeacherScoreInput(type: type),
+                        builder: (context) => TeacherScoreInput(type: type, student: student),
                       ));
                 }
               },

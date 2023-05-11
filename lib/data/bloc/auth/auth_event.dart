@@ -19,3 +19,10 @@ class AuthRegister extends Events {
 
   AuthRegister({required this.user});
 }
+
+class AuthRegisterDetail extends Events {
+  final bool isStudent;
+  final Map<String, dynamic> user;
+
+  AuthRegisterDetail({required this.isStudent, required this.user});
+}

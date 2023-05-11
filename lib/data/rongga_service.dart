@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:non_cognitive/data/bloc/bloc_status.dart';
 import 'package:non_cognitive/data/model/student.dart';
+import 'package:non_cognitive/data/model/tahun_ajaran.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/data/model/users.dart';
 
@@ -41,6 +42,48 @@ class RonggaService {
       final response = await _dio.post(
           "$_baseUrl/auth/api/v1/register",
           data: request
+      );
+
+      print("Info: ${response.toString()}");
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> registerStudent(Map<String, dynamic> request) async {
+    try {
+      FormData data = FormData.fromMap(request);
+
+      final response = await _dio.post(
+          "$_baseUrl/auth/api/v1/registerStudent",
+          data: data
+      );
+
+      print("Info: ${response.toString()}");
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> registerTeacher(Map<String, dynamic> request) async {
+    try {
+      FormData data = FormData.fromMap(request);
+
+      final response = await _dio.post(
+          "$_baseUrl/auth/api/v1/registerTeacher",
+          data: data
       );
 
       print("Info: ${response.toString()}");
@@ -141,6 +184,129 @@ class RonggaService {
     try {
       final response = await _dio.put(
           "$_baseUrl/changePassword",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getAllMapel(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/nilaiSiswa/mapel",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: [], message: response.toString());
+      }
+
+      return ServiceStatus(datastore: response.data["values"]);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: [], message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getAllExistingMapel(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/nilaiSiswa/exists",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: [], message: response.toString());
+      }
+
+      return ServiceStatus(datastore: response.data["values"]);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: [], message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> showTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/tahunAjaran",
+        data: request,
+      );
+
+      print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: List<TahunAjaran>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<TahunAjaran>.from(response.data["values"].map((e) => TahunAjaran.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: List<TahunAjaran>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> addTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/tahunAjaran/add",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> editTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.put(
+          "$_baseUrl/tahunAjaran/edit",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> deleteTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.delete(
+          "$_baseUrl/tahunAjaran/delete",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> setActiveTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.put(
+          "$_baseUrl/tahunAjaran/active",
           data: request
       );
 

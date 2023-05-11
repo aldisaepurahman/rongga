@@ -81,7 +81,7 @@ class _SearchTeacher extends State<SearchTeacher> {
                       return ItemSearchCard(
                         id_number: list_teacher[index].idNumber ?? "",
                         name: list_teacher[index].name ?? "",
-                        image: list_teacher[index].photo != null ? list_teacher[index].photo! : "assets/images/no_image.png",
+                        image: list_teacher[index].photo ?? "",
                         type: list_teacher[index].type ?? UserType.GURU,
                         onCheckDetailed: () {
                           Navigator.of(context).push(MaterialPageRoute(

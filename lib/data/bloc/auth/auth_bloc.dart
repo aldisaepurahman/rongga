@@ -9,6 +9,7 @@ class AuthBloc extends Bloc<Events, RonggaState> {
     on<AuthLogin>(_login);
     on<AuthChangePassword>(_changePassword);
     on<AuthRegister>(_register);
+    on<AuthRegisterDetail>(_registerDetail);
     on<ResetEvent>(_resetPage);
   }
 
@@ -49,6 +50,24 @@ class AuthBloc extends Bloc<Events, RonggaState> {
       await service.register(event.user).then((status) {
         emit(CrudState(status.datastore));
       });
+    } catch (error) {
+      emit(FailureState(error.toString()));
+    }
+  }
+
+  Future<void> _registerDetail(AuthRegisterDetail event, Emitter<RonggaState> emit) async {
+    try {
+      emit(LoadingState());
+      final RonggaService service = RonggaService();
+      if (event.isStudent) {
+        await service.registerStudent(event.user).then((status) {
+          emit(CrudState(status.datastore));
+        });
+      } else {
+        await service.registerTeacher(event.user).then((status) {
+          emit(CrudState(status.datastore));
+        });
+      }
     } catch (error) {
       emit(FailureState(error.toString()));
     }

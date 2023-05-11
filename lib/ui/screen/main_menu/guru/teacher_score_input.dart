@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/final_score_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
@@ -12,8 +13,9 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class TeacherScoreInput extends StatefulWidget {
   final UserType type;
+  final Student student;
 
-  const TeacherScoreInput({super.key, required this.type});
+  const TeacherScoreInput({super.key, required this.type, required this.student});
 
   @override
   State<StatefulWidget> createState() => _TeacherScoreInput();
@@ -89,7 +91,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
                 )
               ],
             ),
-            // const BiodataCard(),
+            BiodataCard(user_data: widget.student),
             Container(
               margin: const EdgeInsets.only(top: 25),
               child: TextTypography(

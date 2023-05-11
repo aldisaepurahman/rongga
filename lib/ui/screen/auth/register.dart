@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_event.dart';
+import 'package:non_cognitive/data/bloc/auth/register_bloc.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/model/users.dart';
@@ -50,7 +51,7 @@ class _RegisterState extends State<Register> {
       "tipe_pengguna": _userType == "Siswa" ? 1 : 2,
     };
 
-    BlocProvider.of<AuthBloc>(context).add(AuthRegister(user: user_map_data));
+    BlocProvider.of<RegisterBloc>(context).add(AuthRegister(user: user_map_data));
   }
 
   void showSubmitDialog(int dialogType) {
@@ -69,19 +70,20 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (context) {
         if (dialogType == 2) {
+          BlocProvider.of<RegisterBloc>(context).add(ResetEvent());
           Future.delayed(const Duration(seconds: 2), () {
-            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => CompleteUserAccount(
                   type: _userType == "Siswa" ? UserType.SISWA : UserType.GURU,
-                  no_induk: idNumberController.text),
+                  no_induk: idNumberController.text,
+                password: passwordController.text,
+              ),
             ));
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
-            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
-            Navigator.of(context).pop();
+            BlocProvider.of<RegisterBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
           });
         }
@@ -236,7 +238,7 @@ class _RegisterState extends State<Register> {
               ),
             ),
           ),
-          BlocConsumer<AuthBloc, RonggaState>(
+          BlocConsumer<RegisterBloc, RonggaState>(
             listener: (_, state) {},
             builder: (_, state) {
               if (state is LoadingState) {

@@ -91,7 +91,7 @@ class _SearchStudent extends State<SearchStudent> {
                       return ItemSearchCard(
                         id_number: list_student[index].idNumber ?? "",
                         name: list_student[index].name ?? "",
-                        image: list_student[index].photo != null ? list_student[index].photo! : "assets/images/no_image.png",
+                        image: list_student[index].photo ?? "",
                         type: list_student[index].type ?? UserType.GURU,
                         badgesType: list_student[index].studyStyle == "Visual"
                             ? BadgesType.VISUAL

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_event.dart';
+import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/model/student.dart';
@@ -76,7 +77,7 @@ class _LoginState extends State<Login> {
       builder: (context) {
         if (dialogType == 2) {
           Future.delayed(const Duration(seconds: 2), () {
-            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
+            BlocProvider.of<LoginBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             if (user?.type == UserType.SISWA) {
               Navigator.of(context).push(MaterialPageRoute(
@@ -90,7 +91,7 @@ class _LoginState extends State<Login> {
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
-            BlocProvider.of<AuthBloc>(context).add(ResetEvent());
+            BlocProvider.of<LoginBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           });
@@ -146,7 +147,7 @@ class _LoginState extends State<Login> {
                 if (idNumberController.text.isNotEmpty &&
                     passwordController.text.isNotEmpty) {
                   isSubmitted = !isSubmitted;
-                  BlocProvider.of<AuthBloc>(context).add(AuthLogin(
+                  BlocProvider.of<LoginBloc>(context).add(AuthLogin(
                       no_induk: idNumberController.text,
                       password: passwordController.text));
                   /*Fluttertoast.showToast(
@@ -195,7 +196,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          BlocConsumer<AuthBloc, RonggaState>(
+          BlocConsumer<LoginBloc, RonggaState>(
             listener: (_, state) {},
             builder: (_, state) {
               if (state is LoadingState) {
