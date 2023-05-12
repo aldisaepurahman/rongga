@@ -39,7 +39,7 @@ class RombelAdminTableData extends DataTableSource {
             child: Container(
               child: TextTypography(
                 type: TextType.LABEL_TITLE,
-                text: content[index].rombel,
+                text: content[index].rombel!,
               ),
             ),
           )),

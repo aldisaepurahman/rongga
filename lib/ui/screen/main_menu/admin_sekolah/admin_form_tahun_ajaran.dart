@@ -197,14 +197,14 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                                   BlocProvider.of<TahunAjaranBloc>(context)
                                       .add(TahunAjaranUpdate(tahun_ajaran: {
                                     "id_tahun_ajaran": widget.thnAjaran?.id_thn_ajaran!,
-                                    "id_sekolah": 1,
+                                    "id_sekolah": widget.id_sekolah,
                                     "tahun_ajaran": tahunController.text,
                                     "semester": _semesterChoice
                                   }));
                                 } else {
                                   BlocProvider.of<TahunAjaranBloc>(context)
                                       .add(TahunAjaranAdd(tahun_ajaran: {
-                                    "id_sekolah": 1,
+                                    "id_sekolah": widget.id_sekolah,
                                     "tahun_ajaran": tahunController.text,
                                     "semester": _semesterChoice
                                   }));

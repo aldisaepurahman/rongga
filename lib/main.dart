@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_cognitive/data/bloc/admin/rombel_sekolah_bloc.dart';
+import 'package:non_cognitive/data/bloc/admin/rombel_sekolah_delact_bloc.dart';
 import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_bloc.dart';
 import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_delact_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
@@ -25,6 +27,8 @@ void main() {
       BlocProvider<RegisterDetailBloc>(create: (context) => RegisterDetailBloc()),
       BlocProvider<TahunAjaranBloc>(create: (context) => TahunAjaranBloc()),
       BlocProvider<TahunAjaranDelActBloc>(create: (context) => TahunAjaranDelActBloc()),
+      BlocProvider<RombelSekolahBloc>(create: (context) => RombelSekolahBloc()),
+      BlocProvider<RombelSekolahDelActBloc>(create: (context) => RombelSekolahDelActBloc()),
     ],
     child: const MyApp(),
   ));

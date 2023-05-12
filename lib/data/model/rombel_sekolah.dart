@@ -1,8 +1,15 @@
 class RombelSekolah {
-  String id_rombel;
-  String id_sekolah;
-  int tingkat;
-  String rombel;
+  int? id_rombel;
+  int? id_sekolah;
+  int? id_tingkat_kelas;
+  String? rombel;
 
-  RombelSekolah({required this.id_rombel, required this.id_sekolah, required this.tingkat, required this.rombel});
+  RombelSekolah({this.id_rombel = 0, this.id_sekolah = 0, this.id_tingkat_kelas = 0, this.rombel = ""});
+
+  RombelSekolah.fromJson(Map<String, dynamic> json) {
+    id_rombel = json['id'];
+    id_sekolah = json['id_sekolah'];
+    id_tingkat_kelas = json['id_tingkat_kelas'];
+    rombel = json['rombel'];
+  }
 }

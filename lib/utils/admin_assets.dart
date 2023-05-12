@@ -10,9 +10,9 @@ List<TahunAjaran> thn_ajaran_list = [
 ];
 
 List<RombelSekolah> rombel_list = [
-  RombelSekolah(id_rombel: "1", id_sekolah: "2", tingkat: 7, rombel: "7A"),
-  RombelSekolah(id_rombel: "2", id_sekolah: "2", tingkat: 7, rombel: "7B"),
-  RombelSekolah(id_rombel: "3", id_sekolah: "2", tingkat: 7, rombel: "7C"),
-  RombelSekolah(id_rombel: "4", id_sekolah: "2", tingkat: 8, rombel: "8A"),
-  RombelSekolah(id_rombel: "5", id_sekolah: "2", tingkat: 9, rombel: "9A"),
+  RombelSekolah(id_rombel: 1, id_sekolah: 2, id_tingkat_kelas: 1, rombel: "7A"),
+  RombelSekolah(id_rombel: 2, id_sekolah: 2, id_tingkat_kelas: 1, rombel: "7B"),
+  RombelSekolah(id_rombel: 3, id_sekolah: 2, id_tingkat_kelas: 1, rombel: "7C"),
+  RombelSekolah(id_rombel: 4, id_sekolah: 2, id_tingkat_kelas: 2, rombel: "8A"),
+  RombelSekolah(id_rombel: 5, id_sekolah: 2, id_tingkat_kelas: 3, rombel: "9A"),
 ];

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:non_cognitive/data/bloc/bloc_status.dart';
+import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/tahun_ajaran.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
@@ -307,6 +308,78 @@ class RonggaService {
     try {
       final response = await _dio.put(
           "$_baseUrl/tahunAjaran/active",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> showRombelSekolah(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/rombelSekolah",
+        data: request,
+      );
+
+      print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: List<RombelSekolah>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<RombelSekolah>.from(response.data["values"].map((e) => RombelSekolah.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: List<RombelSekolah>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> addRombelSekolah(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/rombelSekolah/add",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> editRombelSekolah(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.put(
+          "$_baseUrl/rombelSekolah/edit",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> deleteRombelSekolah(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.delete(
+          "$_baseUrl/rombelSekolah/delete",
           data: request
       );
 
