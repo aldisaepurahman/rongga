@@ -79,6 +79,7 @@ class _LoginState extends State<Login> {
           Future.delayed(const Duration(seconds: 2), () {
             BlocProvider.of<LoginBloc>(context).add(ResetEvent());
             Navigator.of(context).pop();
+            Navigator.of(context).pop();
             if (user?.type == UserType.SISWA) {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const StudentHome(

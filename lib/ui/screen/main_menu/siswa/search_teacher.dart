@@ -66,11 +66,11 @@ class _SearchTeacher extends State<SearchTeacher> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 } else if (state is FailureState) {
-                  return const Padding(
+                  return Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
                         child: Text(
-                            "Data gagal ditampilkan, terjadi error pada sistem!")),
+                            state.error)),
                   );
                 } else if (state is SuccessState) {
                   return ListView.builder(

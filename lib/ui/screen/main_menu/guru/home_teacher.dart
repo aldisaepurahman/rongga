@@ -144,7 +144,7 @@ class _TeacherHome extends State<TeacherHome> {
                     ),
                     const Padding(
                         padding: EdgeInsets.only(top: 10),
-                        child: Pie()
+                        child: Pie(visual_score: 3, auditorial_score: 4, kinestetik_score: 8)
                     )
                   ],
                 )

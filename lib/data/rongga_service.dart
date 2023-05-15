@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:non_cognitive/data/bloc/bloc_status.dart';
 import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/student.dart';
+import 'package:non_cognitive/data/model/student_style.dart';
 import 'package:non_cognitive/data/model/tahun_ajaran.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/data/model/users.dart';
@@ -113,7 +114,7 @@ class RonggaService {
             datastore: List<Teacher>.from([]), message: response.toString());
       }
 
-      return ServiceStatus(datastore: List<Teacher>.from(response.data["values"].map((e) => Teacher.fromJson(e)).toList()));
+      return ServiceStatus(datastore: List<Teacher>.from(response.data["values"].map((e) => Teacher.fromSearchJson(e)).toList()));
     } catch (error, stackTrace) {
       return ServiceStatus(
           datastore: List<Teacher>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
@@ -390,6 +391,44 @@ class RonggaService {
       return ServiceStatus(datastore: true);
     } catch (error, stackTrace) {
       return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> testQuestionnaire(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/kuesioner",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getTestResults(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/kuesioner/show",
+        data: request,
+      );
+
+      print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: StudentStyle.fromJson({}), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: StudentStyle.fromJson(response.data["values"][0]));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: StudentStyle.fromJson({}), message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
 }

@@ -13,3 +13,16 @@ class StudentUpdateProfile extends Events {
 
   StudentUpdateProfile({required this.student});
 }
+
+class StudentQuestionnaire extends Events {
+  final List<Map<String, dynamic>> quests;
+
+  StudentQuestionnaire({required this.quests});
+}
+
+class StudentTestResults extends Events {
+  final int id_siswa;
+  final int id_tahun_ajaran;
+
+  StudentTestResults({required this.id_siswa, required this.id_tahun_ajaran});
+}

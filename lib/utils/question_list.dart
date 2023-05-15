@@ -1,536 +1,408 @@
 import 'package:non_cognitive/data/model/question_item.dart';
 
-final psychology_questions = [
+final visual_questions = [
   QuestionItem(
-      question: "Saya merasa puas dengan apa yang saya miliki baik fisik maupun yang lainnya.",
+    id: 1,
+      question: "Saya merapikan kamar dan meja belajarku.",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Penerimaan Diri",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Masa lalu adalah pengalaman terbaik bagi saya",
+      id: 2,
+      question: "Saya berbicara dengan cepat, terkadang teman-temanku menyebut aku cerewet.",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Penerimaan Diri",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya sudah memiliki cita-cita dan yakin bisa meraih cita-cita yang saya inginkan.",
+      id: 3,
+      question: "Saya cepat melakukan penjumlahan dan perkalian",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Tujuan Hidup",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya percaya tidak ada yang tidak mungkin bila kita mau berusaha",
+      id: 4,
+      question: "Saya dapat menunjukkan arah utara, timur, selatan atau barat dimanapun saya berada.",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Tujuan Hidup",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya memilih dan menentukan setiap keinginan saya sendiri, tanpa harus meminta pendapat orang lain.",
+      id: 5,
+      question: "Saya mengingat seseorang dari wajahnya",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Autonomi",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya berani menolak ajakan teman dengan tegas, tanpa takut dimusuhi.",
+      id: 6,
+      question: "Jika mengerjakan sesuatu, saya membaca instruksi dan perintahnya dulu",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Autonomi",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Kalau berkumpul dengan teman-teman biasanya saya seperti pemimpin karena teman-teman mengikuti saya",
+      id: 7,
+      question: "Saya membaca dengan cepat",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Menguasai Lingkungan",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Meskipun teman-teman saya modis saya tidak mau ikut-ikutan, karena saya punya gaya fashion saya sendiri.",
+      id: 8,
+      question: "Saya membaca buku pelajaran saat guru menjelaskan pelajaran",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Menguasai Lingkungan",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya senang mengikuti kegiatan ekstrakulikuler, bergabung di komunitas tertentu supaya banyak pengalaman.",
+      id: 9,
+      question: "Saya mencoret-coret kertas saat mendengar penjelasan guru",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Perkembangan Personal",
+      category: "Visual",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya tertarik menekuni hobbi-hobbi baru yang menyenangkan",
+      id: 10,
+      question: "Saya melukis, menggambar, atau membuat hasta karya di waktu senggang",
       choices: [
-        "Setuju",
+        "Selalu",
+        "Sering",
         "Kadang-kadang",
         "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Perkembangan Personal",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saya pandai bergaul dan mempunyai banyak teman",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Hubungan Positif",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Teman-teman suka curhat pada saya karena saya bisa menjaga rahasia",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Hubungan Positif",
-      alternativeValue: ""
-  ),
-];
-
-final study_habit_questions = [
-  QuestionItem(
-      question: "Saat belajar di rumah saya terbiasa mendengarkan materi pelajaran dari radio atau youtube",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Mendengar",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat belajar di rumah saya terbiasa menulis atau merangkum materi pelajaran yang guru sampaikan",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Menulis",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat belajar di rumah saya terbiasa membaca buku pelajaran",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Membaca",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat belajar di rumah saya terbiasa menghapal materi pelajaran yang akan dibahas besok",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Menghafal",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat belajar di rumah saya terbiasa berlatih misalnya berlatih pidato atau percakapan sebelum di tes oleh guru",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Latihan",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saya berinisiatif belajar tanpa harus menunggu disuruh/diperintah orang tua",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Belajar Sendiri",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Bila guru memberi tugas saya akan langsung mengerjakannya tanpa menunda nunda.",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Belajar Sendiri",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Bagi saya belajar di rumah dan di sekolahpun sama-sama menyenangkan",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Belajar Sendiri",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saya pandai membagi waktu belajar dan waktu bermain",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Belajar Berkelompok",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saya saya memiliki kesulitan saat belajar sendiri di rumah, saya akan belajar dengan teman atau kelompok",
-      choices: [
-        "Setuju",
-        "Kadang-kadang",
-        "Tidak Pernah"
-      ],
-      groupValue: "",
-      category: "Belajar Berkelompok",
+      category: "Visual",
       alternativeValue: ""
   ),
 ];
 
-final family_questions = [
+final auditorial_questions = [
   QuestionItem(
-      question: "Dalam mendidik dan membesarkan saya, orang tua saya selalu ",
+      id: 11,
+      question: "Ketika bermain sendirian atau bercermin, saya berbicara pada diri sendiri",
       choices: [
-        "Mendidik dengan baik",
-        "Memanjakan saya",
-        "Cuek terhadap saya",
-        "Melarang atau memaksa saya"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-    category: "Cara Orang Tua Mendidik",
+    category: "Auditorial",
     alternativeValue: ""
   ),
   QuestionItem(
-      question: "Kondisi Keluarga Saya ",
+      id: 12,
+      question: "Saya terganggu jika ada orang yang berbicara saat saya menonton televisi atau film",
       choices: [
-        "Orang tua saya hidup bersama",
-        "Orang tua saya bercerai",
-        "Salah satu orang tua saya telah meninggal",
-        "Ayah dan Ibu sudah meninggal"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Relasi dengan Anggota Keluarga",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya sering berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
+      id: 13,
+      question: "Saya membaca dengan menggerakkan bibir",
       choices: [
-        "Ya",
-        "Tidak"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Relasi dengan Anggota Keluarga",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya selalu merasa nyaman ketika berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
+      id: 14,
+      question: "Saya membaca dengan suara yang keras dan mantap",
       choices: [
-        "Ya",
-        "Tidak"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Relasi dengan Anggota Keluarga",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Suasana di rumah sangat tenang dan membuat saya nyaman ketika belajar ",
+      id: 15,
+      question: "Saya tahu semua kata dari lagu yang saya dengar",
       choices: [
-        "Ya",
-        "Tidak"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Suasana Rumah",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Anggota keluarga saya sangat harmonis sehingga saya betah berada di rumah ",
+      id: 16,
+      question: "Saya berbicara dengan teman walaupun pelajaran sudah dimulai",
       choices: [
-        "Ya",
-        "Tidak"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Suasana Rumah",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Menurut saya kondisi ekonomi keluarga saya ",
+      id: 17,
+      question: "Saat seorang diri, saya bernyanyi",
       choices: [
-        "Lebih",
-        "Cukup",
-        "Kurang"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Kondisi Ekonomi",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Kondisi Orang tua saya ",
+      id: 18,
+      question: "Saya mengingat dengan mudah apa yang orang katakan",
       choices: [
-        "Ayah saja yang bekerja",
-        "Ibu saja yang bekerja",
-        "Ayah dan Ibu bekerja",
-        "Kedua orang tua sedang menganggur"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Kondisi Ekonomi",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Orang tua saya memiliki latar belakang pendidikan ",
+      id: 19,
+      question: "Saat berkumpul dengan teman, saya berdiskusi dengan banyak hal",
       choices: [
-        "Sarjana",
-        "SMA",
-        "SD - SMP"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Latar Belakang Kebudayaan",
+      category: "Auditorial",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Orang Saya Berasal dari suku ",
+      id: 20,
+      question: "Saya kesulitan membuat hasta karya",
       choices: [
-        "Jawa",
-        "Sunda",
-        "Lainnya"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
-      category: "Latar Belakang Kebudayaan",
+      category: "Auditorial",
       alternativeValue: ""
   )
 ];
 
-final study_style_questions = [
+final kinestetik_questions = [
   QuestionItem(
-      question: "Kalau ada orang yang meminta petunjuk jalan, biasanya saya akan ",
+      id: 21,
+      question: "Saya berbicara dengan perlahan",
       choices: [
-        "Menggambar peta jalan pada sebuah kertas",
-        "Memberitahu secara lisan (melalui ucapan)",
-        "Mencoba memberitahu dengan isyarat tangan atau langsung mengantarnya"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya paling suka permainan ",
+      id: 22,
+      question: "Saya menyentuh pundak atau tangan teman saya saat saya ajak bicara",
       choices: [
-        "Kata bergambar",
-        "Acak Kata",
-        "Pantomin"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya ingin sekali menonton film di bioskop karena ",
+      id: 23,
+      question: "Saya berdiri atau duduk didekat teman saya saat saya ajak bicara",
       choices: [
-        "Melihat cover iklan yang menarik",
-        "Membaca sinopsis cerita",
-        "Menonton potongan film"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saya punya guru favorit. Saat mengajar, ia selalu menggunakan ",
+      id: 24,
+      question: "Saya belajar dengan melakukan praktik",
       choices: [
-        "Ceramah, diskusi, dan debat",
-        "Diagram, bagan, alur, dan slide",
-        "Trial, Uji coba, dan praktik"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Ketika bicara, biasanya saya paling suka ",
+      id: 25,
+      question: "Saya menghafal rumus atau suatu kalimat dengan cara berjalan dan mengulang-ngulang kalimat",
       choices: [
-        "Suka berbicara, perlahan, dan jelas, tapi tidak suka mendengarkan terlalu lama",
-        "Suka mendengarkan orang lain bicara, baru kemudian berbicara",
-        "Berbicara dengan menggunakan bahasa tubuh dan gerakan yang banyak"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Sebelum mengerjakan sesuatu, saya biasanya ",
+      id: 26,
+      question: "Saya belajar dengan cara mondar-mandir agar lebih paham",
       choices: [
-        "Membaca instruksinya terlebih dahulu",
-        "Mendengarkan instruksi dari orang lain, baru mengerjakan",
-        "Langsung melakukan uji coba"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Ketika lupa sesuatu, biasanya saya ",
+      id: 27,
+      question: "Saya menggunakan jari saya untuk menunjuk kalimat yang saya baca",
       choices: [
-        "Berusaha mengingat dari gambaran bentuk, warna, atau cirinya",
-        "Berusaha mengingat dari ciri suaranya",
-        "Berusaha mengingat apa yang dilakukan dan penggunaannya"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Hal yang paling bisa saya ingat dari seseorang adalah ",
+      id: 28,
+      question: "Ketika saya berbicara, saya memperagakannya atau mencontohkan seperti apa yang saya ceritakan",
       choices: [
-        "Ekspresi wajah yang menawan",
-        "Suaranya yang khas",
-        "Gerakan tubuhnya yang memukau"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Saat berkomunikasi, saya suka kalau ",
+      id: 29,
+      question: "Saya merasa sulit untuk duduk diam dalam waktu yang lama",
       choices: [
-        "Bertemu secara langsung",
-        "Bicara melalui telepon",
-        "Bertemu dalam sebuah kegiatan aktif"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
   ),
   QuestionItem(
-      question: "Kemampuan yang saya bisa dan paling saya sukai adalah ",
+      id: 30,
+      question: "Daripada membaca buku, saya berolahraga diwaktu liburan",
       choices: [
-        "Menggambar, melukis, atau mewarnai",
-        "Bernyanyi atau bermain alat music",
-        "Menari atau beladiri"
+        "Selalu",
+        "Sering",
+        "Kadang-kadang",
+        "Tidak Pernah"
       ],
       groupValue: "",
       category: "",
       alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Ketika santai, saya biasanya ",
-      choices: [
-        "Membaca novel atau buku",
-        "Mendengarkan musik atau radio",
-        "Berolahraga atau bermain"
-      ],
-      groupValue: "",
-      category: "",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat marah, saya biasanya ",
-      choices: [
-        "Lebih memilih untuk diam saja",
-        "Memaki dan berkata-kata secara emosional",
-        "Membanting barang atau memukul"
-      ],
-      groupValue: "",
-      category: "",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Konsentrasi saya terganggu jika ",
-      choices: [
-        "Kondisi ruangan yang berantakan dan tidak rapi",
-        "Bising dan suara gaduh",
-        "Gerakan yang ada di sekitar"
-      ],
-      groupValue: "",
-      category: "",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat belajar, saya biasanya ",
-      choices: [
-        "Membuat catatan atau rangkuman dari materi",
-        "Menghafal sambil menggunakan suara",
-        "Melakukan praktik atau simulasi dari pelajaran"
-      ],
-      groupValue: "",
-      category: "",
-      alternativeValue: ""
-  ),
-  QuestionItem(
-      question: "Saat membaca sesuatu, saya biasanya ",
-      choices: [
-        "Menyukai bacaan yang bercerita tentang detil peristiwa",
-        "Menyukai bacaan yang memiliki banyak percakapan antartokoh",
-        "Menyukai bacaan yang melibatkan aksi dari tokohnya"
-      ],
-      groupValue: "",
-      category: "",
-      alternativeValue: ""
-  ),
+  )
 ];
 
 
 final family_questions_dummy = [
   QuestionItem(
+      id: 31,
       question: "Dalam mendidik dan membesarkan saya, orang tua saya selalu ",
       choices: [
         "Mendidik dengan baik",
@@ -543,6 +415,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 32,
       question: "Kondisi Keluarga Saya ",
       choices: [
         "Orang tua saya hidup bersama",
@@ -555,6 +428,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 33,
       question: "Saya sering berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
       choices: [
         "Ya",
@@ -565,6 +439,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 34,
       question: "Saya selalu merasa nyaman ketika berkomunikasi, mengobrol, bercerita dengan keluarga saya. ",
       choices: [
         "Ya",
@@ -575,6 +450,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 35,
       question: "Suasana di rumah sangat tenang dan membuat saya nyaman ketika belajar ",
       choices: [
         "Ya",
@@ -585,6 +461,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 36,
       question: "Anggota keluarga saya sangat harmonis sehingga saya betah berada di rumah ",
       choices: [
         "Ya",
@@ -595,6 +472,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 37,
       question: "Menurut saya kondisi ekonomi keluarga saya ",
       choices: [
         "Lebih",
@@ -606,6 +484,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 38,
       question: "Kondisi Orang tua saya ",
       choices: [
         "Ayah saja yang bekerja",
@@ -618,6 +497,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 39,
       question: "Orang tua saya memiliki latar belakang pendidikan ",
       choices: [
         "Sarjana",
@@ -629,6 +509,7 @@ final family_questions_dummy = [
       alternativeValue: ""
   ),
   QuestionItem(
+      id: 40,
       question: "Orang Saya Berasal dari suku ",
       choices: [
         "Jawa",

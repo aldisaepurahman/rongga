@@ -8,7 +8,7 @@ class Teacher extends Users {
   int? id_mapel;
   String? spesialisasi;
   String? kelompok_mapel;
-  bool? wali_kelas;
+  int? wali_kelas;
 
   Teacher(
       {required super.idNumber,
@@ -30,7 +30,7 @@ class Teacher extends Users {
       this.id_mapel = 0,
       this.spesialisasi = "",
       this.kelompok_mapel = "",
-      this.wali_kelas = false});
+      this.wali_kelas = 0});
 
   Teacher.fromJson(Map<String, dynamic> json) {
     id_users = json['id'];
@@ -40,9 +40,9 @@ class Teacher extends Users {
     password = json['password'];
     gender = json['gender'];
     no_telp = json['no_telp'];
-    photo = json['photo'];
+    photo = json['photo'].isNotEmpty ? json['photo'] : "";
     address = json['alamat'];
-    type = json["wali_kelas"] && json['spesialisasi'].contains("Konseling")
+    type = (json["wali_kelas"] != null && json['wali_kelas'] > 0) && json['spesialisasi'].contains("Konseling")
         ? UserType.GURU_BK_WALI_KELAS
         : json["wali_kelas"]
             ? UserType.WALI_KELAS
@@ -54,7 +54,33 @@ class Teacher extends Users {
     status_kerja = json['status_ikatan_kerja'];
     spesialisasi = json['spesialisasi'];
     kelompok_mapel = json['kelompok_mapel'];
-    wali_kelas = json['wali_kelas'];
+    if (json['wali_kelas'] != null) {
+      wali_kelas = json['wali_kelas'];
+    } else {
+      wali_kelas = 0;
+    }
+    id_tahun_ajaran = json['id_tahun_ajaran'];
+    tahun_ajaran = json['tahun_ajaran'];
+    token = json['token'];
+  }
+
+  Teacher.fromSearchJson(Map<String, dynamic> json) {
+    id_users = json['id'];
+    idNumber = json['no_induk'];
+    name = json['nama'];
+    email = json['email'];
+    password = json['password'];
+    gender = json['gender'];
+    no_telp = json['no_telp'];
+    photo = json['photo'].isNotEmpty ? json['photo'] : "";
+    address = json['alamat'];
+    type = UserType.GURU;
+    id_sekolah = json['id_sekolah'];
+    id_guru = json['id_guru'];
+    status_kerja = json['status_ikatan_kerja'];
+    spesialisasi = json['spesialisasi'];
+    kelompok_mapel = json['kelompok_mapel'];
+    wali_kelas = 0;
     id_tahun_ajaran = json['id_tahun_ajaran'];
     tahun_ajaran = json['tahun_ajaran'];
     token = json['token'];

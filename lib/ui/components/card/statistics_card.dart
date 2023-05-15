@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:non_cognitive/data/model/student_style.dart';
 import 'package:non_cognitive/ui/components/chart/pie.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 
 class StatisticsCard extends StatelessWidget {
-  const StatisticsCard({super.key});
+  final StudentStyle student_style;
+  const StatisticsCard({super.key, required this.student_style});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +16,13 @@ class StatisticsCard extends StatelessWidget {
         children: [
           TextTypography(
             type: TextType.DESCRIPTION,
-            text: "Rahman Aji",
+            text: student_style.name!,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: TextTypography(
               type: TextType.DESCRIPTION,
-              text: "1920178263",
+              text: student_style.nis!,
             ),
           ),
           Padding(
@@ -28,12 +30,12 @@ class StatisticsCard extends StatelessWidget {
             child: TextTypography(
               type: TextType.DESCRIPTION_SPAN,
               text: "Gaya belajar anda adalah ",
-              jumbleText: "Kinestetik",
+              jumbleText: student_style.learningStyle!,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(top: 10),
-            child: Pie()
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Pie(visual_score: student_style.visual_score!, auditorial_score: student_style.auditorial_score!, kinestetik_score: student_style.kinestetik_score!,)
           )
         ],
       )

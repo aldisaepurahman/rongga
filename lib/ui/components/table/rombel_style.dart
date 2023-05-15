@@ -33,7 +33,7 @@ class RombelStyleTableData extends DataTableSource {
           child: Container(
             child: TextTypography(
               type: TextType.LABEL_TITLE,
-              text: content[index].name,
+              text: content[index].name!,
             ),
           ),
         )),
@@ -42,7 +42,7 @@ class RombelStyleTableData extends DataTableSource {
           child: Container(
             child: TextTypography(
               type: TextType.LABEL_TITLE,
-              text: content[index].learningStyle,
+              text: content[index].learningStyle!,
             ),
           ),
         ))

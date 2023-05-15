@@ -10,6 +10,7 @@ import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_detail_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
+import 'package:non_cognitive/data/bloc/student/student_quest_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
 import 'package:non_cognitive/ui/screen/auth/auth.dart';
 import 'package:non_cognitive/ui/screen/navigations.dart';
@@ -20,6 +21,7 @@ void main() {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
+      BlocProvider<StudentQuestBloc>(create: (context) => StudentQuestBloc()),
       BlocProvider<TeacherBloc>(create: (context) => TeacherBloc()),
       BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       BlocProvider<LoginBloc>(create: (context) => LoginBloc()),

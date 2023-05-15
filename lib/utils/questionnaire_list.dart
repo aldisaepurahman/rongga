@@ -3,23 +3,18 @@ import 'package:non_cognitive/utils/question_list.dart';
 
 final questionnaire_list = [
   QuestionnaireItem(
-    title: "Tes Kesejahteraan Psikologi",
-    description: "Tes ini bertujuan untuk menganalisa bagaimana kesejahteraan psikologi dan emosional dari siswa",
-    question_list: psychology_questions
+    title: "Tes Gaya Belajar Visual",
+    description: "Tes ini bertujuan untuk menganalisa kecocokan anda dengan gaya belajar visual",
+    question_list: visual_questions
   ),
   QuestionnaireItem(
-    title: "Tes Aktivitas Belajar",
-    description: "Tes ini bertujuan untuk menganalisa bagaimana aktivitas dari siswa selama belajar di rumah",
-    question_list: study_habit_questions
+    title: "Tes Gaya Belajar Auditorial",
+    description: "Tes ini bertujuan untuk menganalisa kecocokan anda dengan gaya belajar auditorial",
+    question_list: auditorial_questions
   ),
   QuestionnaireItem(
-    title: "Tes Kondisi Keluarga",
-    description: "Tes ini bertujuan untuk menganalisa bagaimana kondisi keluarga dari siswa",
-    question_list: family_questions
-  ),
-  QuestionnaireItem(
-    title: "Tes Gaya Belajar",
-    description: "Tes ini bertujuan untuk menganalisa bagaimana cara belajar dari siswa",
-    question_list: study_style_questions
+    title: "Tes Gaya Belajar Kinestetik",
+    description: "Tes ini untuk menganalisa kecocokan anda dengan gaya belajar kinestetik",
+    question_list: kinestetik_questions
   )
 ];

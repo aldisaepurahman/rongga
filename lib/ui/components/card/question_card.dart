@@ -40,8 +40,8 @@ class QuestionCardState extends State<QuestionCard> {
             choiceList: widget.question.choices,
             selectedChoice: widget.question.groupValue,
             onSelectedChoice: (value) {
-              widget.question.groupValue = value!;
-              widget.onSelectedChoice(widget.question.groupValue);
+              // widget.question.groupValue = value!;
+              widget.onSelectedChoice(value!);
               setState(() {
                 if (widget.question.groupValue == "Lainnya") {
                   isAlternativeVisible = true;
