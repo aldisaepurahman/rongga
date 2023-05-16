@@ -420,15 +420,15 @@ class RonggaService {
 
       print("Info: ${response.data["values"].toString()}");
 
-      if (response == null) {
+      if (response == null || response.data["values"].length == 0) {
         return ServiceStatus(
-            datastore: StudentStyle.fromJson({}), message: response.toString());
+            datastore: StudentStyle(), message: "");
       }
 
       return ServiceStatus(datastore: StudentStyle.fromJson(response.data["values"][0]));
     } catch (error, stackTrace) {
       return ServiceStatus(
-          datastore: StudentStyle.fromJson({}), message: Error.throwWithStackTrace(error, stackTrace));
+          datastore: StudentStyle(), message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
 }

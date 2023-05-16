@@ -120,7 +120,6 @@ class _StudentHome extends State<StudentHome> {
               listener: (_, state) {
                 if (state is SuccessState) {
                   _studentStyle = state.datastore;
-                  print("adat: ${_studentStyle.nis!}, coba : ${_studentStyle.learningStyle!}");
                 }
               },
               builder: (_, state) {

@@ -3,9 +3,11 @@ import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/screen/auth/login.dart';
 import 'package:non_cognitive/ui/screen/auth/register.dart';
 import 'package:non_cognitive/ui/screen/onboarding/onboarding_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticatePage extends StatefulWidget {
-  const AuthenticatePage({super.key});
+  final bool onboard;
+  const AuthenticatePage({super.key, required this.onboard});
 
   @override
   State<StatefulWidget> createState() => _AuthenticatePage();
@@ -17,6 +19,13 @@ class _AuthenticatePage extends State<AuthenticatePage> {
   static const _duration = Duration(milliseconds: 300);
   static const _curve = Curves.ease;
   bool visible = true;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future<void> _saveOnboardingSession() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.setBool("onboard", true);
+  }
 
   @override
   void dispose() {
@@ -33,7 +42,7 @@ class _AuthenticatePage extends State<AuthenticatePage> {
         body: ListView(
           children: [
             Visibility(
-              visible: visible,
+              visible: (widget.onboard) ? false : visible,
                 child: SizedBox(
                   height: 800,
                   child: OnboardingPage(
@@ -42,6 +51,7 @@ class _AuthenticatePage extends State<AuthenticatePage> {
                         setState(() {
                           if (value == 1) {
                             visible = false;
+                            _saveOnboardingSession();
                           }
                         });
                       }

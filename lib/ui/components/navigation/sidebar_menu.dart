@@ -13,6 +13,7 @@ import 'package:non_cognitive/ui/screen/main_menu/siswa/search_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
 import 'package:non_cognitive/ui/screen/main_menu/wali_kelas/rombel_check.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SidebarMenuCustom extends StatefulWidget {
   final SidebarMenuItem item;
@@ -28,6 +29,13 @@ class SidebarMenuCustom extends StatefulWidget {
 
 class _SidebarMenuCustom extends State<SidebarMenuCustom> {
   var _iconColor = white;
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Future<void> _clearSession() async {
+    final SharedPreferences prefs = await _prefs;
+    prefs.remove("user");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,8 +173,9 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
     }
 
     return () {
+      _clearSession();
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const AuthenticatePage())
+          MaterialPageRoute(builder: (context) => const AuthenticatePage(onboard: false))
       );
     };
   }

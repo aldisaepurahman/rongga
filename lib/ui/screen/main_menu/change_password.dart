@@ -120,7 +120,7 @@ class _ChangePassword extends State<ChangePassword> {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => const AuthenticatePage()));
+                builder: (context) => const AuthenticatePage(onboard: false)));
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
