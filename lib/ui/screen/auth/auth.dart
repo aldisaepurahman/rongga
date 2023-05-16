@@ -27,10 +27,23 @@ class _AuthenticatePage extends State<AuthenticatePage> {
     prefs.setBool("onboard", true);
   }
 
+  void initProfile() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      if (widget.onboard == false) {
+        visible = prefs.getBool("onboard") ?? false;
+      } else {
+        visible = widget.onboard;
+      }
+    });
+  }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+    initProfile();
   }
 
   @override
@@ -42,7 +55,7 @@ class _AuthenticatePage extends State<AuthenticatePage> {
         body: ListView(
           children: [
             Visibility(
-              visible: (widget.onboard) ? false : visible,
+              visible: (visible) ? false : true,
                 child: SizedBox(
                   height: 800,
                   child: OnboardingPage(
