@@ -54,6 +54,8 @@ class _FinalScoreCard extends State<FinalScoreCard> {
                   onChanged: (value) {
                     if (value != null) {
                       widget.onScoreChanged(int.parse(value));
+                    } else {
+                      widget.onScoreChanged(0);
                     }
                   },
                 )

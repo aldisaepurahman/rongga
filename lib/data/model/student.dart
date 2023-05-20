@@ -9,6 +9,8 @@ class Student extends Users {
   int? status_siswa;
   int? id_tingkat_kelas;
   int? tingkat;
+  String? prev_tahun_ajaran;
+  int? kuesioner;
   String? deskripsi;
   String? rombel;
 
@@ -33,6 +35,8 @@ class Student extends Users {
       this.status_siswa = 0,
       this.id_tingkat_kelas = 0,
       this.tingkat = 0,
+      this.prev_tahun_ajaran = "",
+      this.kuesioner = 0,
       this.deskripsi = "",
       this.rombel = ""});
 
@@ -52,6 +56,8 @@ class Student extends Users {
     tahun_masuk = json['tahun_masuk'];
     status_siswa = json['status_awal_siswa'];
     tingkat = json['tingkat'];
+    prev_tahun_ajaran = json['prev_tahun_ajaran'];
+    kuesioner = json['kuesioner'];
     deskripsi = json['deskripsi'];
     rombel = json['rombel'];
     id_tahun_ajaran = json['id_tahun_ajaran'];

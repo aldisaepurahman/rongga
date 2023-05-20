@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:non_cognitive/data/bloc/bloc_status.dart';
+import 'package:non_cognitive/data/model/nilai_akhir_input.dart';
 import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
@@ -199,23 +200,6 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getAllMapel(Map<String, dynamic> request) async {
-    try {
-      final response = await _dio.post(
-          "$_baseUrl/nilaiSiswa/mapel",
-          data: request
-      );
-
-      if (response == null) {
-        return ServiceStatus(datastore: [], message: response.toString());
-      }
-
-      return ServiceStatus(datastore: response.data["values"]);
-    } catch (error, stackTrace) {
-      return ServiceStatus(datastore: [], message: Error.throwWithStackTrace(error, stackTrace));
-    }
-  }
-
   Future<ServiceStatus> getAllExistingMapel(Map<String, dynamic> request) async {
     try {
       final response = await _dio.post(
@@ -223,13 +207,32 @@ class RonggaService {
           data: request
       );
 
+      print("Info: ${response.data["values"].toString()}");
+
       if (response == null) {
-        return ServiceStatus(datastore: [], message: response.toString());
+        return ServiceStatus(datastore: List<NilaiAkhirInput>.from([]), message: response.toString());
       }
 
-      return ServiceStatus(datastore: response.data["values"]);
+      return ServiceStatus(datastore: List<NilaiAkhirInput>.from(response.data["values"].map((e) => NilaiAkhirInput.fromJson(e)).toList()));
     } catch (error, stackTrace) {
-      return ServiceStatus(datastore: [], message: Error.throwWithStackTrace(error, stackTrace));
+      return ServiceStatus(datastore: List<NilaiAkhirInput>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> addNilaiAkhirSiswa(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/nilaiSiswa/add",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
 
