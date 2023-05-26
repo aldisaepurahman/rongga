@@ -21,7 +21,7 @@ class StudentStyle {
       ? "Gabungan (All)" : (json['skor_visual'] < json['skor_auditorial']) && (json['skor_kinestetik'] == json['skor_auditorial'])
       ? "Gabungan (Kinestetik + Auditorial)" : (json['skor_visual'] > json['skor_auditorial']) && (json['skor_kinestetik'] == json['skor_visual'])
       ? "Gabungan (Visual + Kinestetik)" : (json['skor_visual'] == json['skor_auditorial']) && (json['skor_kinestetik'] < json['skor_auditorial'])
-      ? "Gabungan (Visual + Auditorial)" : (json['skor_visual'] < json['skor_auditorial']) && (json['skor_kinestetik'] > json['skor_auditorial'])
+      ? "Gabungan (Visual + Auditorial)" : (json['skor_visual'] < json['skor_kinestetik']) && (json['skor_kinestetik'] > json['skor_auditorial'])
       ? "Kinestetik" : (json['skor_visual'] < json['skor_auditorial']) && (json['skor_kinestetik'] < json['skor_auditorial'])
       ? "Auditorial" : "Visual";
     visual_score = json['skor_visual'];

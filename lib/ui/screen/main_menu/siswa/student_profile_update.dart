@@ -201,6 +201,8 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
       "tahun_masuk": tahunController.text,
       "status_awal_siswa": statusSiswaOpt[_statusSiswa],
       'tingkat': tingkatKelasNumOpt[_tingkatSiswa],
+      'prev_tahun_ajaran': widget.student!.prev_tahun_ajaran,
+      'kuesioner': widget.student!.kuesioner,
       'deskripsi': _tingkatSiswa,
       'rombel': widget.student!.tingkat != tingkatKelasNumOpt[_tingkatSiswa] ? "" : widget.student!.rombel,
       'id_tahun_ajaran': widget.student!.id_tahun_ajaran,

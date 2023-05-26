@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/card/rombel_card.dart';
+import 'package:non_cognitive/ui/components/card/tingkat_only_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
@@ -81,16 +82,14 @@ class _CreateRombel extends State<CreateRombel> {
                 )
               ],
             ),
-            RombelCard(
+            TingkatOnlyCard(
                 type: widget.type,
                 tingkatSiswa: tingkatChoice,
                 onSelectedChoice: (String value) {
                   tingkatChoice = value;
                 },
-                rombelController: rombelController,
                 isEmpty: widget.extendedContents,
               onPressedSubmit: () {},
-              onReset: () {},
             ),
             if (widget.extendedContents)
               ListView(

@@ -81,6 +81,8 @@ class Student extends Users {
       "tahun_masuk": this.tahun_masuk,
       "status_awal_siswa": this.status_siswa,
       'tingkat': this.tingkat,
+      'prev_tahun_ajaran': this.prev_tahun_ajaran,
+      'kuesioner': this.kuesioner,
       'deskripsi': this.deskripsi,
       'rombel': this.rombel,
       'id_tahun_ajaran': this.id_tahun_ajaran,

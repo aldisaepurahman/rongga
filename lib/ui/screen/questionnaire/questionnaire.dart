@@ -181,6 +181,38 @@ class _Questionnaire extends State<Questionnaire> {
     }
   }
 
+  Future<void> _saveSession() async {
+    final SharedPreferences prefs = await _prefs;
+
+    prefs.remove("user");
+
+    var users = {
+      "id": _student!.id_users,
+      "no_induk": _student!.idNumber,
+      "nama": _student!.name,
+      "email": _student!.email,
+      "password": _student!.password,
+      "gender": _student!.gender,
+      "no_telp": _student!.no_telp,
+      "photo": _student!.photo,
+      "alamat": _student!.address,
+      "id_sekolah": _student!.id_sekolah,
+      "id_siswa": _student!.id_siswa,
+      "tahun_masuk": _student!.tahun_masuk,
+      "status_awal_siswa": _student!.status_siswa,
+      'tingkat': _student!.tingkat,
+      'prev_tahun_ajaran': _student!.prev_tahun_ajaran,
+      'kuesioner': 1,
+      'deskripsi': _student!.deskripsi,
+      'rombel': _student!.rombel,
+      'id_tahun_ajaran': _student!.id_tahun_ajaran,
+      'tahun_ajaran': _student!.tahun_ajaran,
+      'token': _student!.token
+    };
+
+    prefs.setString("user", jsonEncode(users));
+  }
+
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
@@ -331,6 +363,7 @@ class _Questionnaire extends State<Questionnaire> {
                         isSubmitted = !isSubmitted;
                         if (state.datastore) {
                           resetForm();
+                          _saveSession();
                           Future.delayed(const Duration(seconds: 1), () {
                             showSubmitDialog(2);
                           });

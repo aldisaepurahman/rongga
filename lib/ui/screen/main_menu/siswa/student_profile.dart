@@ -193,26 +193,28 @@ class _StudentProfile extends State<StudentProfile> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ButtonWidget(
-              background: green,
-              tint: white,
-              type: ButtonType.MEDIUM,
-              content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
-              onPressed: () {
-                if (type == UserType.SISWA) {
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const Questionnaire(),
-                      ));
-                } else {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => StudentHome(type: type, expandedContents: true),
-                      ));
-                }
-              },
-            ),
-            const SizedBox(width: 20),
+            if ((type == UserType.SISWA && student.kuesioner == 0) || type != UserType.SISWA)...[
+              ButtonWidget(
+                background: green,
+                tint: white,
+                type: ButtonType.MEDIUM,
+                content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
+                onPressed: () {
+                  if (type == UserType.SISWA) {
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const Questionnaire(),
+                        ));
+                  } else {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
+                        ));
+                  }
+                },
+              ),
+              const SizedBox(width: 20)
+            ],
             ButtonWidget(
               background: green,
               tint: green,
