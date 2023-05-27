@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/rombel_siswa.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
+import 'package:non_cognitive/ui/components/table/rombel_create.dart';
 import 'package:non_cognitive/ui/components/table/rombel_style.dart';
 import 'package:non_cognitive/ui/components/table/table_column.dart';
 
 class RombelPage extends StatefulWidget {
   final String rombel_name;
   final String description;
+  final List<String> teacherOpt;
+  String teacherChoose;
   final ValueChanged<String?> onSelectedWaliKelas;
   final List<String> tableHeader;
-  final List<StudentStyle> tableContent;
+  final List<RombelSiswa> tableContent;
 
-  const RombelPage(
+  RombelPage(
       {super.key,
       required this.rombel_name,
       required this.description,
+      required this.teacherOpt,
+      required this.teacherChoose,
       required this.onSelectedWaliKelas,
       required this.tableHeader,
       required this.tableContent});
@@ -26,8 +32,15 @@ class RombelPage extends StatefulWidget {
 }
 
 class _RombelPage extends State<RombelPage> {
-  final List<String> guruList = ["Erni Nurhaeni, S.Pd", "Agus Riyadi, S.Pd", "Dedi Kusnadi, S.Pd"];
+  List<String> guruList = ["Erni Nurhaeni, S.Pd", "Agus Riyadi, S.Pd", "Dedi Kusnadi, S.Pd"];
   String _guruChoice = "Erni Nurhaeni, S.Pd";
+
+  @override
+  void initState() {
+    super.initState();
+
+    guruList = widget.teacherOpt;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +81,7 @@ class _RombelPage extends State<RombelPage> {
                         width: 130,
                         child: TextTypography(
                           type: TextType.DESCRIPTION,
-                          text: "Nama Rombel",
+                          text: "Nama Wali Kelas",
                         ),
                       ),
                       Expanded(
@@ -76,12 +89,13 @@ class _RombelPage extends State<RombelPage> {
                               onChanged: (String? value) {
                                 setState(() {
                                   if (value != null) {
-                                    _guruChoice = value;
-                                    widget.onSelectedWaliKelas(_guruChoice);
+                                    // _guruChoice = value;
+                                    widget.teacherChoose = value;
+                                    widget.onSelectedWaliKelas(widget.teacherChoose);
                                   }
                                 });
                               },
-                              content: _guruChoice,
+                              content: widget.teacherChoose,
                               items: guruList
                           )
                       )
@@ -95,7 +109,7 @@ class _RombelPage extends State<RombelPage> {
           child: PaginatedDataTable(
             dataRowHeight: 50,
             columns: createTableHeaders(widget.tableHeader),
-            source: RombelStyleTableData(
+            source: RombelCreateTableData(
                 context: context,
                 content: widget.tableContent
             ),

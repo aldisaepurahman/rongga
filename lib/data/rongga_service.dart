@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:non_cognitive/data/bloc/bloc_status.dart';
+import 'package:non_cognitive/data/model/average_nilai_akhir.dart';
 import 'package:non_cognitive/data/model/nilai_akhir_input.dart';
 import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/student.dart';
@@ -108,8 +109,6 @@ class RonggaService {
         data: request,
       );
 
-      print("Info: ${response.data["values"].toString()}");
-
       if (response == null) {
         return ServiceStatus(
             datastore: List<Teacher>.from([]), message: response.toString());
@@ -133,7 +132,7 @@ class RonggaService {
 
       if (response == null) {
         return ServiceStatus(
-            datastore: List<Teacher>.from([]), message: response.toString());
+            datastore: List<Student>.from([]), message: response.toString());
       }
 
       return ServiceStatus(datastore: List<Student>.from(response.data["values"].map((e) => Student.fromJson(e)).toList()));
@@ -332,8 +331,6 @@ class RonggaService {
         data: request,
       );
 
-      print("Info: ${response.data["values"].toString()}");
-
       if (response == null) {
         return ServiceStatus(
             datastore: List<RombelSekolah>.from([]), message: response.toString());
@@ -432,6 +429,59 @@ class RonggaService {
     } catch (error, stackTrace) {
       return ServiceStatus(
           datastore: StudentStyle(), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getStudentTingkat(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/rombelSiswa/getAllSiswa",
+        data: request,
+      );
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: List<Student>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<Student>.from(response.data["values"].map((e) => Student.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: List<Student>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getAverageNilaiAkhir(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/rombelSiswa/getAverage",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: List<AverageNilaiAkhir>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<AverageNilaiAkhir>.from(response.data["values"].map((e) => AverageNilaiAkhir.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: List<AverageNilaiAkhir>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getAllTestResults(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/rombelSiswa/getAllTests",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: List<StudentStyle>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<StudentStyle>.from(response.data["values"].map((e) => StudentStyle.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: List<StudentStyle>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
 }

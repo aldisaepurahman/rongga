@@ -11,6 +11,7 @@ import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_detail_bloc.dart';
+import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_make_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_quest_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_bloc.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
       BlocProvider<TahunAjaranBloc>(create: (context) => TahunAjaranBloc()),
       BlocProvider<TahunAjaranDelActBloc>(create: (context) => TahunAjaranDelActBloc()),
       BlocProvider<RombelSekolahBloc>(create: (context) => RombelSekolahBloc()),
+      BlocProvider<RombelSiswaMakeBloc>(create: (context) => RombelSiswaMakeBloc()),
       BlocProvider<RombelSekolahDelActBloc>(create: (context) => RombelSekolahDelActBloc()),
       BlocProvider<StudentMapelBloc>(create: (context) => StudentMapelBloc()),
       BlocProvider<StudentMapelScoreBloc>(create: (context) => StudentMapelScoreBloc()),
