@@ -6,10 +6,12 @@ import 'package:non_cognitive/ui/components/core/typography.dart';
 class RombelCreateTableData extends DataTableSource {
   BuildContext context;
   final List<RombelSiswa> content;
+  final bool useLevel;
 
   RombelCreateTableData({
     required this.context,
-    required this.content
+    required this.content,
+    required this.useLevel
   });
 
   @override
@@ -43,7 +45,7 @@ class RombelCreateTableData extends DataTableSource {
           child: Container(
             child: TextTypography(
               type: TextType.LABEL_TITLE,
-              text: "${content[index].style.learningStyle!} - ${content[index].level!}",
+              text: useLevel ? "${content[index].style.learningStyle!} - ${content[index].level!}" : content[index].style.learningStyle!,
             ),
           ),
         ))

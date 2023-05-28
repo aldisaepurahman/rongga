@@ -141,14 +141,14 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           );
         };
       }
-      else if (menu_name == "Rombel Saya") {
+      /*else if (menu_name == "Rombel Saya") {
         return () {
           Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (context) => RombelCheck(type: type))
           );
         };
-      }
+      }*/
     } else if (type == UserType.ADMIN) {
       if (menu_name == "Beranda") {
         return () {

@@ -19,7 +19,6 @@ final List<SidebarMenuItem> guruBKMenu = [
 final List<SidebarMenuItem> guruBKWaliKelasMenu = [
   SidebarMenuItem("Beranda", Icons.home, () {}),
   SidebarMenuItem("Cari Siswa", Icons.search, () {}),
-  SidebarMenuItem("Rombel Saya", Icons.group_work, () {}),
   SidebarMenuItem("Buat Rombel", Icons.group_work, () {}),
   SidebarMenuItem("Profil", Icons.person, () {}),
   SidebarMenuItem("Keluar", Icons.logout, () {})
@@ -28,7 +27,6 @@ final List<SidebarMenuItem> guruBKWaliKelasMenu = [
 final List<SidebarMenuItem> waliKelasMenu = [
   SidebarMenuItem("Beranda", Icons.home, () {}),
   SidebarMenuItem("Cari Siswa", Icons.search, () {}),
-  SidebarMenuItem("Rombel Saya", Icons.group_work, () {}),
   SidebarMenuItem("Profil", Icons.person, () {}),
   SidebarMenuItem("Keluar", Icons.logout, () {})
 ];

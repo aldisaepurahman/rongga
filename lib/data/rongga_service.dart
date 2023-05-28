@@ -484,4 +484,91 @@ class RonggaService {
       return ServiceStatus(datastore: List<StudentStyle>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
+
+  Future<ServiceStatus> addSiswaToRombel(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/rombelSiswa/add",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> addWaliKelas(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/rombelWaliKelas/add",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> deleteRombelSiswa(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.delete(
+          "$_baseUrl/rombelSiswa/delete",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> deleteWaliKelas(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.delete(
+          "$_baseUrl/rombelWaliKelas/delete",
+          data: request
+      );
+
+      if (response == null) {
+        return ServiceStatus(datastore: false, message: response.toString());
+      }
+
+      return ServiceStatus(datastore: true);
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getRombelSearch(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/rombelSiswa/showDetail",
+        data: request,
+      );
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: List<Student>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<Student>.from(response.data["values"].map((e) => Student.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: List<Student>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
 }

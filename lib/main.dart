@@ -11,12 +11,16 @@ import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_detail_bloc.dart';
+import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_add_bloc.dart';
+import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_check_bloc.dart';
+import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_delete_bloc.dart';
 import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_make_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_quest_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_score_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
+import 'package:non_cognitive/data/bloc/teacher/teacher_home_bloc.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/data/model/users.dart';
@@ -38,6 +42,7 @@ Future<void> main() async {
       BlocProvider<StudentBloc>(create: (context) => StudentBloc()),
       BlocProvider<StudentQuestBloc>(create: (context) => StudentQuestBloc()),
       BlocProvider<TeacherBloc>(create: (context) => TeacherBloc()),
+      BlocProvider<TeacherHomeBloc>(create: (context) => TeacherHomeBloc()),
       BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
       BlocProvider<RegisterBloc>(create: (context) => RegisterBloc()),
@@ -46,6 +51,9 @@ Future<void> main() async {
       BlocProvider<TahunAjaranDelActBloc>(create: (context) => TahunAjaranDelActBloc()),
       BlocProvider<RombelSekolahBloc>(create: (context) => RombelSekolahBloc()),
       BlocProvider<RombelSiswaMakeBloc>(create: (context) => RombelSiswaMakeBloc()),
+      BlocProvider<RombelSiswaCheckBloc>(create: (context) => RombelSiswaCheckBloc()),
+      BlocProvider<RombelSiswaAddBloc>(create: (context) => RombelSiswaAddBloc()),
+      BlocProvider<RombelSiswaDeleteBloc>(create: (context) => RombelSiswaDeleteBloc()),
       BlocProvider<RombelSekolahDelActBloc>(create: (context) => RombelSekolahDelActBloc()),
       BlocProvider<StudentMapelBloc>(create: (context) => StudentMapelBloc()),
       BlocProvider<StudentMapelScoreBloc>(create: (context) => StudentMapelScoreBloc()),

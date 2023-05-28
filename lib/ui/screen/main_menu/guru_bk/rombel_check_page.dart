@@ -8,38 +8,27 @@ import 'package:non_cognitive/ui/components/table/rombel_create.dart';
 import 'package:non_cognitive/ui/components/table/rombel_style.dart';
 import 'package:non_cognitive/ui/components/table/table_column.dart';
 
-class RombelPage extends StatefulWidget {
+class RombelCheckPage extends StatefulWidget {
   final String rombel_name;
   final String description;
-  final List<String> teacherOpt;
-  String teacherChoose;
-  final ValueChanged<String?> onSelectedWaliKelas;
   final List<String> tableHeader;
   final List<RombelSiswa> tableContent;
 
-  RombelPage(
+  RombelCheckPage(
       {super.key,
       required this.rombel_name,
       required this.description,
-      required this.teacherOpt,
-      required this.teacherChoose,
-      required this.onSelectedWaliKelas,
       required this.tableHeader,
       required this.tableContent});
 
   @override
-  State<StatefulWidget> createState() => _RombelPage();
+  State<StatefulWidget> createState() => _RombelCheckPage();
 }
 
-class _RombelPage extends State<RombelPage> {
-  List<String> guruList = ["Erni Nurhaeni, S.Pd", "Agus Riyadi, S.Pd", "Dedi Kusnadi, S.Pd"];
-  String _guruChoice = "Erni Nurhaeni, S.Pd";
-
+class _RombelCheckPage extends State<RombelCheckPage> {
   @override
   void initState() {
     super.initState();
-
-    guruList = widget.teacherOpt;
   }
 
   @override
@@ -72,36 +61,6 @@ class _RombelPage extends State<RombelPage> {
                       type: TextType.DESCRIPTION,
                       text: widget.description,
                     )),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 130,
-                        child: TextTypography(
-                          type: TextType.DESCRIPTION,
-                          text: "Nama Wali Kelas",
-                        ),
-                      ),
-                      Expanded(
-                          child: DropdownFilter(
-                              onChanged: (String? value) {
-                                setState(() {
-                                  if (value != null) {
-                                    // _guruChoice = value;
-                                    widget.teacherChoose = value;
-                                    widget.onSelectedWaliKelas(widget.teacherChoose);
-                                  }
-                                });
-                              },
-                              content: widget.teacherChoose,
-                              items: guruList
-                          )
-                      )
-                    ],
-                  ),
-                ),
               ],
             )),
         Container(
@@ -112,7 +71,7 @@ class _RombelPage extends State<RombelPage> {
             source: RombelCreateTableData(
                 context: context,
                 content: widget.tableContent,
-              useLevel: true
+              useLevel: false
             ),
             rowsPerPage: 5,
             columnSpacing: 0,

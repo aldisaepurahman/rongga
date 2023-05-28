@@ -26,3 +26,21 @@ class StudentScoreInput extends Events {
 
   StudentScoreInput({required this.scores});
 }
+
+class StudentRombelSearch extends Events {
+  final int wali_kelas;
+  final int id_sekolah;
+  final int id_tahun_ajaran;
+  int? id_guru;
+  int? tingkat;
+  final String rombel;
+
+  StudentRombelSearch({
+    required this.wali_kelas,
+    required this.id_sekolah,
+    required this.id_tahun_ajaran,
+    this.id_guru = 0,
+    this.tingkat = 0,
+    required this.rombel,
+  });
+}

@@ -54,6 +54,7 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
                 'id_sekolah': rombel_sekolah[i].id_sekolah,
                 'id_tingkat_kelas': rombel_sekolah[i].id_tingkat_kelas,
                 'rombel': rombel_sekolah[i].rombel,
+                'description': "",
                 'list_siswa': <RombelSiswa>[],
                 'visual_count': 0,
                 'auditorial_count': 0,
@@ -92,7 +93,7 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
             if (foundError) {
               emit(const FailureState("Coba untuk lengkapi data nilai akhir serta kuesioner siswa"));
             } else {
-              for (var i = 0; i < rombel_sekolah.length; i++) {
+              for (var i = 0; i < rombel_group.length; i++) {
                 for (var j = 0; j < rombel_group[i]['list_siswa'].length; j++) {
                   if (rombel_group[i]['list_siswa'][j].style.learningStyle.contains("Visual")) {
                     rombel_group[i]['visual_count'] += 1;
@@ -101,6 +102,35 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
                   } else if (rombel_group[i]['list_siswa'][j].style.learningStyle.contains("Kinestetik")) {
                     rombel_group[i]['kinestetik_count'] += 1;
                   }
+                }
+
+                int total_count = rombel_group[i]['visual_count'] + rombel_group[i]['auditorial_count'] + rombel_group[i]['kinestetik_count'];
+                var visualRatio = (rombel_group[i]['visual_count'] * 100)/total_count;
+                var auditorialRatio = (rombel_group[i]['auditorial_count'] * 100)/total_count;
+                var kinestetikRatio = (rombel_group[i]['kinestetik_count'] * 100)/total_count;
+
+                if (kinestetikRatio >= 40) {
+                  rombel_group[i]['description'] = "Sebagian besar siswa di rombel ini cenderung belajar dengan mempraktikkan "
+                      "apa yang sebenarnya dijelaskan oleh guru. Sebagian besar siswa di rombel ini akan cocok diberikan tugas "
+                      "berupa tugas praktik yang membuat mereka mampu memahami cara penyelesaian dari tugas tersebut melalui "
+                      "metode gerakan. Beberapa siswa lainnya baik dalam hal mendengarkan materi dan memperhatikan materi berupa gambar "
+                      "yang dijelaskan oleh guru.";
+                } else if (visualRatio >= 40) {
+                  rombel_group[i]['description'] = "Sebagian besar siswa di rombel ini cenderung belajar dengan memperhatikan "
+                      "materi yang dijelaskan oleh guru dalam bentuk ilustrasi atau gambar. Sebagian besar siswa di rombel ini "
+                      "akan cocok diberikan tugas yang mampu mengembangkan kreativitas dalam menggambar atau mengilustrasikan suatu "
+                      "permasalahan. Beberapa siswa lainnya baik dalam hal mendengarkan materi dan mempraktikkan materi "
+                      "yang dijelaskan oleh guru.";
+                } else if (auditorialRatio >= 40) {
+                  rombel_group[i]['description'] = "Sebagian besar siswa di rombel ini cenderung belajar dengan mendengar "
+                      "materi yang disampaikan oleh guru ketika kegiatan belajar mengajar berlangsung. Sebagian besar siswa di rombel ini "
+                      "Bagi siswa tersebut, guru perlu memaksimalkan kemampuan mereka dalam menyimak materi yang mereka sampaikan. "
+                      "Beberapa siswa lainnya baik dalam hal memperhatikan materi dan mempraktikkan materi "
+                      "yang dijelaskan oleh guru.";
+                } else {
+                  rombel_group[i]['description'] = "Siswa di rombel ini memiliki cara belajar yang hampir seimbang. Gaya belajar "
+                      "yang ada berimbang tersebut perlu diakomodir oleh guru yang mampu mengaplikasikan setiap jenis cara mengajar "
+                      "yang bisa dimengerti oleh setiap siswa dengan gaya belajar yang berbeda tersebut.";
                 }
               }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
@@ -12,7 +13,11 @@ class TingkatOnlyCard extends StatefulWidget {
   String tingkatSiswa;
   final ValueChanged<String> onSelectedChoice;
   final bool isEmpty;
+  final List<Student> listStudent;
+  final int allStudent;
   final VoidCallback? onPressedSubmit;
+  final VoidCallback? onManualInput;
+  final VoidCallback? onReset;
 
   TingkatOnlyCard(
       {super.key,
@@ -20,7 +25,11 @@ class TingkatOnlyCard extends StatefulWidget {
         required this.tingkatSiswa,
         required this.onSelectedChoice,
         required this.isEmpty,
-        this.onPressedSubmit});
+        required this.listStudent,
+        required this.allStudent,
+        this.onPressedSubmit,
+        this.onManualInput,
+        this.onReset});
 
   @override
   State<StatefulWidget> createState() => _TingkatOnlyCard();
@@ -76,6 +85,26 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  if (widget.listStudent.isNotEmpty && (widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS)) ...[
+                    ButtonWidget(
+                      background: blue,
+                      tint: white,
+                      type: ButtonType.MEDIUM,
+                      content: "Input Siswa Manual",
+                      onPressed: widget.onManualInput,
+                    ),
+                    const SizedBox(width: 20)
+                  ],
+                  if (widget.allStudent > 0 && (widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS)) ...[
+                    ButtonWidget(
+                      background: orange,
+                      tint: black,
+                      type: ButtonType.MEDIUM,
+                      content: "Buat Ulang Rombel",
+                      onPressed: widget.onReset,
+                    ),
+                    const SizedBox(width: 20)
+                  ],
                   ButtonWidget(
                     background: green,
                     tint: white,
