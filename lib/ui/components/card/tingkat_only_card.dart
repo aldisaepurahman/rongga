@@ -68,7 +68,7 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
                           onChanged: (String? value) {
                             setState(() {
                               if (value != null) {
-                                // widget.tingkatSiswa = value;
+                                widget.tingkatSiswa = value;
                                 widget.onSelectedChoice(widget.tingkatSiswa);
                               }
                             });

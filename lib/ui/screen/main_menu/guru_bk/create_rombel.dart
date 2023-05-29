@@ -9,6 +9,7 @@ import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_delete_bl
 import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_make_bloc.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
+import 'package:non_cognitive/data/model/rombel_sekolah.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/rombel_card.dart';
@@ -20,6 +21,7 @@ import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_no_button.dart';
 import 'package:non_cognitive/ui/components/dialog/loading_dialog.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru_bk/insert_manual_student.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru_bk/rombel_check_page.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru_bk/rombel_page.dart';
 import 'package:non_cognitive/utils/table_assets.dart';
@@ -69,6 +71,7 @@ class _CreateRombel extends State<CreateRombel> {
   List<String> listGuruChoose = <String>[];
   List<Teacher> listTeacher = <Teacher>[];
   List<Student> listStudentTemp = <Student>[];
+  List<RombelSekolah> listRombel = <RombelSekolah>[];
   List<Map<String, dynamic>> listPageRombel = <Map<String, dynamic>>[];
   bool hasGroup = false;
   bool isSubmitted = false;
@@ -189,10 +192,12 @@ class _CreateRombel extends State<CreateRombel> {
               widget.extendedContents = false;
               index = 0;
               indexAdd = 0;
+              allStudents = 0;
               listGuruOpt.clear();
               listStudentTemp.clear();
               listGuruChoose.clear();
               listTeacher.clear();
+              listRombel.clear();
             });
             Navigator.of(context).pop();
             Navigator.of(context).pop();
@@ -284,7 +289,36 @@ class _CreateRombel extends State<CreateRombel> {
                     ));
               },
               onManualInput: () {
+                BlocProvider.of<RombelSiswaAddBloc>(context).add(ResetEvent());
+                BlocProvider.of<RombelSiswaMakeBloc>(context).add(ResetEvent());
+                BlocProvider.of<RombelSiswaCheckBloc>(context).add(ResetEvent());
+                List<Student> students = <Student>[];
+                students.addAll(listStudentTemp);
+                List<RombelSekolah> rombels = <RombelSekolah>[];
+                rombels.addAll(listRombel);
 
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => InsertManualStudent(
+                          type: widget.type,
+                          id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                          tingkat: tingkatKelasOpt[tingkatChoice]!,
+                          listStudent: students,
+                          listRombel: rombels,
+                        )));
+                setState(() {
+                  widget.extendedContents = false;
+                  index = 0;
+                  indexAdd = 0;
+                  allStudents = 0;
+                  listGuruOpt.clear();
+                  listStudentTemp.clear();
+                  listGuruChoose.clear();
+                  listTeacher.clear();
+                  listPageRombel.clear();
+                  listRombel.clear();
+                });
               },
               onReset: () {
                 resetWarningDialog();
@@ -294,11 +328,13 @@ class _CreateRombel extends State<CreateRombel> {
               listener: (_, state) {
                 if (state is SuccessState) {
                   listStudentTemp.clear();
+                  listRombel.clear();
                   listPageRombel.clear();
                   setState(() {
                     listStudentTemp = state.datastore["list_student_temp"];
                     hasGroup = state.datastore["has_group"];
                     allStudents = state.datastore["allStudents"];
+                    listRombel = state.datastore["rombel"];
                   });
 
                   listPageRombel = state.datastore["rombel_siswa"];
@@ -409,6 +445,7 @@ class _CreateRombel extends State<CreateRombel> {
                               BlocProvider.of<RombelSiswaCheckBloc>(context).add(ResetEvent());
                               widget.extendedContents = true;
                               index = 0;
+                              allStudents = 0;
                             });
                           },
                         )
@@ -427,6 +464,7 @@ class _CreateRombel extends State<CreateRombel> {
                     listTeacher.clear();
                     listPageRombel.clear();
                     setState(() {
+                      listRombel.clear();
                       listStudentTemp.clear();
                     });
 

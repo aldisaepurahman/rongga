@@ -25,7 +25,7 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
         service.getAverageNilaiAkhir({"tingkat": event.tingkat, "id_tahun_ajaran": event.id_tahun_ajaran, "id_sekolah": event.id_sekolah}),
         service.getAllTestResults({"id_tahun_ajaran": event.id_tahun_ajaran}),
         service.searchTeacher({"id_sekolah": event.id_sekolah}),
-        service.showRombelSekolah({"id_sekolah": event.id_sekolah})
+        service.showRombelSekolah({"id_sekolah": event.id_sekolah, "tingkat": event.tingkat})
       ]).then((arr) {
         bool foundError = false;
 

@@ -23,6 +23,12 @@ class AddRombelSiswa extends Events {
   AddRombelSiswa({required this.list_siswa, required this.list_wali});
 }
 
+class AddManualRombelSiswa extends Events {
+  final List<Map<String, dynamic>> list_siswa;
+
+  AddManualRombelSiswa({required this.list_siswa});
+}
+
 class DeleteRombelSiswa extends Events {
   final int id_sekolah;
   final int id_tahun_ajaran;

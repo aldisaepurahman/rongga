@@ -23,6 +23,7 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
       await Future.wait([
         service.getStudentTingkat({"tingkat": event.tingkat, "id_sekolah": event.id_sekolah}),
         service.getAllTestResults({"id_tahun_ajaran": event.id_tahun_ajaran}),
+        service.showRombelSekolah({"id_sekolah": event.id_sekolah, "tingkat": event.tingkat})
       ]).then((arr) {
         bool foundError = false;
 
@@ -37,6 +38,7 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
         } else {
           var list_siswa = List<Student>.from(arr[0].datastore);
           var quests = List<StudentStyle>.from(arr[1].datastore);
+          var rombel = List<RombelSekolah>.from(arr[2].datastore);
 
           Map counts = {};
 
@@ -50,16 +52,18 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
 
           List<Map<String, dynamic>> rombel_group = <Map<String, dynamic>>[];
           counts.keys.forEach((key) {
-            var maps = {
-              'id_sekolah': event.id_sekolah,
-              'rombel': key,
-              'description': "",
-              'list_siswa': <RombelSiswa>[],
-              'visual_count': 0,
-              'auditorial_count': 0,
-              'kinestetik_count': 0
-            };
-            rombel_group.add(maps);
+            if (key is String) {
+              var maps = {
+                'id_sekolah': event.id_sekolah,
+                'rombel': key,
+                'description': "",
+                'list_siswa': <RombelSiswa>[],
+                'visual_count': 0,
+                'auditorial_count': 0,
+                'kinestetik_count': 0
+              };
+              rombel_group.add(maps);
+            }
           });
 
           int allStudents = 0;
@@ -167,7 +171,8 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
             "list_student_temp": tempStudents,
             "rombel_siswa": rombel_group,
             "has_group": hasGroup,
-            "allStudents": allStudents
+            "allStudents": allStudents,
+            "rombel": rombel
           }));
         }
       });

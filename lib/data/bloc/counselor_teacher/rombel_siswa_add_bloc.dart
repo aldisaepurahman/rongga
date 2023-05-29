@@ -13,6 +13,7 @@ import 'package:non_cognitive/data/rongga_service.dart';
 class RombelSiswaAddBloc extends Bloc<Events, RonggaState> {
   RombelSiswaAddBloc() : super(EmptyState()) {
     on<AddRombelSiswa>(_addRombel);
+    on<AddManualRombelSiswa>(_addManualRombel);
     on<ResetEvent>(_resetPage);
   }
 
@@ -41,6 +42,18 @@ class RombelSiswaAddBloc extends Bloc<Events, RonggaState> {
             emit(const CrudState(false));
           }
         }
+      });
+    } catch (error) {
+      emit(FailureState(error.toString()));
+    }
+  }
+
+  Future<void> _addManualRombel(AddManualRombelSiswa event, Emitter<RonggaState> emit) async {
+    try {
+      emit(LoadingState());
+      final RonggaService service = RonggaService();
+      await service.addSiswaToRombel({"rombel_siswa": event.list_siswa}).then((status) {
+        emit(CrudState(status.datastore));
       });
     } catch (error) {
       emit(FailureState(error.toString()));

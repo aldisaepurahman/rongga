@@ -249,7 +249,6 @@ class _TeacherHome extends State<TeacherHome> {
                     ),
                   );
                 } else if (state is SuccessState) {
-                  print("data: ${state.datastore}");
                   if (visual_count == 0 && auditorial_count == 0 && kinestetik_count == 0) {
                     return Padding(
                       padding: EdgeInsets.all(24),
