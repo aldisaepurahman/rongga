@@ -2,15 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/status_profile_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
-import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile_update.dart';
 import 'package:non_cognitive/utils/user_type.dart';
@@ -121,7 +122,7 @@ class _TeacherProfile extends State<TeacherProfile> {
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 25),
       children: [
-        if (widget.type == UserType.GURU)
+        /*if (widget.type == UserType.GURU)
           Container(
             margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
             child: Center(
@@ -132,39 +133,110 @@ class _TeacherProfile extends State<TeacherProfile> {
                 align: TextAlign.center,
               ),
             ),
-          ),
-        Center(
-          child: CircleAvatarCustom(
-              fromNetwork: teacher.photo,
-              path: "assets/images/no_image.png",
-              isWeb: kIsWeb,
-              radius: isMobile ? 50 : 80),
+          ),*/
+        CardContainer(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                    child: Lottie.asset("assets/images/information-icon.json",
+                        repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                Expanded(
+                    flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: TextTypography(
+                        type: TextType.TITLE,
+                        text: widget.type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang dimiliki oleh guru kalian seperti yang bisa dilihat dibawah ini."
+                            : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai data diri yang bapak/ibu miliki. Jika ingin mengubah data diri anda, tekan tombol Ubah Profil.",
+                      ),
+                    )
+                )
+              ],
+            )
         ),
-        const SizedBox(height: 20),
-        if (widget.type == UserType.GURU ||
-            widget.type == UserType.GURU_BK ||
-            widget.type == UserType.WALI_KELAS ||
-            widget.type == UserType.GURU_BK_WALI_KELAS)
+        if (isMobile) ...[
+          Center(
+            child: CircleAvatarCustom(
+                fromNetwork: teacher.photo,
+                path: "assets/images/no_image.png",
+                isWeb: kIsWeb,
+                radius: isMobile ? 50 : 80),
+          ),
+          const SizedBox(height: 20),
+          if (widget.type == UserType.GURU ||
+              widget.type == UserType.GURU_BK ||
+              widget.type == UserType.WALI_KELAS ||
+              widget.type == UserType.GURU_BK_WALI_KELAS)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonWidget(
+                  background: green,
+                  tint: green,
+                  type: ButtonType.OUTLINED,
+                  content: "Ubah Profil",
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) =>
+                          TeacherProfileUpdate(type: widget.type, teacher: teacher),
+                    )).then(onBackPage);
+                  },
+                ),
+              ],
+            ),
+          const SizedBox(height: 20),
+          BiodataCard(user_data: teacher),
+          StatusProfileCard(type: UserType.GURU, teacher_data: teacher)
+        ] else ...[
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ButtonWidget(
-                background: green,
-                tint: green,
-                type: ButtonType.OUTLINED,
-                content: "Ubah Profil",
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) =>
-                        TeacherProfileUpdate(type: widget.type, teacher: teacher),
-                  )).then(onBackPage);
-                },
+              Expanded(
+                  flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: CircleAvatarCustom(
+                            fromNetwork: teacher.photo,
+                            path: "assets/images/no_image.png",
+                            isWeb: kIsWeb,
+                            radius: isMobile ? 50 : 80),
+                      ),
+                      const SizedBox(height: 20),
+                      if (widget.type == UserType.GURU ||
+                          widget.type == UserType.GURU_BK ||
+                          widget.type == UserType.WALI_KELAS ||
+                          widget.type == UserType.GURU_BK_WALI_KELAS)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ButtonWidget(
+                              background: green,
+                              tint: green,
+                              type: ButtonType.OUTLINED,
+                              content: "Ubah Profil",
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      TeacherProfileUpdate(type: widget.type, teacher: teacher),
+                                )).then(onBackPage);
+                              },
+                            ),
+                          ],
+                        ),
+                    ],
+                  )
               ),
+              Expanded(flex: 6, child: BiodataCard(user_data: teacher)),
             ],
           ),
-        const SizedBox(height: 20),
-        BiodataCard(user_data: teacher),
-        StatusProfileCard(type: UserType.GURU, teacher_data: teacher)
+          StatusProfileCard(type: UserType.GURU, teacher_data: teacher)
+        ]
       ],
     );
   }

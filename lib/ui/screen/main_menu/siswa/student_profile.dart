@@ -3,11 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/status_profile_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/constants.dart';
@@ -167,78 +169,188 @@ class _StudentProfile extends State<StudentProfile> {
   ListView _renderPage(UserType type, bool isMobile, Student student) {
     return ListView(
       shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(vertical: 25),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
-        if (type == UserType.SISWA)
-          Container(
-            margin: const EdgeInsets.only(left: 12, right: 12, bottom: 20),
-            child: isMobile ? Center(
-              child: TextTypography(
-                type: TextType.DESCRIPTION,
-                text: "Anda dapat mengubah profil anda pada kolom inputan dibawah",
-              ),
-            ) : TextTypography(
-              type: TextType.DESCRIPTION,
-              text: "Anda dapat mengubah profil anda pada kolom inputan dibawah",
-            ),
+        if (isMobile) ...[
+          CardContainer(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                      child: Lottie.asset("assets/images/information-icon.json",
+                          repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                  Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: TextTypography(
+                          type: TextType.TITLE,
+                          text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
+                              "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
+                              : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
+                              "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
+                        ),
+                      )
+                  )
+                ],
+              )
           ),
-        Center(
-          child: CircleAvatarCustom(
-            fromNetwork: student.photo,
-              path: "assets/images/no_image.png",
-              isWeb: kIsWeb,
-              radius: isMobile ? 50: 80),
-        ),
-        const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if ((type == UserType.SISWA && student.kuesioner == 0) || type != UserType.SISWA)...[
+          const SizedBox(height: 20),
+          Center(
+            child: CircleAvatarCustom(
+                fromNetwork: student.photo,
+                path: "assets/images/no_image.png",
+                isWeb: kIsWeb,
+                radius: isMobile ? 50: 80),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if ((type == UserType.SISWA && student.kuesioner == 0) || type != UserType.SISWA)...[
+                ButtonWidget(
+                  background: green,
+                  tint: white,
+                  type: ButtonType.MEDIUM,
+                  content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
+                  onPressed: () {
+                    if (type == UserType.SISWA) {
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const Questionnaire(),
+                          ));
+                    } else {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
+                          ));
+                    }
+                  },
+                ),
+                const SizedBox(width: 20)
+              ],
               ButtonWidget(
                 background: green,
-                tint: white,
-                type: ButtonType.MEDIUM,
-                content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
+                tint: green,
+                type: ButtonType.OUTLINED,
+                content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
                 onPressed: () {
                   if (type == UserType.SISWA) {
-                    Navigator.of(context).pushReplacement(
+                    Navigator.push(context,
                         MaterialPageRoute(
-                          builder: (context) => const Questionnaire(),
-                        ));
+                          builder: (context) => StudentProfileUpdate(student: student),
+                        )).then(onBackPage);
                   } else {
                     Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
+                          builder: (context) => TeacherScoreInput(type: type, student: student),
                         ));
                   }
                 },
               ),
-              const SizedBox(width: 20)
             ],
-            ButtonWidget(
-              background: green,
-              tint: green,
-              type: ButtonType.OUTLINED,
-              content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
-              onPressed: () {
-                if (type == UserType.SISWA) {
-                  Navigator.push(context,
-                      MaterialPageRoute(
-                        builder: (context) => StudentProfileUpdate(student: student),
-                      )).then(onBackPage);
-                } else {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => TeacherScoreInput(type: type, student: student),
-                      ));
-                }
-              },
-            ),
-          ],
-        ),
-        const SizedBox(height: 20),
-        BiodataCard(user_data: student),
-        StatusProfileCard(type: UserType.SISWA, student_data: student)
+          ),
+          const SizedBox(height: 20),
+          BiodataCard(user_data: student),
+          StatusProfileCard(type: UserType.SISWA, student_data: student)
+        ] else ...[
+          CardContainer(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                      child: Lottie.asset("assets/images/information-icon.json",
+                          repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                  Expanded(
+                      flex: 8,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: TextTypography(
+                          type: TextType.TITLE,
+                          text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
+                              "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
+                              : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
+                              "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
+                        ),
+                      )
+                  )
+                ],
+              )
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                flex: 3,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: CircleAvatarCustom(
+                            fromNetwork: student.photo,
+                            path: "assets/images/no_image.png",
+                            isWeb: kIsWeb,
+                            radius: isMobile ? 50: 80),
+                      ),
+                      const SizedBox(height: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if ((type == UserType.SISWA && student.kuesioner == 0) || type != UserType.SISWA)...[
+                            ButtonWidget(
+                              background: green,
+                              tint: white,
+                              type: ButtonType.MEDIUM,
+                              content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
+                              onPressed: () {
+                                if (type == UserType.SISWA) {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => const Questionnaire(),
+                                      ));
+                                } else {
+                                  Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
+                                      ));
+                                }
+                              },
+                            ),
+                            const SizedBox(height: 20)
+                          ],
+                          ButtonWidget(
+                            background: green,
+                            tint: green,
+                            type: ButtonType.OUTLINED,
+                            content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
+                            onPressed: () {
+                              if (type == UserType.SISWA) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(
+                                      builder: (context) => StudentProfileUpdate(student: student),
+                                    )).then(onBackPage);
+                              } else {
+                                Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => TeacherScoreInput(type: type, student: student),
+                                    ));
+                              }
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+              ),
+              Expanded(flex: 6, child: BiodataCard(user_data: student)),
+            ],
+          ),
+          StatusProfileCard(type: UserType.SISWA, student_data: student)
+        ]
       ],
     );
   }

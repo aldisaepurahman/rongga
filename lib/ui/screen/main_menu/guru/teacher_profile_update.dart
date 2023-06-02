@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
@@ -16,6 +17,7 @@ import 'package:non_cognitive/data/bloc/teacher/teacher_event.dart';
 import 'package:non_cognitive/data/model/bottom_sheet_item.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/constants.dart';
@@ -421,6 +423,29 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                   )
                 ],
               ),
+              CardContainer(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Lottie.asset("assets/images/information-icon.json",
+                              repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                      Expanded(
+                          flex: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: TextTypography(
+                              type: TextType.TITLE,
+                              text: "Di halaman ini, bapak/ibu bisa mengubah data pribadi yang dapat dilihat oleh siswa di sekolah anda. Pastikan "
+                                  "untuk melengkapi semua data yang ada disini ya.",
+                            ),
+                          )
+                      )
+                    ],
+                  )
+              ),
+              const SizedBox(height: 20),
               Center(
                 child: Stack(
                   children: [

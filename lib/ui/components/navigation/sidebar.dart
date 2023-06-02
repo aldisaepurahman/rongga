@@ -23,7 +23,7 @@ class _SidebarCustom extends State<SidebarCustom> {
 
     return Container(
       decoration: BoxDecoration(color: skyBlue),
-      width: _showMobile ? 70 : 220,
+      width: _showMobile ? 70 : MediaQuery.of(context).size.width < 1366 ? MediaQuery.of(context).size.width * 0.25 : 300,
       padding: EdgeInsets.symmetric(vertical: 24, horizontal: _showMobile ? 12 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,11 +31,10 @@ class _SidebarCustom extends State<SidebarCustom> {
         children: [
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8), color: lightGray),
-            width: 45,
-            height: 45,
+                borderRadius: BorderRadius.circular(8), color: white),
+            padding: const EdgeInsets.all(5),
             child: Center(
-              child: TextTypography(type: TextType.HEADER, text: "C")
+              child: Image.asset("assets/images/rongga-logo-blue.png")
             ),
           ),
           const SizedBox(height: 24),

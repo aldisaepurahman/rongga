@@ -51,6 +51,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: skyBlue,
       body: Column(
         children: [
           Expanded(
@@ -64,22 +65,25 @@ class _OnboardingPageState extends State<OnboardingPage> {
               },
               itemBuilder: (_, i) {
                 return Padding(
-                  padding: const EdgeInsets.all(50),
+                  padding: const EdgeInsets.only(top: 50, bottom: 10, left: 50, right: 50),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 10),
-                      Image.asset(contents[i].image, width: 300, height: 200),
+                      Image.asset(contents[i].image, width: 300, height: widget.isMobilePage ? 200 : 320),
                       const SizedBox(height: 20),
                       TextTypography(
-                          type: TextType.HEADER,
-                          text: contents[i].title
+                          type: TextType.SUPER_HEADER,
+                          text: contents[i].title,
+                        color: white,
                       ),
                       const SizedBox(height: 30),
                       Expanded(
                         child: TextTypography(
                             type: TextType.DESCRIPTION,
-                            text: contents[i].description
+                            text: contents[i].description,
+                          align: TextAlign.center,
+                          color: white,
                         ),
                       ),
                     ],
@@ -103,8 +107,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: Padding(
                 padding: const EdgeInsets.all(50),
                 child: ButtonWidget(
-                  background: green,
-                  tint: white,
+                  background: white,
+                  tint: skyBlue,
                   type: ButtonType.LARGE_WIDE,
                   content: currentIndex != contents.length-1 ? "Lanjut" : "Daftar Sekarang",
                   onPressed: () {

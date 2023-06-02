@@ -63,13 +63,13 @@ class PieState extends State<Pie>{
           fontFamily: "Poppins"
         ),
       ),
-      chartValuesOptions: const ChartValuesOptions(
+      chartValuesOptions: ChartValuesOptions(
         showChartValueBackground: false,
         showChartValues: true,
         showChartValuesInPercentage: true,
         showChartValuesOutside: false,
         decimalPlaces: 0,
-        chartValueStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: "Poppins"),
+        chartValueStyle: TextStyle(fontWeight: FontWeight.bold, fontFamily: "Poppins", color: white),
       )
     );
   }

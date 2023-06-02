@@ -9,7 +9,8 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class BiodataCard extends StatelessWidget {
   final Users user_data;
-  const BiodataCard({super.key, required this.user_data});
+  final bool? fullBio;
+  const BiodataCard({super.key, required this.user_data, this.fullBio});
 
   @override
   Widget build(BuildContext context) {
@@ -44,39 +45,41 @@ class BiodataCard extends StatelessWidget {
             ),
             ProfileItemList(
                 icon: Icons.email,
-                label: "Email",
-                description: user_data.email!
-            ),
-            Divider(
-              height: 20,
-              thickness: 1,
-              color: gray,
-            ),
-            ProfileItemList(
-                icon: Icons.man,
                 label: "Jenis Kelamin",
                 description: user_data.gender!
             ),
-            Divider(
-              height: 20,
-              thickness: 1,
-              color: gray,
-            ),
-            ProfileItemList(
-                icon: Icons.phone,
-                label: "No. Telepon",
-                description: user_data.no_telp!
-            ),
-            Divider(
-              height: 20,
-              thickness: 1,
-              color: gray,
-            ),
-            ProfileItemList(
-                icon: Icons.location_on,
-                label: "Alamat",
-                description: user_data.address!
-            ),
+            if (fullBio == null) ...[
+              Divider(
+                height: 20,
+                thickness: 1,
+                color: gray,
+              ),
+              ProfileItemList(
+                  icon: Icons.man,
+                  label: "Jenis Kelamin",
+                  description: user_data.gender!
+              ),
+              Divider(
+                height: 20,
+                thickness: 1,
+                color: gray,
+              ),
+              ProfileItemList(
+                  icon: Icons.phone,
+                  label: "No. Telepon",
+                  description: user_data.no_telp!
+              ),
+              Divider(
+                height: 20,
+                thickness: 1,
+                color: gray,
+              ),
+              ProfileItemList(
+                  icon: Icons.location_on,
+                  label: "Alamat",
+                  description: user_data.address!
+              ),
+            ]
           ],
         )
     );

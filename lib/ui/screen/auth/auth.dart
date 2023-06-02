@@ -19,6 +19,7 @@ class _AuthenticatePage extends State<AuthenticatePage> {
   static const _duration = Duration(milliseconds: 300);
   static const _curve = Curves.ease;
   bool visible = true;
+  bool authVisible = true;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -36,6 +37,8 @@ class _AuthenticatePage extends State<AuthenticatePage> {
       } else {
         visible = widget.onboard;
       }
+
+      authVisible = visible;
     });
   }
 
@@ -43,6 +46,11 @@ class _AuthenticatePage extends State<AuthenticatePage> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
     initProfile();
   }
 
@@ -63,7 +71,8 @@ class _AuthenticatePage extends State<AuthenticatePage> {
                       onButtonClicked: (int value) {
                         setState(() {
                           if (value == 1) {
-                            visible = false;
+                            visible = true;
+                            authVisible = true;
                             _saveOnboardingSession();
                           }
                         });
@@ -71,23 +80,26 @@ class _AuthenticatePage extends State<AuthenticatePage> {
                   ),
                 )
             ),
-            SizedBox(
-              height: 800,
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (value) {},
-                children: [
-                  Login(isMobilePage: _showMobile, onTextClicked: () {
-                    _controller.nextPage(
-                        duration: _duration, curve: _curve);
-                  }),
-                  Register(isMobilePage: _showMobile, onTextClicked:() {
-                    _controller.previousPage(
-                        duration: _duration, curve: _curve);
-                  })
-                ],
-              ),
+            Visibility(
+              visible: authVisible,
+                child: SizedBox(
+                  height: 800,
+                  child: PageView(
+                    controller: _controller,
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (value) {},
+                    children: [
+                      Login(isMobilePage: _showMobile, onTextClicked: () {
+                        _controller.nextPage(
+                            duration: _duration, curve: _curve);
+                      }),
+                      Register(isMobilePage: _showMobile, onTextClicked:() {
+                        _controller.previousPage(
+                            duration: _duration, curve: _curve);
+                      })
+                    ],
+                  ),
+                )
             )
           ],
         ),

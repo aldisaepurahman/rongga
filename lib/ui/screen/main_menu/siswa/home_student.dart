@@ -2,17 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/student/student_event.dart';
 import 'package:non_cognitive/data/bloc/student/student_quest_bloc.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
+import 'package:non_cognitive/ui/components/card/biodata_card.dart';
 import 'package:non_cognitive/ui/components/card/family_card.dart';
 import 'package:non_cognitive/ui/components/card/psychology_card.dart';
 import 'package:non_cognitive/ui/components/card/statistics_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
@@ -129,21 +133,44 @@ class _StudentHome extends State<StudentHome> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 } if (state is FailureState) {
-                  return const Padding(
+                  return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset("assets/images/incorrect.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
+                          TextTypography(
+                            type: TextType.HEADER,
+                            text: "Data gagal ditampilkan, terjadi error pada sistem!",
+                            align: TextAlign.center,
+                          )
+                        ],
+                      )
+                  );
+                  /*return const Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
                         child: Text(
                             "Data gagal ditampilkan, terjadi error pada sistem!")),
-                  );
+                  );*/
                 } if (state is SuccessState) {
                   if (_studentStyle.nis!.isNotEmpty) {
                     return _renderExtendedPage(widget.type, _studentStyle);
                   } else if (widget.type != UserType.SISWA) {
                     return Center(
-                        child: TextTypography(
-                          type: TextType.DESCRIPTION,
-                          text: "Siswa ini belum melakukan tes gaya belajar di tahun ajaran saat ini",
-                          align: TextAlign.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/images/no-data.json",
+                                repeat: true, animate: true, reverse: false),
+                            const SizedBox(height: 10),
+                            TextTypography(
+                              type: TextType.HEADER,
+                              text: "Siswa ini belum melakukan tes gaya belajar di tahun ajaran saat ini",
+                              align: TextAlign.center,
+                            )
+                          ],
                         )
                     );
                   } else {
@@ -151,9 +178,12 @@ class _StudentHome extends State<StudentHome> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Lottie.asset("assets/images/no-data.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
                           TextTypography(
-                            type: TextType.DESCRIPTION,
-                            text: "Anda belum pernah melakukan tes di tahun ajaran saat ini\nSilahkan ikuti tes terlebih dahulu",
+                            type: TextType.HEADER,
+                            text: "Sepertinya tahun ini kamu belum mengambil tes terbaru\nSelesaikan tes terbarumu ya.",
                             align: TextAlign.center,
                           ),
                           const SizedBox(height: 10),
@@ -174,9 +204,20 @@ class _StudentHome extends State<StudentHome> {
                     );
                   }
                 }
-                return const Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Center(child: Text("Tidak Ada Data")),
+                return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Lottie.asset("assets/images/no-data.json",
+                            repeat: true, animate: true, reverse: false),
+                        const SizedBox(height: 10),
+                        TextTypography(
+                          type: TextType.HEADER,
+                          text: "Wah, tidak ada data yang ditemukan",
+                          align: TextAlign.center,
+                        )
+                      ],
+                    )
                 );
               },
             ),
@@ -186,6 +227,7 @@ class _StudentHome extends State<StudentHome> {
   }
 
   ListView _renderExtendedPage(UserType type, StudentStyle student_style) {
+    final _showUltraWide = MediaQuery.of(context).size.width > screenLg;
     String _descriptionStyle = "";
 
     if (student_style.learningStyle! == "Gabungan (All)") {
@@ -219,57 +261,55 @@ class _StudentHome extends State<StudentHome> {
 
     return ListView(
       shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(vertical: 25),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
-        /*if (type == UserType.SISWA)
-          Visibility(
-            visible: needConfirmation,
-            child: Container(
-                margin: const EdgeInsets.only(left: 12, right: 12, bottom: 15),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextTypography(
-                              type: TextType.TITLE,
-                              text: "Perhatian!",
-                            ),
-                            TextTypography(
-                              type: TextType.DESCRIPTION,
-                              text: "Anda dinyatakan naik kelas menuju tingkat berikutnya.",
-                            ),
-                          ],
-                        )
-                    ),
-                    const SizedBox(width: 10),
-                    ButtonWidget(
-                      background: orange,
-                      tint: white,
-                      type: ButtonType.MEDIUM,
-                      content: "Baik",
-                      onPressed: () {
-                        setState(() {
-                          needConfirmation = false;
-                        });
-                      },
+        CardContainer(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Center(
+                    child: Lottie.asset("assets/images/waving.json",
+                        repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                Expanded(
+                  flex: 8,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: TextTypography(
+                        type: TextType.TITLE,
+                        text: type == UserType.SISWA
+                            ? "Halo ${_student.name}. Selamat datang di Rongga. Disini kamu bisa lihat seperti apa hasil tes gaya belajar "
+                            "yang kamu miliki. Selain itu, kamu juga bisa tau seperti apa cara belajar yang sesuai dengan gaya belajar yang kamu miliki."
+                            : "Halo bapak/ibu guru, Selamat datang di Rongga. Disini saya infokan bagaimana hasil tes gaya belajar dari ${_student.name} ya.",
+                      ),
                     )
-                  ],
                 )
+              ],
             )
-        ),*/
-        StatisticsCard(student_style: student_style),
-        PsychologyCard(
+        ),
+        if (_showUltraWide) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: BiodataCard(user_data: _student)),
+              Expanded(child: StatisticsCard(student_style: student_style)),
+            ],
+          ),
+          PsychologyCard(
             title: "Saran Metode Belajar",
             chartTitle: "Diagram Kesejahteraan Psikologi",
-          description: _descriptionStyle,
-        ),
-        /*const PsychologyCard(
-            title: "Aktivitas Belajar",
-            chartTitle: "Diagram Aktivitas Belajar"
-        ),
-        FamilyCard(items: family_questions_dummy)*/
+            description: _descriptionStyle,
+          )
+        ] else ...[
+          BiodataCard(user_data: _student, fullBio: false),
+          StatisticsCard(student_style: student_style),
+          PsychologyCard(
+            title: "Saran Metode Belajar",
+            chartTitle: "Diagram Kesejahteraan Psikologi",
+            description: _descriptionStyle,
+          )
+        ]
       ],
     );
   }

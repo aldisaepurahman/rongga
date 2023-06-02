@@ -14,7 +14,13 @@ class StatisticsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextTypography(
+          Center(
+            child: TextTypography(
+              type: TextType.HEADER,
+              text: "Statistik Gaya Belajar",
+            ),
+          ),
+          /*TextTypography(
             type: TextType.DESCRIPTION,
             text: student_style.name!,
           ),
@@ -32,7 +38,7 @@ class StatisticsCard extends StatelessWidget {
               text: "Gaya belajar anda adalah ",
               jumbleText: student_style.learningStyle!,
             ),
-          ),
+          ),*/
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Pie(visual_score: student_style.visual_score!, auditorial_score: student_style.auditorial_score!, kinestetik_score: student_style.kinestetik_score!,)

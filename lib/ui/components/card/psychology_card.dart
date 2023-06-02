@@ -12,7 +12,6 @@ class PsychologyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CardContainer(
-      height: 150,
       child: Column(
         children: [
           TextTypography(

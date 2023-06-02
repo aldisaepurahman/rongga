@@ -111,14 +111,8 @@ class _LoginState extends State<Login> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
         children: [
-          Container(
-            margin: const EdgeInsets.only(top: 23),
-            child: Center(
-              child: TextTypography(
-                  type: TextType.HEADER, text: "SELAMAT DATANG KEMBALI!"),
-            ),
-          ),
-          Image.asset("assets/images/logo_sementara_resize.png",
+          const SizedBox(height: 50),
+          Image.asset("assets/images/rongga-logo-blue.png",
               width: 300, height: 200, fit: BoxFit.contain),
           Container(
             margin: const EdgeInsets.only(top: 20),

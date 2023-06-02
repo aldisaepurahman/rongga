@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 
 enum TextType {
+  SUPER_HEADER,
   HEADER,
   DESCRIPTION,
   DESCRIPTION_SPAN,
@@ -28,6 +29,7 @@ class TextTypography extends StatelessWidget {
       : super(key: key);
 
   Map<TextType, double> fontSize = {
+    TextType.SUPER_HEADER: 24,
     TextType.HEADER: 20,
     TextType.DESCRIPTION: 14,
     TextType.TITLE: 16,

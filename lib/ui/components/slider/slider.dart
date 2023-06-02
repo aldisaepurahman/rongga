@@ -21,8 +21,8 @@ class _SliderState extends State<SliderCustom> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: widget.currentIndex == widget.index
-            ? green
-            : gray,
+            ? blue
+            : white,
       ),
     );
   }
