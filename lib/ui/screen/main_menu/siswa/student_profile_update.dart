@@ -24,6 +24,7 @@ import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/bottom_sheet.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_no_button.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_photo_button.dart';
 import 'package:non_cognitive/ui/components/dialog/loading_dialog.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/radio_button.dart';
@@ -111,6 +112,34 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   int method = 0;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  void editPhotoWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogPhotoButton(
+          title: "Halo!",
+          content:
+          "Coba pilih salah satu opsi dibawah ini.",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Ambil Gambar Dari Galeri",
+          buttonRight: "Hapus Foto Profil",
+          buttonBottom: "Kembali",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+            _getProfilePhoto(ImageSource.gallery);
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            deletePhotoWarningDialog();
+          },
+          onPressedButtonBottom: () {
+            Navigator.of(context).pop();
+          }
+        );
+      },
+    );
+  }
 
   void deletePhotoWarningDialog() {
     showDialog(
@@ -252,8 +281,8 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   void showSubmitDialog(int dialogType) {
     String imgPath = (dialogType > 1)
         ? (dialogType == 2)
-        ? "assets/images/success.json"
-        : "assets/images/incorrect.json"
+        ? "assets/images/happy-student-success.json"
+        : "assets/images/learn-incorrect.json"
         : "assets/images/loading_icon.json";
     String content = (dialogType > 1)
         ? (dialogType == 2)
@@ -337,7 +366,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
           color: red),
     ];
 
-    if (!kIsWeb) {
+    /*if (!kIsWeb) {
       bottom_sheet_profile_list.insert(1, BottomSheetCustomItem(
         icon: Icons.camera_alt,
         title: "Ambil Gambar dari Camera",
@@ -345,7 +374,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
           Navigator.of(context).pop();
         },
       ));
-    }
+    }*/
 
     idNumberController = TextEditingController(text: widget.student.idNumber);
     nameController = TextEditingController(text: widget.student.name);
@@ -458,17 +487,21 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                           icon: Icons.camera_alt,
                           miniButton: true,
                           onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              shape: const RoundedRectangleBorder(
-                                // <-- SEE HERE
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(25.0),
+                            if (kIsWeb) {
+                              editPhotoWarningDialog();
+                            } else {
+                              showModalBottomSheet(
+                                context: context,
+                                shape: const RoundedRectangleBorder(
+                                  // <-- SEE HERE
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(25.0),
+                                  ),
                                 ),
-                              ),
-                              builder: (context) => BottomSheetCustom(
-                                  items: bottom_sheet_profile_list),
-                            );
+                                builder: (context) => BottomSheetCustom(
+                                    items: bottom_sheet_profile_list),
+                              );
+                            }
                           },
                         ))
                   ],

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_event.dart';
@@ -268,113 +269,67 @@ class _TeacherHome extends State<TeacherHome> {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      if (_showMobile) ...[
-                        CardContainer(
-                            child: Column(
-                              children: [
-                                TextTypography(
-                                  type: TextType.TITLE,
-                                  text: widget.type != UserType.WALI_KELAS || widget.type != UserType.GURU_BK_WALI_KELAS ? "Rekap Diagram Persentase" : "Rekap Diagram Persentase Kelas Anda",
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Pie(visual_score: visual_count, auditorial_score: auditorial_count, kinestetik_score: kinestetik_count)
-                                )
-                              ],
-                            )
-                        ),
-                        if (widget.type == UserType.WALI_KELAS || widget.type == UserType.GURU_BK_WALI_KELAS) ...[
-                          CardContainer(
-                              child: Column(
-                                children: [
-                                  TextTypography(
-                                    type: TextType.TITLE,
-                                    text: "Informasi Detail",
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: TextTypography(
-                                        type: TextType.DESCRIPTION,
-                                        text: description,
-                                      )),
-                                ],
-                              )),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 25),
-                            child: PaginatedDataTable(
-                              dataRowHeight: 70,
-                              columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
-                              source: RombelStyleTableData(
-                                  context: context,
-                                  content: listStudent
+                      CardContainer(
+                          child: Column(
+                            children: [
+                              TextTypography(
+                                type: TextType.TITLE,
+                                text: widget.type != UserType.WALI_KELAS || widget.type != UserType.GURU_BK_WALI_KELAS ? "Rekap Diagram Persentase" : "Rekap Diagram Persentase Kelas Anda",
                               ),
-                              rowsPerPage: 5,
-                              columnSpacing: 0,
-                              horizontalMargin: 0,
-                              showCheckboxColumn: false,
-                            ),
+                              Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Pie(visual_score: visual_count, auditorial_score: auditorial_count, kinestetik_score: kinestetik_count)
+                              )
+                            ],
                           )
-                        ]
-                      ] else ...[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                                child: CardContainer(
+                      ),
+                      if (widget.type == UserType.WALI_KELAS || widget.type == UserType.GURU_BK_WALI_KELAS) ...[
+                        CardContainer(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
                                     child: Column(
                                       children: [
                                         TextTypography(
                                           type: TextType.TITLE,
-                                          text: widget.type != UserType.WALI_KELAS || widget.type != UserType.GURU_BK_WALI_KELAS ? "Rekap Diagram Persentase" : "Rekap Diagram Persentase Kelas Anda",
+                                          text: "Informasi Detail",
                                         ),
                                         Padding(
                                             padding: const EdgeInsets.only(top: 10),
-                                            child: Pie(visual_score: visual_count, auditorial_score: auditorial_count, kinestetik_score: kinestetik_count)
-                                        )
+                                            child: TextTypography(
+                                              type: TextType.DESCRIPTION,
+                                              text: description,
+                                              align: TextAlign.justify,
+                                            )),
                                       ],
                                     )
                                 ),
+                                const SizedBox(width: 20),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Lottie.asset("assets/images/woman-teacher.json",
+                                      repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.2),
+                                )
+                              ],
+                            )),
+                        Container(
+                          margin: const EdgeInsets.symmetric(vertical: 25),
+                          child: PaginatedDataTable(
+                            dataRowHeight: 70,
+                            columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
+                            source: RombelStyleTableData(
+                                context: context,
+                                content: listStudent
                             ),
-                            if (widget.type == UserType.WALI_KELAS || widget.type == UserType.GURU_BK_WALI_KELAS) ...[
-                              Expanded(
-                                  child: CardContainer(
-                                      child: Column(
-                                        children: [
-                                          TextTypography(
-                                            type: TextType.TITLE,
-                                            text: "Informasi Detail",
-                                          ),
-                                          Padding(
-                                              padding: const EdgeInsets.only(top: 10),
-                                              child: TextTypography(
-                                                type: TextType.DESCRIPTION,
-                                                text: description,
-                                              )),
-                                        ],
-                                      )
-                                  )
-                              ),
-                            ]
-                          ],
-                        ),
-                        if (widget.type == UserType.WALI_KELAS || widget.type == UserType.GURU_BK_WALI_KELAS)
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 25),
-                            child: PaginatedDataTable(
-                              dataRowHeight: 70,
-                              columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
-                              source: RombelStyleTableData(
-                                  context: context,
-                                  content: listStudent
-                              ),
-                              rowsPerPage: 5,
-                              columnSpacing: 0,
-                              horizontalMargin: 0,
-                              showCheckboxColumn: false,
-                            ),
-                          )
-                      ],
+                            rowsPerPage: 5,
+                            columnSpacing: 0,
+                            horizontalMargin: 0,
+                            showCheckboxColumn: false,
+                          ),
+                        )
+                      ]
                     ],
                   );
                 }

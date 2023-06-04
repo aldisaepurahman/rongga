@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_create_event.dart';
 import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_add_bloc.dart';
 import 'package:non_cognitive/data/bloc/counselor_teacher/rombel_siswa_check_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/rombel_card.dart';
 import 'package:non_cognitive/ui/components/card/tingkat_only_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
@@ -271,6 +273,28 @@ class _CreateRombel extends State<CreateRombel> {
                 )
               ],
             ),
+            CardContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: Lottie.asset("assets/images/information-icon.json",
+                            repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                    Expanded(
+                        flex: 8,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: TextTypography(
+                            type: TextType.TITLE,
+                            text: "Di halaman ini, bapak/ibu bisa melihat daftar rombel yang telah dibuat selama tahun ajaran ini, bisa untuk dirombak, "
+                                "bisa untuk menambahkan siswa secara manual pada rombel tertentu.",
+                          ),
+                        )
+                    )
+                  ],
+                )
+            ),
             TingkatOnlyCard(
                 type: widget.type,
                 tingkatSiswa: tingkatChoice,
@@ -372,7 +396,7 @@ class _CreateRombel extends State<CreateRombel> {
                                   RombelCheckPage(
                                       rombel_name: listPageRombel[i]['rombel'],
                                       description: listPageRombel[i]['description'],
-                                      tableHeader: ["No", "Nama Siswa", "Gaya Belajar - Level Akademik"],
+                                      tableHeader: ["No", "Nama Siswa", "Gaya Belajar"],
                                       tableContent: listPageRombel[i]['list_siswa']
                                   ),
                               ]
@@ -423,8 +447,12 @@ class _CreateRombel extends State<CreateRombel> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        const SizedBox(height: 10),
+                        Lottie.asset("assets/images/no-data.json",
+                            repeat: true, animate: true, reverse: false),
+                        const SizedBox(height: 10),
                         TextTypography(
-                          type: TextType.DESCRIPTION,
+                          type: TextType.TITLE,
                           text: "Rombel di tingkat kelas pada tahun ajaran ini belum dibuat",
                           align: TextAlign.center,
                         ),
@@ -486,13 +514,20 @@ class _CreateRombel extends State<CreateRombel> {
                       child: Center(child: CircularProgressIndicator()),
                     );
                   } else if (state is FailureState) {
-                    return Padding(
-                      padding: EdgeInsets.all(24),
-                      child: Center(
-                          child: TextTypography(
-                            type: TextType.DESCRIPTION,
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 10),
+                          Lottie.asset("assets/images/incorrect.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
+                          TextTypography(
+                            type: TextType.TITLE,
                             text: state.error,
-                          )
+                            align: TextAlign.center,
+                          ),
+                        ],
                       ),
                     );
                   } else if (state is SuccessState) {

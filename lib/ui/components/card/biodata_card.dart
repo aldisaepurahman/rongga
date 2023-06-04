@@ -56,8 +56,8 @@ class BiodataCard extends StatelessWidget {
               ),
               ProfileItemList(
                   icon: Icons.man,
-                  label: "Jenis Kelamin",
-                  description: user_data.gender!
+                  label: "Email",
+                  description: user_data.email!
               ),
               Divider(
                 height: 20,

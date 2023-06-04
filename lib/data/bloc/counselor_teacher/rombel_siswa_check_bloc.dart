@@ -137,32 +137,53 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
               var kinestetikRatio = (rombel_group[i]['kinestetik_count'] *
                   100) / total_count;
 
-              if (kinestetikRatio >= 40) {
+              if (kinestetikRatio == visualRatio && kinestetikRatio == auditorialRatio) {
+                rombel_group[i]['description'] =
+                "Siswa di rombel ini memiliki cara belajar yang hampir seimbang. Gaya belajar "
+                    "yang ada berimbang tersebut perlu diakomodir oleh guru yang mampu mengaplikasikan setiap jenis cara mengajar "
+                    "yang bisa dimengerti oleh setiap siswa dengan gaya belajar yang berbeda tersebut.";
+              }
+              else if (kinestetikRatio == auditorialRatio && kinestetikRatio > visualRatio) {
+                rombel_group[i]['description'] =
+                "Siswa di rombel ini dominan memiliki cara belajar dengan mempraktikkan apa yang sebenarnya dijelaskan oleh guru, ataupun"
+                    " dengan mendengar materi yang dijelaskan menggunakan metode ceramah atau diskusi langsung. Beberapa siswa lainnya cenderung "
+                    "suka dengan memperhatikan materi dalam bentuk gambar karena mereka mudah memahami penjelasan dengan gambar atau ilustrasi.";
+              }
+              else if (kinestetikRatio < auditorialRatio && auditorialRatio == visualRatio) {
+                rombel_group[i]['description'] =
+                "Siswa di rombel ini dominan memiliki cara belajar dengan mendengar materi yang dijelaskan menggunakan metode ceramah atau "
+                    "diskusi langsung, ataupun dengan "
+                    "memperhatikan materi dalam bentuk gambar karena mereka mudah memahami penjelasan dengan gambar atau ilustrasi. "
+                    "Beberapa siswa lainnya cenderung mudah belajar dengan cara mempraktikkannya secara langsung apa yang dijelaskan oleh guru.";
+              }
+              else if (kinestetikRatio > auditorialRatio && kinestetikRatio == visualRatio) {
+                rombel_group[i]['description'] =
+                "Siswa di rombel ini dominan mudah belajar dengan cara mempraktikkannya secara langsung apa yang dijelaskan oleh guru, "
+                    "ataupun dengan memperhatikan materi dalam bentuk gambar karena mereka mudah memahami penjelasan dengan gambar atau ilustrasi. "
+                    "Beberapa siswa lainnya cenderung mudah belajar dengan mendengar materi yang dijelaskan menggunakan metode ceramah atau "
+                    "diskusi langsung";
+              }
+              else if (kinestetikRatio > auditorialRatio && kinestetikRatio > visualRatio) {
                 rombel_group[i]['description'] =
                 "Sebagian besar siswa di rombel ini cenderung belajar dengan mempraktikkan "
                     "apa yang sebenarnya dijelaskan oleh guru. Sebagian besar siswa di rombel ini akan cocok diberikan tugas "
                     "berupa tugas praktik yang membuat mereka mampu memahami cara penyelesaian dari tugas tersebut melalui "
                     "metode gerakan. Beberapa siswa lainnya baik dalam hal mendengarkan materi dan memperhatikan materi berupa gambar "
                     "yang dijelaskan oleh guru.";
-              } else if (visualRatio >= 40) {
+              } else if (visualRatio > auditorialRatio && visualRatio > kinestetikRatio) {
                 rombel_group[i]['description'] =
                 "Sebagian besar siswa di rombel ini cenderung belajar dengan memperhatikan "
                     "materi yang dijelaskan oleh guru dalam bentuk ilustrasi atau gambar. Sebagian besar siswa di rombel ini "
                     "akan cocok diberikan tugas yang mampu mengembangkan kreativitas dalam menggambar atau mengilustrasikan suatu "
                     "permasalahan. Beberapa siswa lainnya baik dalam hal mendengarkan materi dan mempraktikkan materi "
                     "yang dijelaskan oleh guru.";
-              } else if (auditorialRatio >= 40) {
+              } else {
                 rombel_group[i]['description'] =
                 "Sebagian besar siswa di rombel ini cenderung belajar dengan mendengar "
                     "materi yang disampaikan oleh guru ketika kegiatan belajar mengajar berlangsung. Sebagian besar siswa di rombel ini "
                     "Bagi siswa tersebut, guru perlu memaksimalkan kemampuan mereka dalam menyimak materi yang mereka sampaikan. "
                     "Beberapa siswa lainnya baik dalam hal memperhatikan materi dan mempraktikkan materi "
                     "yang dijelaskan oleh guru.";
-              } else {
-                rombel_group[i]['description'] =
-                "Siswa di rombel ini memiliki cara belajar yang hampir seimbang. Gaya belajar "
-                    "yang ada berimbang tersebut perlu diakomodir oleh guru yang mampu mengaplikasikan setiap jenis cara mengajar "
-                    "yang bisa dimengerti oleh setiap siswa dengan gaya belajar yang berbeda tersebut.";
               }
             }
           }

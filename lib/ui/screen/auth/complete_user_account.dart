@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
-import 'package:non_cognitive/data/bloc/auth/auth_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_event.dart';
 import 'package:non_cognitive/data/bloc/auth/login_bloc.dart';
 import 'package:non_cognitive/data/bloc/auth/register_detail_bloc.dart';
@@ -19,6 +19,7 @@ import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/data/model/users.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/circle_avatar.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/constants.dart';
@@ -29,11 +30,8 @@ import 'package:non_cognitive/ui/components/dialog/dialog_no_button.dart';
 import 'package:non_cognitive/ui/components/dialog/loading_dialog.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
-import 'package:non_cognitive/ui/screen/auth/complete_student_info.dart';
-import 'package:non_cognitive/ui/screen/auth/complete_teacher_info.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/home_teacher.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/home_student.dart';
-import 'package:non_cognitive/ui/screen/navigations.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -260,8 +258,8 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
   void showSubmitDialog(int dialogType) {
     String imgPath = (dialogType > 1)
         ? (dialogType == 2)
-            ? "assets/images/success.json"
-            : "assets/images/incorrect.json"
+            ? "assets/images/happy-student-success.json"
+            : "assets/images/learn-incorrect.json"
         : "assets/images/loading_icon.json";
     String content = (dialogType > 1)
         ? (dialogType == 2)
@@ -368,7 +366,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
       )
     ];
 
-    if (!kIsWeb) {
+    /*if (!kIsWeb) {
       bottom_sheet_profile_list.insert(
           1,
           BottomSheetCustomItem(
@@ -378,7 +376,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
               Navigator.of(context).pop();
             },
           ));
-    }
+    }*/
   }
 
   @override
@@ -397,16 +395,29 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                     type: TextType.HEADER, text: "Lengkapi Data Akun Anda"),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: Center(
-                child: TextTypography(
-                  type: TextType.DESCRIPTION,
-                  text:
-                      "Lengkapi data diri berikut ini untuk menyelesaikan proses registrasi akun anda",
-                  align: TextAlign.center,
-                ),
-              ),
+            CardContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: Lottie.asset("assets/images/information-icon.json",
+                            repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                    Expanded(
+                        flex: 8,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: TextTypography(
+                            type: TextType.TITLE,
+                            text: widget.type == UserType.SISWA ? "Di halaman ini, kamu perlu melengkapi data diri yang diperlukan oleh sistem. Jika masih belum "
+                                "yakin dengan data diri yang ada, kamu bisa melewatinya dan melengkapi di halaman profil. Namun, pastikan pilihan tingkat kelas terpilih dengan benar."
+                                : "Di halaman ini, bapak/ibu perlu melengkapi data diri yang diperlukan oleh sistem. Jika masih belum "
+                                "yakin dengan data diri yang ada, kamu bisa melewatinya dan melengkapi di halaman profil. Namun, pastikan pilihan spesialisasi dan status guru terpilih dengan benar.",
+                          ),
+                        )
+                    )
+                  ],
+                )
             ),
             if (!_showMobile)
               Row(
@@ -447,7 +458,8 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                         icon: Icons.camera_alt,
                                         miniButton: true,
                                         onPressed: () {
-                                          showModalBottomSheet(
+                                          _getProfilePhoto(ImageSource.gallery);
+                                          /*showModalBottomSheet(
                                             context: context,
                                             shape: const RoundedRectangleBorder(
                                               // <-- SEE HERE
@@ -460,7 +472,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                                 BottomSheetCustom(
                                                     items:
                                                         bottom_sheet_profile_list),
-                                          );
+                                          );*/
                                         },
                                       ))
                                 ],
@@ -709,7 +721,8 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                 icon: Icons.camera_alt,
                                 miniButton: true,
                                 onPressed: () {
-                                  showModalBottomSheet(
+                                  _getProfilePhoto(ImageSource.gallery);
+                                  /*showModalBottomSheet(
                                     context: context,
                                     shape: const RoundedRectangleBorder(
                                       // <-- SEE HERE
@@ -719,7 +732,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                     ),
                                     builder: (context) => BottomSheetCustom(
                                         items: bottom_sheet_profile_list),
-                                  );
+                                  );*/
                                 },
                               ))
                         ],

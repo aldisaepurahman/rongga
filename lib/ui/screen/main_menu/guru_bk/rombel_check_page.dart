@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/model/rombel_siswa.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
@@ -49,20 +50,35 @@ class _RombelCheckPage extends State<RombelCheckPage> {
           ],
         ),
         CardContainer(
-            child: Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextTypography(
-                  type: TextType.TITLE,
-                  text: "Informasi Detail",
+                Expanded(
+                    child: Column(
+                      children: [
+                        TextTypography(
+                          type: TextType.TITLE,
+                          text: "Informasi Detail",
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: TextTypography(
+                              type: TextType.DESCRIPTION,
+                              text: widget.description,
+                            )),
+                      ],
+                    )
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: TextTypography(
-                      type: TextType.DESCRIPTION,
-                      text: widget.description,
-                    )),
+                const SizedBox(width: 20),
+                Align(
+                  alignment: Alignment.center,
+                  child: Lottie.asset("assets/images/woman-teacher.json",
+                      repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.2),
+                )
               ],
-            )),
+            )
+        ),
         Container(
           margin: const EdgeInsets.symmetric(vertical: 25),
           child: PaginatedDataTable(

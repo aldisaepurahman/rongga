@@ -63,8 +63,8 @@ class _LoginState extends State<Login> {
   void showSubmitDialog(int dialogType, Users? user) {
     String imgPath = (dialogType > 1)
         ? (dialogType == 2)
-            ? "assets/images/success.json"
-            : "assets/images/incorrect.json"
+            ? "assets/images/happy-student-success.json"
+            : "assets/images/learn-incorrect.json"
         : "assets/images/loading_icon.json";
     String content = (dialogType > 1)
         ? (dialogType == 2)

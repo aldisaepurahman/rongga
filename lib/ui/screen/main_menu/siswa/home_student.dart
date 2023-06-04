@@ -21,6 +21,7 @@ import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/navigation/appbar.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/questionnaire/questionnaire.dart';
+import 'package:non_cognitive/utils/learn_method_asset.dart';
 import 'package:non_cognitive/utils/question_list.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -227,36 +228,27 @@ class _StudentHome extends State<StudentHome> {
   }
 
   ListView _renderExtendedPage(UserType type, StudentStyle student_style) {
-    final _showUltraWide = MediaQuery.of(context).size.width > screenLg;
-    String _descriptionStyle = "";
+    List<Map<String, String>> psychologyItem = <Map<String, String>>[];
 
     if (student_style.learningStyle! == "Gabungan (All)") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara belajar apapun" : "Siswa ini cocok dengan cara belajar apapun";
+      psychologyItem.addAll(visualMethod);
+      psychologyItem.addAll(auditorialMethod);
+      psychologyItem.addAll(kinesteticMethod);
     } else if (student_style.learningStyle! == "Gabungan (Kinestetik + Auditorial)") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara berbasis studi kasus atau sambil fokus mendengarkan materi yang diberikan"
-          : "Siswa ini cocok dengan cara berbasis studi kasus atau sambil fokus mendengarkan materi yang diberikan";
+      psychologyItem.addAll(kinesteticMethod);
+      psychologyItem.addAll(auditorialMethod);
     } else if (student_style.learningStyle! == "Gabungan (Visual + Kinestetik)") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara berbasis studi kasus atau diberikan suatu gambar atau visualisasi dari materi yang dipaparkan"
-          : "Siswa ini cocok dengan cara berbasis studi kasus atau diberikan suatu gambar atau visualisasi dari materi yang dipaparkan";
+      psychologyItem.addAll(visualMethod);
+      psychologyItem.addAll(kinesteticMethod);
     } else if (student_style.learningStyle! == "Gabungan (Visual + Auditorial)") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara sambil fokus mendengarkan materi yang diberikan atau diberikan suatu gambar atau visualisasi dari materi yang dipaparkan"
-          : "Siswa ini cocok dengan cara sambil fokus mendengarkan materi yang diberikan atau diberikan suatu gambar atau visualisasi dari materi yang dipaparkan";
+      psychologyItem.addAll(visualMethod);
+      psychologyItem.addAll(auditorialMethod);
     } else if (student_style.learningStyle! == "Kinestetik") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara berbasis studi kasus"
-          : "Siswa ini cocok dengan cara berbasis studi kasus";
+      psychologyItem.addAll(kinesteticMethod);
     } else if (student_style.learningStyle! == "Auditorial") {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara fokus mendengarkan materi yang diberikan"
-          : "Siswa ini cocok dengan cara fokus mendengarkan materi yang diberikan";
+      psychologyItem.addAll(auditorialMethod);
     } else {
-      _descriptionStyle = type == UserType.SISWA
-          ? "Anda akan cocok dengan cara diberikan suatu gambar atau visualisasi dari materi yang dipaparkan"
-          : "Siswa ini cocok dengan cara diberikan suatu gambar atau visualisasi dari materi yang dipaparkan";
+      psychologyItem.addAll(visualMethod);
     }
 
     return ListView(
@@ -287,29 +279,12 @@ class _StudentHome extends State<StudentHome> {
               ],
             )
         ),
-        if (_showUltraWide) ...[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: BiodataCard(user_data: _student)),
-              Expanded(child: StatisticsCard(student_style: student_style)),
-            ],
-          ),
-          PsychologyCard(
-            title: "Saran Metode Belajar",
-            chartTitle: "Diagram Kesejahteraan Psikologi",
-            description: _descriptionStyle,
-          )
-        ] else ...[
-          BiodataCard(user_data: _student, fullBio: false),
-          StatisticsCard(student_style: student_style),
-          PsychologyCard(
-            title: "Saran Metode Belajar",
-            chartTitle: "Diagram Kesejahteraan Psikologi",
-            description: _descriptionStyle,
-          )
-        ]
+        BiodataCard(user_data: _student, fullBio: false),
+        StatisticsCard(student_style: student_style),
+        PsychologyCard(
+          title: "Saran Metode Belajar",
+          information: psychologyItem,
+        )
       ],
     );
   }

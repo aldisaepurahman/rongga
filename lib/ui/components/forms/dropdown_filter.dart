@@ -17,9 +17,10 @@ class DropdownFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: ShapeDecoration(
-        color: lightGray,
+        color: white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
+          side: BorderSide(width: 3, color: lightGray)
         ),
       ),
       child: Padding(

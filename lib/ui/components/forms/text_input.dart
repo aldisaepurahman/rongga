@@ -41,11 +41,11 @@ class TextInputState extends State<TextInputCustom> {
       onChanged: widget.onChanged ?? (value) {},
       decoration: widget.type == TextInputCustomType.WITH_ICON
           ? InputDecoration(
-              fillColor: lightGray,
+              fillColor: white,
               filled: true,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none),
+                  borderSide: BorderSide(width: 2, color: lightGray)),
               hintText: widget.hint,
               hintStyle: TextStyle(
                 color: gray,
@@ -53,11 +53,12 @@ class TextInputState extends State<TextInputCustom> {
               ),
               prefixIcon: Icon(widget.icon))
           : InputDecoration(
-              fillColor: lightGray,
+              fillColor: white,
               filled: true,
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none),
+                  borderSide: BorderSide(width: 3, color: lightGray),
+              ),
               hintText: widget.hint,
               hintStyle: TextStyle(
                 color: gray,
