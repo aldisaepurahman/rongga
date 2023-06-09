@@ -39,6 +39,7 @@ class QuestionCardState extends State<QuestionCard> {
             type: RadioType.VERTICAL,
             choiceList: widget.question.choices,
             selectedChoice: widget.question.groupValue,
+            needAnimation: true,
             onSelectedChoice: (value) {
               // widget.question.groupValue = value!;
               widget.onSelectedChoice(value!);

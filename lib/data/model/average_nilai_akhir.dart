@@ -21,8 +21,8 @@ class AverageNilaiAkhir {
     id_sekolah = json['id_sekolah'];
     id_tahun_ajaran = json['id_tahun_ajaran'];
     nilai = json['rata_rata'];
-    level_avg = nilai! >= 85
-        ? "Tinggi" : nilai! < 85 && nilai! >= 75
+    level_avg = nilai! >= 85.0
+        ? "Tinggi" : nilai! < 85.0 && nilai! >= 75.0
         ? "Sedang" : "Rendah";
   }
 }

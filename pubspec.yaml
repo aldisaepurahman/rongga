@@ -52,6 +52,8 @@ dependencies:
   mime: ^1.0.4
   image_picker_web: ^3.0.0+1
   intl: ^0.17.0
+  file_picker: ^4.0.0
+  flutter_excel: ^1.0.1
 
 dev_dependencies:
   flutter_test:

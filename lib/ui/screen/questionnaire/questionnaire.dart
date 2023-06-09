@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/student/student_event.dart';
@@ -271,20 +272,32 @@ class _Questionnaire extends State<Questionnaire> {
                   ],
                 ),
                 CardContainer(
-                    child: Column(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        TextTypography(
-                          type: TextType.TITLE,
-                          text: questionnaire_list[i].title,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: TextTypography(
-                              type: TextType.DESCRIPTION,
-                              text: questionnaire_list[i].description,
-                            )),
+                        Center(
+                            child: Lottie.asset("assets/images/waving.json",
+                                repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                        Expanded(
+                            child: Column(
+                              children: [
+                                TextTypography(
+                                  type: TextType.TITLE,
+                                  text: questionnaire_list[i].title,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: TextTypography(
+                                      type: TextType.DESCRIPTION,
+                                      text: questionnaire_list[i].description,
+                                    )),
+                              ],
+                            )
+                        )
                       ],
-                    )),
+                    )
+                ),
                 for (var questions in questionnaire_list[i].question_list)
                   QuestionCard(
                     question: questions,

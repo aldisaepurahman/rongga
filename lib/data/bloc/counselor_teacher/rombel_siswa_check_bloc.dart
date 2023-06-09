@@ -23,7 +23,8 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
       await Future.wait([
         service.getStudentTingkat({"tingkat": event.tingkat, "id_sekolah": event.id_sekolah}),
         service.getAllTestResults({"id_tahun_ajaran": event.id_tahun_ajaran}),
-        service.showRombelSekolah({"id_sekolah": event.id_sekolah, "tingkat": event.tingkat})
+        service.showRombelSekolah({"id_sekolah": event.id_sekolah, "tingkat": event.tingkat}),
+        service.getAverageNilaiAkhir({"tingkat": event.tingkat, "id_tahun_ajaran": event.id_tahun_ajaran, "id_sekolah": event.id_sekolah}),
       ]).then((arr) {
         bool foundError = false;
 
@@ -39,6 +40,7 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
           var list_siswa = List<Student>.from(arr[0].datastore);
           var quests = List<StudentStyle>.from(arr[1].datastore);
           var rombel = List<RombelSekolah>.from(arr[2].datastore);
+          var nilai_akhir = List<AverageNilaiAkhir>.from(arr[3].datastore);
 
           Map counts = {};
 
@@ -100,7 +102,10 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
             }
 
             if (!found) {
-              tempStudents.add(list_siswa[i]);
+              int idxScore = nilai_akhir.indexWhere((row) => row.id_siswa == list_siswa[i].id_siswa);
+              if (idxScore >= 0) {
+                tempStudents.add(list_siswa[i]);
+              }
             }
           }
 

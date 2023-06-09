@@ -168,7 +168,7 @@ class _TeacherProfile extends State<TeacherProfile> {
           if (widget.type == UserType.GURU ||
               widget.type == UserType.GURU_BK ||
               widget.type == UserType.WALI_KELAS ||
-              widget.type == UserType.GURU_BK_WALI_KELAS)
+              widget.type == UserType.GURU_BK_WALI_KELAS) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -184,8 +184,19 @@ class _TeacherProfile extends State<TeacherProfile> {
                     )).then(onBackPage);
                   },
                 ),
+                const SizedBox(width: 20),
+                ButtonWidget(
+                  background: green,
+                  tint: white,
+                  type: ButtonType.MEDIUM,
+                  content: "Input Nilai Akhir Siswa",
+                  onPressed: () {
+
+                  },
+                ),
               ],
-            ),
+            )
+          ],
           const SizedBox(height: 20),
           BiodataCard(user_data: teacher),
           StatusProfileCard(type: UserType.GURU, teacher_data: teacher)
@@ -211,8 +222,8 @@ class _TeacherProfile extends State<TeacherProfile> {
                       if (widget.type == UserType.GURU ||
                           widget.type == UserType.GURU_BK ||
                           widget.type == UserType.WALI_KELAS ||
-                          widget.type == UserType.GURU_BK_WALI_KELAS)
-                        Row(
+                          widget.type == UserType.GURU_BK_WALI_KELAS) ...[
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ButtonWidget(
@@ -227,8 +238,19 @@ class _TeacherProfile extends State<TeacherProfile> {
                                 )).then(onBackPage);
                               },
                             ),
+                            const SizedBox(height: 20),
+                            ButtonWidget(
+                              background: green,
+                              tint: white,
+                              type: ButtonType.MEDIUM,
+                              content: "Input Nilai Akhir Siswa",
+                              onPressed: () {
+
+                              },
+                            ),
                           ],
-                        ),
+                        )
+                      ],
                     ],
                   )
               ),

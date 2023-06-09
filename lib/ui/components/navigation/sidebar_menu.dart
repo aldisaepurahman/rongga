@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/sidebar_menu_item.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/screen/auth/auth.dart';
 import 'package:non_cognitive/ui/screen/main_menu/admin_sekolah/admin_rombel_list.dart';
 import 'package:non_cognitive/ui/screen/main_menu/admin_sekolah/admin_tahun_ajaran.dart';
@@ -35,6 +36,32 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
   Future<void> _clearSession() async {
     final SharedPreferences prefs = await _prefs;
     prefs.remove("user");
+  }
+
+  void logoutWarningDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return DialogDoubleButton(
+          title: "Peringatan!",
+          content:
+          "Kamu harus login ulang jika ingin masuk ke akunmu kembali. Kamu yakin?",
+          path_image: "assets/images/caution.json",
+          buttonLeft: "Tidak",
+          buttonRight: "Ya",
+          onPressedButtonLeft: () {
+            Navigator.of(context).pop();
+          },
+          onPressedButtonRight: () {
+            Navigator.of(context).pop();
+            _clearSession();
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const AuthenticatePage(onboard: false))
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -173,10 +200,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
     }
 
     return () {
-      _clearSession();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const AuthenticatePage(onboard: false))
-      );
+      logoutWarningDialog();
     };
   }
 

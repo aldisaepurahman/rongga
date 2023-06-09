@@ -432,7 +432,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                             margin: const EdgeInsets.only(top: 15),
                             child: Center(
                               child: TextTypography(
-                                  type: TextType.LABEL_TITLE,
+                                  type: TextType.TITLE,
                                   text: "Foto Profil Anda"),
                             ),
                           ),
@@ -447,7 +447,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                       path: "assets/images/no_image.png",
                                       webPreview: webImage,
                                       isWeb: kIsWeb,
-                                      radius: 80),
+                                      radius: 150),
                                   Positioned(
                                       right: 0,
                                       bottom: 0,
