@@ -128,7 +128,7 @@ class RonggaService {
         data: request,
       );
 
-      print("Info: ${response.data["values"].toString()}");
+      // print("Info: ${response.data["values"].toString()}");
 
       if (response == null) {
         return ServiceStatus(
@@ -199,6 +199,25 @@ class RonggaService {
     }
   }
 
+  Future<ServiceStatus> getAllScore(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+          "$_baseUrl/nilaiSiswa/all",
+          data: request
+      );
+
+      // print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(datastore: List<NilaiAkhirInput>.from([]), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: List<NilaiAkhirInput>.from(response.data["values"].map((e) => NilaiAkhirInput.fromJson(e)).toList()));
+    } catch (error, stackTrace) {
+      return ServiceStatus(datastore: List<NilaiAkhirInput>.from([]), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
   Future<ServiceStatus> getAllExistingMapel(Map<String, dynamic> request) async {
     try {
       final response = await _dio.post(
@@ -232,6 +251,48 @@ class RonggaService {
       return ServiceStatus(datastore: true);
     } catch (error, stackTrace) {
       return ServiceStatus(datastore: false, message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getCurrentTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/tahunAjaran/current",
+        data: request,
+      );
+
+      // print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: TahunAjaran(), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: TahunAjaran.fromJson(response.data["values"][0]));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: TahunAjaran(), message: Error.throwWithStackTrace(error, stackTrace));
+    }
+  }
+
+  Future<ServiceStatus> getPreviousTahunAjaran(Map<String, dynamic> request) async {
+    try {
+      final response = await _dio.post(
+        "$_baseUrl/tahunAjaran/previous",
+        data: request,
+      );
+
+      // print("Info: ${response.data["values"].toString()}");
+
+      if (response == null) {
+        return ServiceStatus(
+            datastore: TahunAjaran(), message: response.toString());
+      }
+
+      return ServiceStatus(datastore: TahunAjaran.fromJson(response.data["values"][0]));
+    } catch (error, stackTrace) {
+      return ServiceStatus(
+          datastore: TahunAjaran(), message: Error.throwWithStackTrace(error, stackTrace));
     }
   }
 

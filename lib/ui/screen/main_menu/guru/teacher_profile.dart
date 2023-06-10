@@ -14,6 +14,7 @@ import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile_update.dart';
+import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_score_excel_import.dart';
 import 'package:non_cognitive/utils/user_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart' show Uint8List, kIsWeb;
@@ -189,9 +190,12 @@ class _TeacherProfile extends State<TeacherProfile> {
                   background: green,
                   tint: white,
                   type: ButtonType.MEDIUM,
-                  content: "Input Nilai Akhir Siswa",
+                  content: "Import Nilai Akhir Siswa",
                   onPressed: () {
-
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) =>
+                          TeacherScoreExcelInput(type: widget.type, teacher: teacher),
+                    )).then(onBackPage);
                   },
                 ),
               ],
@@ -243,9 +247,12 @@ class _TeacherProfile extends State<TeacherProfile> {
                               background: green,
                               tint: white,
                               type: ButtonType.MEDIUM,
-                              content: "Input Nilai Akhir Siswa",
+                              content: "Import Nilai Akhir Siswa",
                               onPressed: () {
-
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) =>
+                                      TeacherScoreExcelInput(type: widget.type, teacher: teacher),
+                                )).then(onBackPage);
                               },
                             ),
                           ],

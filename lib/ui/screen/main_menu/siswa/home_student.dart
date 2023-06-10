@@ -73,7 +73,7 @@ class _StudentHome extends State<StudentHome> {
       }
 
       BlocProvider.of<StudentQuestBloc>(context).add(ResetEvent());
-      BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, id_tahun_ajaran: _student.id_tahun_ajaran!));
+      BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, tahun_ajaran: _student.tahun_ajaran!));
     });
   }
 

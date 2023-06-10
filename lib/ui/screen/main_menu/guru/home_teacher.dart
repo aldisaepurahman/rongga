@@ -257,9 +257,18 @@ class _TeacherHome extends State<TeacherHome> {
                     return Padding(
                       padding: EdgeInsets.all(24),
                       child: Center(
-                          child: TextTypography(
-                            type: TextType.DESCRIPTION,
-                            text: "Rombel yang dicari tidak ditemukan",
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset("assets/images/no-data.json",
+                                  repeat: true, animate: true, reverse: false),
+                              const SizedBox(height: 10),
+                              TextTypography(
+                                type: TextType.HEADER,
+                                text: "Rombel yang dicari tidak ditemukan.",
+                                align: TextAlign.center,
+                              )
+                            ],
                           )
                       ),
                     );
@@ -336,54 +345,6 @@ class _TeacherHome extends State<TeacherHome> {
                 return const SizedBox(width: 0);
               },
             ),
-            /*CardContainer(
-                child: Column(
-                  children: [
-                    TextTypography(
-                      type: TextType.TITLE,
-                      text: widget.type != UserType.WALI_KELAS || widget.type != UserType.GURU_BK_WALI_KELAS ? "Rekap Diagram Persentase" : "Rekap Diagram Persentase Kelas Anda",
-                    ),
-                    const Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Pie(visual_score: 3, auditorial_score: 4, kinestetik_score: 8)
-                    )
-                  ],
-                )
-            ),
-            if (widget.type == UserType.WALI_KELAS || widget.type == UserType.GURU_BK_WALI_KELAS) ...[
-              CardContainer(
-                  child: Column(
-                    children: [
-                      TextTypography(
-                        type: TextType.TITLE,
-                        text: "Informasi Detail",
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: TextTypography(
-                            type: TextType.DESCRIPTION,
-                            text: "Siswa di rombel ini cenderung kuat dalam hal berhitung dan membaca, "
-                                "serta kuat dalam materi yang berkaitan dengan matematika, "
-                                "namun kurang baik dalam materi tentang Bahasa Inggris",
-                          )),
-                    ],
-                  )),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 25),
-                child: PaginatedDataTable(
-                  dataRowHeight: 70,
-                  columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
-                  source: RombelStyleTableData(
-                      context: context,
-                      content: student_style_list
-                  ),
-                  rowsPerPage: 5,
-                  columnSpacing: 0,
-                  horizontalMargin: 0,
-                  showCheckboxColumn: false,
-                ),
-              )
-            ]*/
           ],
         )
     );

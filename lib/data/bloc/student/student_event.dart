@@ -22,7 +22,7 @@ class StudentQuestionnaire extends Events {
 
 class StudentTestResults extends Events {
   final int id_siswa;
-  final int id_tahun_ajaran;
+  final String tahun_ajaran;
 
-  StudentTestResults({required this.id_siswa, required this.id_tahun_ajaran});
+  StudentTestResults({required this.id_siswa, required this.tahun_ajaran});
 }

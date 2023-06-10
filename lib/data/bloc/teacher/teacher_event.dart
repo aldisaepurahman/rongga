@@ -27,6 +27,14 @@ class StudentScoreInput extends Events {
   StudentScoreInput({required this.scores});
 }
 
+class TeacherExcelCheck extends Events {
+  final int id_sekolah;
+  final int id_tahun_ajaran;
+  final String tahun_ajaran;
+
+  TeacherExcelCheck({required this.id_sekolah, required this.id_tahun_ajaran, required this.tahun_ajaran});
+}
+
 class StudentRombelSearch extends Events {
   final int wali_kelas;
   final int id_sekolah;

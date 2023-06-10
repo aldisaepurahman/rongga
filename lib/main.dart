@@ -20,6 +20,7 @@ import 'package:non_cognitive/data/bloc/student/student_quest_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_score_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
+import 'package:non_cognitive/data/bloc/teacher/teacher_excel_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_home_bloc.dart';
 import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
@@ -43,6 +44,7 @@ Future<void> main() async {
       BlocProvider<StudentQuestBloc>(create: (context) => StudentQuestBloc()),
       BlocProvider<TeacherBloc>(create: (context) => TeacherBloc()),
       BlocProvider<TeacherHomeBloc>(create: (context) => TeacherHomeBloc()),
+      BlocProvider<TeacherExcelBloc>(create: (context) => TeacherExcelBloc()),
       BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       BlocProvider<LoginBloc>(create: (context) => LoginBloc()),
       BlocProvider<RegisterBloc>(create: (context) => RegisterBloc()),

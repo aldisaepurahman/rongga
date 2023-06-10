@@ -8,6 +8,7 @@ class TextInputCustom extends StatefulWidget {
   final String hint;
   final TextInputCustomType type;
   final IconData? icon;
+  final bool? readOnly;
   final Function(String)? onChanged;
 
   const TextInputCustom(
@@ -16,7 +17,7 @@ class TextInputCustom extends StatefulWidget {
       required this.hint,
       required this.type,
       this.icon,
-      this.onChanged,
+      this.onChanged, this.readOnly,
       });
 
   @override
@@ -37,6 +38,7 @@ class TextInputState extends State<TextInputCustom> {
       style: const TextStyle(
         fontFamily: "Poppins"
       ),
+      readOnly: widget.readOnly ?? false,
       cursorColor: gray,
       onChanged: widget.onChanged ?? (value) {},
       decoration: widget.type == TextInputCustomType.WITH_ICON
