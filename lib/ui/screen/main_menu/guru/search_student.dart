@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_event.dart';
 import 'package:non_cognitive/data/model/student.dart';
+import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/badges/badges.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/student_search_card.dart';
@@ -12,6 +15,7 @@ import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
 import 'package:non_cognitive/utils/student_list_dummy.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchStudent extends StatefulWidget {
   final UserType type;
@@ -26,14 +30,41 @@ class _SearchStudent extends State<SearchStudent> {
   final rombelController = TextEditingController();
 
   List<Student> list_student = <Student>[];
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Teacher _teacher = Teacher(
+      idNumber: "",
+      name: "",
+      email: "",
+      password: "",
+      gender: "",
+      no_telp: "",
+      photo: "",
+      address: "",
+      type: UserType.GURU,
+      id_sekolah: 0,
+      id_tahun_ajaran: 0,
+      tahun_ajaran: '',
+      token: ''
+  );
+
+  void initProfile() async {
+    final SharedPreferences prefs = await _prefs;
+    final String user = prefs.getString("user") ?? "";
+
+    setState(() {
+      _teacher = Teacher.fromJson(jsonDecode(user));
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    initProfile();
 
     Future.delayed(Duration.zero, () {
       BlocProvider.of<TeacherBloc>(context)
-          .add(StudentOnSearch(id_sekolah: 1, nama: "", rombel: ""));
+          .add(StudentOnSearch(id_sekolah: 1, nama: "", rombel: "", token: _teacher.token!));
     });
   }
 
@@ -59,7 +90,9 @@ class _SearchStudent extends State<SearchStudent> {
                     StudentOnSearch(
                         id_sekolah: 1,
                         nama: namaController.text,
-                        rombel: rombelController.text));
+                        rombel: rombelController.text,
+                      token: _teacher.token!
+                    ));
               },
             ),
             BlocConsumer<TeacherBloc, RonggaState>(

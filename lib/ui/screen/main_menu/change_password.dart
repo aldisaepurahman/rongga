@@ -21,8 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ChangePassword extends StatefulWidget {
   final UserType type;
   final int id_user;
+  final String token;
 
-  const ChangePassword({super.key, required this.type, required this.id_user});
+  const ChangePassword({super.key, required this.type, required this.id_user, required this.token});
 
   @override
   State<StatefulWidget> createState() => _ChangePassword();
@@ -92,7 +93,7 @@ class _ChangePassword extends State<ChangePassword> {
         verifyPassController.text.isNotEmpty &&
         newPassController.text == verifyPassController.text) {
       BlocProvider.of<AuthBloc>(context).add(
-          AuthChangePassword(id_user: widget.id_user, password: newPassController.text));
+          AuthChangePassword(id_user: widget.id_user, password: newPassController.text, token: widget.token));
     }
     else {
       showSubmitDialog(4);

@@ -24,10 +24,10 @@ class TeacherExcelBloc extends Bloc<Events, RonggaState> {
       emit(LoadingState());
       final RonggaService service = RonggaService();
       await Future.wait([
-        service.searchStudent({"id_sekolah": event.id_sekolah}),
-        service.getCurrentTahunAjaran({"id_tahun_ajaran": event.id_tahun_ajaran}),
-        service.getPreviousTahunAjaran({"tahun_ajaran": event.tahun_ajaran}),
-        service.getAllScore({"id_sekolah": event.id_sekolah}),
+        service.searchStudent({"id_sekolah": event.id_sekolah}, event.token),
+        service.getCurrentTahunAjaran({"id_tahun_ajaran": event.id_tahun_ajaran}, event.token),
+        service.getPreviousTahunAjaran({"tahun_ajaran": event.tahun_ajaran}, event.token),
+        service.getAllScore({"id_sekolah": event.id_sekolah}, event.token),
       ]).then((arr) {
         bool foundError = false;
 

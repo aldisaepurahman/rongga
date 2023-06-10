@@ -19,8 +19,9 @@ import 'package:non_cognitive/utils/user_type.dart';
 class AdminFormRombel extends StatefulWidget {
   RombelSekolah? rombel;
   final int id_sekolah;
+  final String token;
 
-  AdminFormRombel({super.key, this.rombel, required this.id_sekolah});
+  AdminFormRombel({super.key, this.rombel, required this.id_sekolah, required this.token});
 
   @override
   State<StatefulWidget> createState() => _AdminFormRombel();
@@ -206,14 +207,14 @@ class _AdminFormRombel extends State<AdminFormRombel> {
                                     "id_sekolah": widget.id_sekolah,
                                     "id_tingkat_kelas": _tingkatOpt[_tingkatChoice],
                                     "rombel": rombelController.text,
-                                  }));
+                                  }, token: widget.token));
                                 } else {
                                   BlocProvider.of<RombelSekolahBloc>(context)
                                       .add(RombelSekolahAdd(rombel_sekolah: {
                                     "id_sekolah": widget.id_sekolah,
                                     "id_tingkat_kelas": _tingkatOpt[_tingkatChoice],
                                     "rombel": rombelController.text,
-                                  }));
+                                  }, token: widget.token));
                                 }
                               } else {
                                 showSubmitDialog(4);

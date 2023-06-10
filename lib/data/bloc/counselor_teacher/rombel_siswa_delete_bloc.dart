@@ -21,8 +21,8 @@ class RombelSiswaDeleteBloc extends Bloc<Events, RonggaState> {
       emit(LoadingState());
       final RonggaService service = RonggaService();
       await Future.wait([
-        service.deleteRombelSiswa({"id_sekolah": event.id_sekolah, "id_tahun_ajaran": event.id_tahun_ajaran, "tingkat": event.tingkat}),
-        service.deleteWaliKelas({"id_sekolah": event.id_sekolah, "id_tahun_ajaran": event.id_tahun_ajaran, "tingkat": event.tingkat}),
+        service.deleteRombelSiswa({"id_sekolah": event.id_sekolah, "id_tahun_ajaran": event.id_tahun_ajaran, "tingkat": event.tingkat}, event.token),
+        service.deleteWaliKelas({"id_sekolah": event.id_sekolah, "id_tahun_ajaran": event.id_tahun_ajaran, "tingkat": event.tingkat}, event.token),
       ]).then((arr) {
         bool foundError = false;
 

@@ -19,9 +19,10 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class AdminFormTahunAjaran extends StatefulWidget {
   final int id_sekolah;
+  final String token;
   TahunAjaran? thnAjaran;
 
-  AdminFormTahunAjaran({super.key, this.thnAjaran, required this.id_sekolah});
+  AdminFormTahunAjaran({super.key, this.thnAjaran, required this.id_sekolah, required this.token});
 
   @override
   State<StatefulWidget> createState() => _AdminFormTahunAjaran();
@@ -200,14 +201,14 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                                     "id_sekolah": widget.id_sekolah,
                                     "tahun_ajaran": tahunController.text,
                                     "semester": _semesterChoice
-                                  }));
+                                  }, token: widget.token));
                                 } else {
                                   BlocProvider.of<TahunAjaranBloc>(context)
                                       .add(TahunAjaranAdd(tahun_ajaran: {
                                     "id_sekolah": widget.id_sekolah,
                                     "tahun_ajaran": tahunController.text,
                                     "semester": _semesterChoice
-                                  }));
+                                  }, token: widget.token));
                                 }
                               } else {
                                 showSubmitDialog(4);

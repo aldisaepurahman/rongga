@@ -102,11 +102,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> searchTeacher(Map<String, dynamic> request) async {
+  Future<ServiceStatus> searchTeacher(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/searchTeacher",
         data: request,
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $token"
+          }
+        )
       );
 
       if (response == null) {
@@ -121,11 +126,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> searchStudent(Map<String, dynamic> request) async {
+  Future<ServiceStatus> searchStudent(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/searchStudents",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       // print("Info: ${response.data["values"].toString()}");
@@ -142,13 +152,18 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> editStudent(Map<String, dynamic> request) async {
+  Future<ServiceStatus> editStudent(Map<String, dynamic> request, String token) async {
     try {
       FormData data = FormData.fromMap(request);
 
       final response = await _dio.put(
         "$_baseUrl/editStudent",
-        data: data
+        data: data,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       print("Info: ${response.toString()}");
@@ -163,13 +178,18 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> editTeacher(Map<String, dynamic> request) async {
+  Future<ServiceStatus> editTeacher(Map<String, dynamic> request, String token) async {
     try {
       FormData data = FormData.fromMap(request);
 
       final response = await _dio.put(
           "$_baseUrl/editTeacher",
-          data: data
+          data: data,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -182,11 +202,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> changePassword(Map<String, dynamic> request) async {
+  Future<ServiceStatus> changePassword(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.put(
           "$_baseUrl/changePassword",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -199,11 +224,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getAllScore(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getAllScore(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/nilaiSiswa/all",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       // print("Info: ${response.data["values"].toString()}");
@@ -218,11 +248,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getAllExistingMapel(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getAllExistingMapel(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/nilaiSiswa/exists",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       print("Info: ${response.data["values"].toString()}");
@@ -237,11 +272,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> addNilaiAkhirSiswa(Map<String, dynamic> request) async {
+  Future<ServiceStatus> addNilaiAkhirSiswa(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/nilaiSiswa/add",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -254,11 +294,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getCurrentTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getCurrentTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/tahunAjaran/current",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       // print("Info: ${response.data["values"].toString()}");
@@ -275,11 +320,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getPreviousTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getPreviousTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/tahunAjaran/previous",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       // print("Info: ${response.data["values"].toString()}");
@@ -296,11 +346,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> showTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> showTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/tahunAjaran",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       print("Info: ${response.data["values"].toString()}");
@@ -317,11 +372,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> addTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> addTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/tahunAjaran/add",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -334,11 +394,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> editTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> editTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.put(
           "$_baseUrl/tahunAjaran/edit",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -351,11 +416,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> deleteTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> deleteTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.delete(
           "$_baseUrl/tahunAjaran/delete",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -368,11 +438,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> setActiveTahunAjaran(Map<String, dynamic> request) async {
+  Future<ServiceStatus> setActiveTahunAjaran(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.put(
           "$_baseUrl/tahunAjaran/active",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -385,11 +460,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> showRombelSekolah(Map<String, dynamic> request) async {
+  Future<ServiceStatus> showRombelSekolah(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/rombelSekolah",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -404,11 +484,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> addRombelSekolah(Map<String, dynamic> request) async {
+  Future<ServiceStatus> addRombelSekolah(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/rombelSekolah/add",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -421,11 +506,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> editRombelSekolah(Map<String, dynamic> request) async {
+  Future<ServiceStatus> editRombelSekolah(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.put(
           "$_baseUrl/rombelSekolah/edit",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -438,11 +528,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> deleteRombelSekolah(Map<String, dynamic> request) async {
+  Future<ServiceStatus> deleteRombelSekolah(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.delete(
           "$_baseUrl/rombelSekolah/delete",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -455,11 +550,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> testQuestionnaire(Map<String, dynamic> request) async {
+  Future<ServiceStatus> testQuestionnaire(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/kuesioner",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -472,11 +572,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getTestResults(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getTestResults(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/kuesioner/show",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       print("Info: ${response.data["values"].toString()}");
@@ -493,11 +598,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getStudentTingkat(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getStudentTingkat(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/rombelSiswa/getAllSiswa",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -512,11 +622,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getAverageNilaiAkhir(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getAverageNilaiAkhir(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/rombelSiswa/getAverage",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -529,11 +644,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getAllTestResults(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getAllTestResults(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/rombelSiswa/getAllTests",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -546,11 +666,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> addSiswaToRombel(Map<String, dynamic> request) async {
+  Future<ServiceStatus> addSiswaToRombel(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/rombelSiswa/add",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -563,11 +688,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> addWaliKelas(Map<String, dynamic> request) async {
+  Future<ServiceStatus> addWaliKelas(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
           "$_baseUrl/rombelWaliKelas/add",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -580,11 +710,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> deleteRombelSiswa(Map<String, dynamic> request) async {
+  Future<ServiceStatus> deleteRombelSiswa(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.delete(
           "$_baseUrl/rombelSiswa/delete",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -597,11 +732,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> deleteWaliKelas(Map<String, dynamic> request) async {
+  Future<ServiceStatus> deleteWaliKelas(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.delete(
           "$_baseUrl/rombelWaliKelas/delete",
-          data: request
+          data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {
@@ -614,11 +754,16 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getRombelSearch(Map<String, dynamic> request) async {
+  Future<ServiceStatus> getRombelSearch(Map<String, dynamic> request, String token) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/rombelSiswa/showDetail",
         data: request,
+          options: Options(
+              headers: {
+                "Authorization": "Bearer $token"
+              }
+          )
       );
 
       if (response == null) {

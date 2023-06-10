@@ -23,6 +23,7 @@ import 'package:non_cognitive/utils/user_type.dart';
 
 class InsertManualStudent extends StatefulWidget {
   final UserType type;
+  final String token;
   final int id_tahun_ajaran;
   final int tingkat;
   final List<Student> listStudent;
@@ -31,6 +32,7 @@ class InsertManualStudent extends StatefulWidget {
   const InsertManualStudent(
       {super.key,
       required this.type,
+      required this.token,
       required this.id_tahun_ajaran,
       required this.tingkat,
       required this.listStudent,
@@ -172,7 +174,7 @@ class _InsertManualStudent extends State<InsertManualStudent> {
                   list_siswa.add(mapping);
 
                   BlocProvider.of<RombelSiswaAddBloc>(context)
-                      .add(AddManualRombelSiswa(list_siswa: list_siswa));
+                      .add(AddManualRombelSiswa(list_siswa: list_siswa, token: widget.token));
                 } else {
                   showSubmitDialog(4);
                 }

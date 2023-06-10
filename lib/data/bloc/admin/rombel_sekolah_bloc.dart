@@ -20,7 +20,7 @@ class RombelSekolahBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.showRombelSekolah({"id_sekolah": event.id_sekolah}).then((status) {
+      await service.showRombelSekolah({"id_sekolah": event.id_sekolah}, event.token).then((status) {
         var rombel_sekolah = List<RombelSekolah>.from(status.datastore);
         emit(status.message.isEmpty
             ? SuccessState(rombel_sekolah)
@@ -36,7 +36,7 @@ class RombelSekolahBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.addRombelSekolah(event.rombel_sekolah).then((status) {
+      await service.addRombelSekolah(event.rombel_sekolah, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {
@@ -48,7 +48,7 @@ class RombelSekolahBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.editRombelSekolah(event.rombel_sekolah).then((status) {
+      await service.editRombelSekolah(event.rombel_sekolah, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

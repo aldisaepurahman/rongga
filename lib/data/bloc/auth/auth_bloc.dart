@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.changePassword({"id": event.id_user, "password": event.password}).then((status) {
+      await service.changePassword({"id": event.id_user, "password": event.password}, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

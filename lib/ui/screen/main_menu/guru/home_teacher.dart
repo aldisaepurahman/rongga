@@ -82,6 +82,7 @@ class _TeacherHome extends State<TeacherHome> {
           tingkat: widget.type == UserType.ADMIN ? 0 : _tingkatOpt[_tingkatChoice],
           rombel: "",
           id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+          token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
         ));
   }
 
@@ -215,6 +216,7 @@ class _TeacherHome extends State<TeacherHome> {
                                       tingkat: _tingkatOpt[_tingkatChoice],
                                       rombel: rombelController.text,
                                       id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+                                      token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
                                     ));
                               },
                             )
@@ -246,9 +248,18 @@ class _TeacherHome extends State<TeacherHome> {
                   return Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
-                        child: TextTypography(
-                          type: TextType.DESCRIPTION,
-                          text: state.error,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/images/incorrect.json",
+                                repeat: true, animate: true, reverse: false),
+                            const SizedBox(height: 10),
+                            TextTypography(
+                              type: TextType.HEADER,
+                              text: "Waduh, terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
+                              align: TextAlign.center,
+                            )
+                          ],
                         )
                     ),
                   );
@@ -342,7 +353,24 @@ class _TeacherHome extends State<TeacherHome> {
                     ],
                   );
                 }
-                return const SizedBox(width: 0);
+                return Padding(
+                  padding: EdgeInsets.all(24),
+                  child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset("assets/images/no-data.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
+                          TextTypography(
+                            type: TextType.HEADER,
+                            text: "Tidak ada data yang ditemukan.",
+                            align: TextAlign.center,
+                          )
+                        ],
+                      )
+                  ),
+                );
               },
             ),
           ],

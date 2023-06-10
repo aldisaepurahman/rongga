@@ -22,8 +22,8 @@ class RombelSiswaAddBloc extends Bloc<Events, RonggaState> {
       emit(LoadingState());
       final RonggaService service = RonggaService();
       await Future.wait([
-        service.addSiswaToRombel({"rombel_siswa": event.list_siswa}),
-        service.addWaliKelas({"wali_kelas": event.list_wali}),
+        service.addSiswaToRombel({"rombel_siswa": event.list_siswa}, event.token),
+        service.addWaliKelas({"wali_kelas": event.list_wali}, event.token),
       ]).then((arr) {
         bool foundError = false;
 
@@ -52,7 +52,7 @@ class RombelSiswaAddBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.addSiswaToRombel({"rombel_siswa": event.list_siswa}).then((status) {
+      await service.addSiswaToRombel({"rombel_siswa": event.list_siswa}, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

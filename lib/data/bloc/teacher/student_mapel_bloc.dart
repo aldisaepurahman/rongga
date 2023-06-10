@@ -15,7 +15,7 @@ class StudentMapelBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.getAllExistingMapel(event.criterias).then((students) {
+      await service.getAllExistingMapel(event.criterias, event.token).then((students) {
         var list_nilai = List<NilaiAkhirInput>.from(students.datastore);
         emit(students.message.isEmpty
             ? SuccessState(list_nilai)

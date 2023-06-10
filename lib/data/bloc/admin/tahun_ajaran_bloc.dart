@@ -18,7 +18,7 @@ class TahunAjaranBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.showTahunAjaran({"id_sekolah": event.id_sekolah}).then((status) {
+      await service.showTahunAjaran({"id_sekolah": event.id_sekolah}, event.token).then((status) {
         var tahun_ajaran = List<TahunAjaran>.from(status.datastore);
         emit(status.message.isEmpty
             ? SuccessState(tahun_ajaran)
@@ -34,7 +34,7 @@ class TahunAjaranBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.addTahunAjaran(event.tahun_ajaran).then((status) {
+      await service.addTahunAjaran(event.tahun_ajaran, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {
@@ -46,7 +46,7 @@ class TahunAjaranBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.editTahunAjaran(event.tahun_ajaran).then((status) {
+      await service.editTahunAjaran(event.tahun_ajaran, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

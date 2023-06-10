@@ -271,7 +271,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     if (student_data["no_induk"].isNotEmpty && student_data["email"].isNotEmpty && student_data["nama"].isNotEmpty
     && student_data["gender"].isNotEmpty && student_data["status_siswa"] > 0 && student_data["id_tingkat_siswa"] > 0
     && student_data["tahun_masuk"].isNotEmpty) {
-      BlocProvider.of<StudentBloc>(context).add(StudentUpdateProfile(student: student_data));
+      BlocProvider.of<StudentBloc>(context).add(StudentUpdateProfile(student: student_data, token: widget.student.token!));
     }
      else {
       showSubmitDialog(4);
@@ -640,7 +640,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         ..onTap = () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!)));
+                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!, token: widget.student.token!)));
                         })
                 ]),
           ),
@@ -857,7 +857,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                         ..onTap = () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!)));
+                                  ChangePassword(type: UserType.SISWA, id_user: widget.student.id_users!, token: widget.student.token!)));
                         })
                 ]),
           ),

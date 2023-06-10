@@ -16,7 +16,7 @@ class TeacherBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.searchStudent({"id_sekolah": event.id_sekolah, "nama": event.nama, "rombel": event.rombel}).then((students) {
+      await service.searchStudent({"id_sekolah": event.id_sekolah, "nama": event.nama, "rombel": event.rombel}, event.token).then((students) {
         var list_student = List<Student>.from(students.datastore);
         emit(students.message.isEmpty
             ? SuccessState(list_student)
@@ -34,7 +34,7 @@ class TeacherBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.editTeacher(event.teacher).then((status) {
+      await service.editTeacher(event.teacher, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

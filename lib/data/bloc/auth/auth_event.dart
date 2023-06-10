@@ -10,8 +10,9 @@ class AuthLogin extends Events {
 class AuthChangePassword extends Events {
   final int id_user;
   final String password;
+  final String token;
 
-  AuthChangePassword({required this.id_user, required this.password});
+  AuthChangePassword({required this.id_user, required this.password, required this.token});
 }
 
 class AuthRegister extends Events {

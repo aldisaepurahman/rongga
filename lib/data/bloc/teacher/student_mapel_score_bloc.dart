@@ -15,7 +15,7 @@ class StudentMapelScoreBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.addNilaiAkhirSiswa({"nilai_akhir": event.scores}).then((scores) {
+      await service.addNilaiAkhirSiswa({"nilai_akhir": event.scores}, event.token).then((scores) {
         emit(CrudState(scores.datastore));
       }).catchError((error) {
         emit(FailureState(error.toString()));

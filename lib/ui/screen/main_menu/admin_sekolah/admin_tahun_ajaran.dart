@@ -49,7 +49,7 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
     BlocProvider.of<TahunAjaranBloc>(context).add(ResetEvent());
     print("user: ${_user.id_sekolah}");
     BlocProvider.of<TahunAjaranBloc>(context)
-        .add(TahunAjaranShow(id_sekolah: _user.id_sekolah!));
+        .add(TahunAjaranShow(id_sekolah: _user.id_sekolah!, token: _user.token!));
   }
 
   void recreateProfile() async {
@@ -142,10 +142,12 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
               BlocProvider.of<TahunAjaranDelActBloc>(context).add(
                   TahunAjaranActive(
                       id_tahun_ajaran: thn_ajaran.id_thn_ajaran!,
-                      id_sekolah: _user.id_sekolah!));
+                      id_sekolah: _user.id_sekolah!,
+                    token: _user.token!
+                  ));
             } else {
               BlocProvider.of<TahunAjaranDelActBloc>(context).add(
-                  TahunAjaranDelete(id_tahun_ajaran: thn_ajaran.id_thn_ajaran!));
+                  TahunAjaranDelete(id_tahun_ajaran: thn_ajaran.id_thn_ajaran!, token: _user.token!));
             }
           },
         );
@@ -174,7 +176,7 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => AdminFormTahunAjaran(
-                        id_sekolah: _user.id_sekolah!))).then(onBackPage);
+                        id_sekolah: _user.id_sekolah!, token: _user.token!))).then(onBackPage);
           },
         ),
         child: ListView(
@@ -241,8 +243,9 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
                                 MaterialPageRoute(
                                     builder: (context) => AdminFormTahunAjaran(
                                         id_sekolah: _user.id_sekolah!,
-                                        thnAjaran:
-                                            thn_ajaran))).then(onBackPage);
+                                        thnAjaran: thn_ajaran,
+                                      token: _user.token!,
+                                    ))).then(onBackPage);
                           },
                           onDeleted: (TahunAjaran thn_ajaran) {
                             submitWarningDialog(thn_ajaran, 2);

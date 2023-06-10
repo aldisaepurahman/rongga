@@ -18,7 +18,7 @@ class RombelSekolahDelActBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.deleteRombelSekolah({"id_rombel": event.id_rombel}).then((status) {
+      await service.deleteRombelSekolah({"id_rombel": event.id_rombel}, event.token).then((status) {
         emit(CrudState(status.datastore));
       });
     } catch (error) {

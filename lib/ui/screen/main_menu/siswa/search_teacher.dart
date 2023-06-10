@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_event.dart';
+import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/teacher_search_card.dart';
@@ -11,6 +14,7 @@ import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
 import 'package:non_cognitive/utils/teacher_list_dummy.dart';
 import 'package:non_cognitive/utils/user_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchTeacher extends StatefulWidget {
   const SearchTeacher({super.key});
@@ -24,13 +28,41 @@ class _SearchTeacher extends State<SearchTeacher> {
 
   List<Teacher> list_teacher = <Teacher>[];
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  Student _student = Student(
+      idNumber: "",
+      name: "",
+      email: "",
+      password: "",
+      gender: "",
+      no_telp: "",
+      photo: "",
+      address: "",
+      type: UserType.SISWA,
+      id_sekolah: 0,
+      id_tahun_ajaran: 0,
+      tahun_ajaran: '',
+      token: ''
+  );
+
+  void initProfile() async {
+    final SharedPreferences prefs = await _prefs;
+    final String user = prefs.getString("user") ?? "";
+
+    setState(() {
+      _student = Student.fromJson(jsonDecode(user));
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    initProfile();
 
     Future.delayed(Duration.zero, () {
       BlocProvider.of<StudentBloc>(context)
-          .add(TeacherOnSearch(id_sekolah: 1, nama: ""));
+          .add(TeacherOnSearch(id_sekolah: 1, nama: "", token: _student.token!));
     });
   }
 
@@ -49,7 +81,7 @@ class _SearchTeacher extends State<SearchTeacher> {
               namaController: namaController,
               onPressedSubmit: () {
                 BlocProvider.of<StudentBloc>(context)
-                    .add(TeacherOnSearch(id_sekolah: 1, nama: namaController.text));
+                    .add(TeacherOnSearch(id_sekolah: 1, nama: namaController.text, token: _student.token!));
               },
             ),
             BlocConsumer<StudentBloc, RonggaState>(

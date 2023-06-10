@@ -168,7 +168,7 @@ class _Questionnaire extends State<Questionnaire> {
       }
     }
 
-    BlocProvider.of<StudentQuestBloc>(context).add(StudentQuestionnaire(quests: quests));
+    BlocProvider.of<StudentQuestBloc>(context).add(StudentQuestionnaire(quests: quests, token: _student.token!));
   }
 
   void resetForm() {

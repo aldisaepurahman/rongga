@@ -150,14 +150,16 @@ class _CreateRombel extends State<CreateRombel> {
                 DeleteRombelSiswa(
                     id_tahun_ajaran: _teacher.id_tahun_ajaran!,
                     id_sekolah: _teacher.id_sekolah!,
-                    tingkat: tingkatKelasOpt[tingkatChoice]!
+                    tingkat: tingkatKelasOpt[tingkatChoice]!,
+                    token: _teacher.token!
                 ));
             BlocProvider.of<RombelSiswaDeleteBloc>(context).add(ResetEvent());
             BlocProvider.of<RombelSiswaMakeBloc>(context).add(
                 MakeRombelSiswa(
                     id_tahun_ajaran: _teacher.id_tahun_ajaran!,
                     id_sekolah: _teacher.id_sekolah!,
-                    tingkat: tingkatKelasOpt[tingkatChoice]!
+                    tingkat: tingkatKelasOpt[tingkatChoice]!,
+                  token: _teacher.token!
                 ));
             BlocProvider.of<RombelSiswaCheckBloc>(context).add(ResetEvent());
             setState(() {
@@ -250,7 +252,7 @@ class _CreateRombel extends State<CreateRombel> {
 
       list_wali.add(wali_mapping);
     }
-    BlocProvider.of<RombelSiswaAddBloc>(context).add(AddRombelSiswa(list_siswa: list_siswa, list_wali: list_wali));
+    BlocProvider.of<RombelSiswaAddBloc>(context).add(AddRombelSiswa(list_siswa: list_siswa, list_wali: list_wali, token: _teacher.token!));
   }
 
   @override
@@ -309,7 +311,8 @@ class _CreateRombel extends State<CreateRombel> {
                     CheckRombelSiswa(
                         id_tahun_ajaran: _teacher.id_tahun_ajaran!,
                       id_sekolah: _teacher.id_sekolah!,
-                      tingkat: tingkatKelasOpt[tingkatChoice]!
+                      tingkat: tingkatKelasOpt[tingkatChoice]!,
+                        token: _teacher.token!
                     ));
               },
               onManualInput: () {
@@ -330,6 +333,7 @@ class _CreateRombel extends State<CreateRombel> {
                           tingkat: tingkatKelasOpt[tingkatChoice]!,
                           listStudent: students,
                           listRombel: rombels,
+                          token: _teacher.token!,
                         )));
                 setState(() {
                   widget.extendedContents = false;
@@ -468,7 +472,8 @@ class _CreateRombel extends State<CreateRombel> {
                                   MakeRombelSiswa(
                                       id_tahun_ajaran: _teacher.id_tahun_ajaran!,
                                       id_sekolah: _teacher.id_sekolah!,
-                                      tingkat: tingkatKelasOpt[tingkatChoice]!
+                                      tingkat: tingkatKelasOpt[tingkatChoice]!,
+                                    token: _teacher.token!
                                   ));
                               BlocProvider.of<RombelSiswaCheckBloc>(context).add(ResetEvent());
                               widget.extendedContents = true;

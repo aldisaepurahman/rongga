@@ -279,7 +279,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
 
     if (teacher_data["no_induk"].isNotEmpty && teacher_data["email"].isNotEmpty && teacher_data["nama"].isNotEmpty
         && teacher_data["gender"].isNotEmpty && teacher_data["status_kerja"] > 0 && teacher_data["id_mapel"] > 0) {
-      BlocProvider.of<TeacherBloc>(context).add(TeacherUpdateProfile(teacher: teacher_data));
+      BlocProvider.of<TeacherBloc>(context).add(TeacherUpdateProfile(teacher: teacher_data, token: widget.teacher.token!));
     }
     else {
       showSubmitDialog(4);
@@ -671,7 +671,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!))
+                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!, token: widget.teacher.token!))
                           );
                         })
                 ]),
@@ -907,7 +907,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!))
+                              MaterialPageRoute(builder: (context) => ChangePassword(type: UserType.GURU, id_user: widget.teacher.id_users!, token: widget.teacher.token!))
                           );
                         })
                 ]),

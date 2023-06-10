@@ -276,7 +276,9 @@ class _TeacherScoreExcelInput extends State<TeacherScoreExcelInput> {
     BlocProvider.of<TeacherExcelBloc>(context).add(TeacherExcelCheck(
         id_sekolah: widget.teacher.id_sekolah!,
         id_tahun_ajaran: widget.teacher.id_tahun_ajaran!,
-        tahun_ajaran: widget.teacher.tahun_ajaran!));
+        tahun_ajaran: widget.teacher.tahun_ajaran!,
+      token: widget.teacher.token!
+    ));
   }
 
   @override
@@ -343,7 +345,7 @@ class _TeacherScoreExcelInput extends State<TeacherScoreExcelInput> {
                 _importExcel();
               },
               onPressedSubmit: () {
-                BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_final_score));
+                BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_final_score, token: widget.teacher.token!));
               },
             ),
             BlocConsumer<TeacherExcelBloc, RonggaState>(

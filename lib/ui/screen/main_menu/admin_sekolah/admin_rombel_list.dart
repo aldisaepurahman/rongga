@@ -49,7 +49,7 @@ class _AdminRombelList extends State<AdminRombelList> {
     BlocProvider.of<RombelSekolahBloc>(context).add(ResetEvent());
 
     BlocProvider.of<RombelSekolahBloc>(context)
-        .add(RombelSekolahShow(id_sekolah: _user.id_sekolah!));
+        .add(RombelSekolahShow(id_sekolah: _user.id_sekolah!, token: _user.token!));
   }
 
   void initProfile() async {
@@ -121,7 +121,7 @@ class _AdminRombelList extends State<AdminRombelList> {
             isSubmitted = true;
             _rombel = rombel;
             BlocProvider.of<RombelSekolahDelActBloc>(context).add(
-                  RombelSekolahDelete(id_rombel: rombel.id_rombel!));
+                  RombelSekolahDelete(id_rombel: rombel.id_rombel!, token: _user.token!));
           },
         );
       },
@@ -146,7 +146,7 @@ class _AdminRombelList extends State<AdminRombelList> {
           icon: Icons.add,
           onPressed: () {
             Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AdminFormRombel(id_sekolah: _user.id_sekolah!))
+              MaterialPageRoute(builder: (context) => AdminFormRombel(id_sekolah: _user.id_sekolah!, token: _user.token!))
             ).then(onBackPage);
           },
         ),
@@ -211,6 +211,7 @@ class _AdminRombelList extends State<AdminRombelList> {
                                 MaterialPageRoute(
                                     builder: (context) => AdminFormRombel(
                                         id_sekolah: _user.id_sekolah!,
+                                        token: _user.token!,
                                         rombel: rombel))).then(onBackPage);
                           },
                           onDeleted: (RombelSekolah rombel) {

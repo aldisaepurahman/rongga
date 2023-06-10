@@ -81,7 +81,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
     };
     print("mapp : $mapp");
     Future.delayed(Duration.zero, () {
-      BlocProvider.of<StudentMapelBloc>(context).add(StudentScoreExists(criterias: mapp));
+      BlocProvider.of<StudentMapelBloc>(context).add(StudentScoreExists(criterias: mapp, token: _teacher.token!));
     });
   }
 
@@ -143,7 +143,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
           onPressedButtonRight: () {
             Navigator.of(context).pop();
             isSubmitted = true;
-            BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_nilai));
+            BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_nilai, token: _teacher.token!));
           },
         );
       },
