@@ -121,6 +121,7 @@ class _TeacherProfile extends State<TeacherProfile> {
   ListView _renderPage(bool isMobile, Teacher teacher) {
     return ListView(
       shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 25),
       children: [
         /*if (widget.type == UserType.GURU)
@@ -173,30 +174,34 @@ class _TeacherProfile extends State<TeacherProfile> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ButtonWidget(
-                  background: green,
-                  tint: green,
-                  type: ButtonType.OUTLINED,
-                  content: "Ubah Profil",
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) =>
-                          TeacherProfileUpdate(type: widget.type, teacher: teacher),
-                    )).then(onBackPage);
-                  },
+                Expanded(
+                    child: ButtonWidget(
+                      background: green,
+                      tint: green,
+                      type: ButtonType.OUTLINED,
+                      content: "Ubah Profil",
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>
+                              TeacherProfileUpdate(type: widget.type, teacher: teacher),
+                        )).then(onBackPage);
+                      },
+                    )
                 ),
                 const SizedBox(width: 20),
-                ButtonWidget(
-                  background: green,
-                  tint: white,
-                  type: ButtonType.MEDIUM,
-                  content: "Import Nilai Akhir Siswa",
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) =>
-                          TeacherScoreExcelInput(type: widget.type, teacher: teacher),
-                    )).then(onBackPage);
-                  },
+                Expanded(
+                    child: ButtonWidget(
+                      background: green,
+                      tint: white,
+                      type: ButtonType.MEDIUM,
+                      content: "Import Nilai Akhir Siswa",
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) =>
+                              TeacherScoreExcelInput(type: widget.type, teacher: teacher),
+                        )).then(onBackPage);
+                      },
+                    )
                 ),
               ],
             )

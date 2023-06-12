@@ -29,7 +29,7 @@ class StudentQuestBloc extends Bloc<Events, RonggaState> {
     try {
       emit(LoadingState());
       final RonggaService service = RonggaService();
-      await service.getTestResults({"id_siswa": event.id_siswa, "tahun_ajaran": event.tahun_ajaran}, event.token).then((tests) {
+      await service.getTestResults({"id_siswa": event.id_siswa, "tahun_ajaran": event.tahun_ajaran}).then((tests) {
         var list_tests = tests.datastore as StudentStyle;
         emit(tests.message.isEmpty
             ? SuccessState(list_tests)

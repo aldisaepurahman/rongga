@@ -201,7 +201,7 @@ class _AdminRombelList extends State<AdminRombelList> {
                   if (state is SuccessState) {
                     return PaginatedDataTable(
                       dataRowHeight: 50,
-                      columns: createTableHeaders(["No", "Tahun Ajaran", "Aksi"]),
+                      columns: createTableHeaders(["No", "Nama Rombel", "Aksi"]),
                       source: RombelAdminTableData(
                           context: context,
                           content: rombel_sekolah,

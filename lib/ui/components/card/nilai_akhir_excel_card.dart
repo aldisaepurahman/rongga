@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
@@ -34,6 +35,8 @@ class _NilaiAkhirExcelCard extends State<NilaiAkhirExcelCard> {
 
   @override
   Widget build(BuildContext context) {
+    final _showMobile = MediaQuery.of(context).size.width < screenMd;
+
     return CardContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,14 +46,15 @@ class _NilaiAkhirExcelCard extends State<NilaiAkhirExcelCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 130,
+                  Expanded(
                     child: TextTypography(
                       type: TextType.DESCRIPTION,
                       text: "Import Excel",
                     ),
                   ),
+                  const SizedBox(width: 20),
                   Expanded(
+                    flex: 3,
                       child: TextInputCustom(
                           controller: widget.rombelController,
                           hint: "Nama File",
@@ -59,12 +63,15 @@ class _NilaiAkhirExcelCard extends State<NilaiAkhirExcelCard> {
                       )
                   ),
                   const SizedBox(width: 20),
-                  ButtonWidget(
-                    background: orange,
-                    tint: black,
-                    type: ButtonType.MEDIUM,
-                    content: "Import",
-                    onPressed: widget.onBrowse,
+                  Expanded(
+                      child: ButtonWidget(
+                        background: orange,
+                        tint: black,
+                        type: (_showMobile) ? ButtonType.ICON_ONLY : ButtonType.MEDIUM,
+                        icon: Icons.upload,
+                        content: "Import",
+                        onPressed: widget.onBrowse,
+                      )
                   ),
                 ],
               )

@@ -81,7 +81,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
           onTap: widget.item.name != widget.menu_name ? changePage(widget.type, widget.item.name) : () {},
           child: Container(
             width: widget.isMobilePage ? 44 : null,
-            height: 44,
+            height: 34,
             padding: const EdgeInsets.symmetric(horizontal: 8),
             margin: const EdgeInsets.symmetric(vertical: 8),
             child: Row(
@@ -91,7 +91,7 @@ class _SidebarMenuCustom extends State<SidebarMenuCustom> {
               children: [
                 Icon(
                   widget.item.icon,
-                  size: 20,
+                  size: 16,
                   color: widget.item.name == widget.menu_name ? orange : _iconColor,
                 ),
                 if (!widget.isMobilePage) ...[

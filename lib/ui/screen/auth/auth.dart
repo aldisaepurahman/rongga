@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/screen/auth/login.dart';
 import 'package:non_cognitive/ui/screen/auth/register.dart';
@@ -59,31 +60,73 @@ class _AuthenticatePage extends State<AuthenticatePage> {
     final _showMobile = MediaQuery.of(context).size.width < screenMd;
 
     if (_showMobile) {
-      return Scaffold(
-        body: ListView(
-          children: [
-            Visibility(
-              visible: (visible) ? false : true,
-                child: SizedBox(
-                  height: 800,
-                  child: OnboardingPage(
-                      isMobilePage: _showMobile,
-                      onButtonClicked: (int value) {
-                        setState(() {
-                          if (value == 1) {
-                            visible = true;
-                            authVisible = true;
-                            _saveOnboardingSession();
+      return WillPopScope(
+          onWillPop: () async {
+            SystemNavigator.pop();
+            return false;
+          },
+          child: Scaffold(
+            body: ListView(
+              children: [
+                Visibility(
+                    visible: (visible) ? false : true,
+                    child: SizedBox(
+                      height: 800,
+                      child: OnboardingPage(
+                          isMobilePage: _showMobile,
+                          onButtonClicked: (int value) {
+                            setState(() {
+                              if (value == 1) {
+                                visible = true;
+                                authVisible = true;
+                                _saveOnboardingSession();
+                              }
+                            });
                           }
-                        });
-                      }
-                  ),
+                      ),
+                    )
+                ),
+                Visibility(
+                    visible: authVisible,
+                    child: SizedBox(
+                      height: 800,
+                      child: PageView(
+                        controller: _controller,
+                        physics: const NeverScrollableScrollPhysics(),
+                        onPageChanged: (value) {},
+                        children: [
+                          Login(isMobilePage: _showMobile, onTextClicked: () {
+                            _controller.nextPage(
+                                duration: _duration, curve: _curve);
+                          }),
+                          Register(isMobilePage: _showMobile, onTextClicked:() {
+                            _controller.previousPage(
+                                duration: _duration, curve: _curve);
+                          })
+                        ],
+                      ),
+                    )
                 )
+              ],
             ),
-            Visibility(
-              visible: authVisible,
-                child: SizedBox(
-                  height: 800,
+          ),
+      );
+    }
+
+    return WillPopScope(
+        onWillPop: () async {
+          SystemNavigator.pop();
+          return false;
+        },
+        child: Scaffold(
+          body: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                  child: OnboardingPage(isMobilePage: _showMobile)
+              ),
+              Expanded(
                   child: PageView(
                     controller: _controller,
                     physics: const NeverScrollableScrollPhysics(),
@@ -98,41 +141,11 @@ class _AuthenticatePage extends State<AuthenticatePage> {
                             duration: _duration, curve: _curve);
                       })
                     ],
-                  ),
-                )
-            )
-          ],
-        ),
-      );
-    }
-
-    return Scaffold(
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-              child: OnboardingPage(isMobilePage: _showMobile)
-          ),
-          Expanded(
-              child: PageView(
-                controller: _controller,
-                physics: const NeverScrollableScrollPhysics(),
-                onPageChanged: (value) {},
-                children: [
-                  Login(isMobilePage: _showMobile, onTextClicked: () {
-                    _controller.nextPage(
-                        duration: _duration, curve: _curve);
-                  }),
-                  Register(isMobilePage: _showMobile, onTextClicked:() {
-                    _controller.previousPage(
-                        duration: _duration, curve: _curve);
-                  })
-                ],
+                  )
               )
-          )
-        ],
-      ),
+            ],
+          ),
+        ),
     );
   }
 }

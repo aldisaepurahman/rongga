@@ -150,8 +150,7 @@ class _AdminFormRombel extends State<AdminFormRombel> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: 130,
+                          Expanded(
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Tingkat Kelas",
@@ -174,8 +173,7 @@ class _AdminFormRombel extends State<AdminFormRombel> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: 130,
+                          Expanded(
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Nama Rombel",

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
@@ -73,7 +74,7 @@ class _StudentHome extends State<StudentHome> {
       }
 
       BlocProvider.of<StudentQuestBloc>(context).add(ResetEvent());
-      BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, tahun_ajaran: _student.tahun_ajaran!, token: _student.token!));
+      BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, tahun_ajaran: _student.tahun_ajaran!));
     });
   }
 
@@ -85,80 +86,132 @@ class _StudentHome extends State<StudentHome> {
 
   @override
   Widget build(BuildContext context) {
-    return MainLayout(
-        type: widget.type,
-        menu_name: "Beranda",
-        child: ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+    return WillPopScope(
+        onWillPop: () async {
+          SystemNavigator.pop();
+          return false;
+        },
+        child: MainLayout(
+            type: widget.type,
+            menu_name: "Beranda",
+            child: ListView(
               children: [
-                if (widget.type != UserType.SISWA)
-                  Container(
-                    margin: const EdgeInsets.only(top: 25, bottom: 15),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ButtonWidget(
-                          background: gray,
-                          tint: lightGray,
-                          type: ButtonType.BACK,
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                Container(
-                  margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
-                  child: TextTypography(
-                      text: "Statistik",
-                      type: TextType.HEADER
-                  ),
-                )
-              ],
-            ),
-            BlocConsumer<StudentQuestBloc, RonggaState>(
-              listener: (_, state) {
-                if (state is SuccessState) {
-                  _studentStyle = state.datastore;
-                }
-              },
-              builder: (_, state) {
-                if (state is LoadingState) {
-                  return const Padding(
-                    padding: EdgeInsets.all(24),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                } if (state is FailureState) {
-                  return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Lottie.asset("assets/images/incorrect.json",
-                              repeat: true, animate: true, reverse: false),
-                          const SizedBox(height: 10),
-                          TextTypography(
-                            type: TextType.HEADER,
-                            text: "Data gagal ditampilkan, terjadi error pada sistem!",
-                            align: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (widget.type != UserType.SISWA)
+                      Container(
+                        margin: const EdgeInsets.only(top: 25, bottom: 15),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ButtonWidget(
+                              background: gray,
+                              tint: lightGray,
+                              type: ButtonType.BACK,
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 25, left: 25, bottom: 15),
+                      child: TextTypography(
+                          text: "Statistik",
+                          type: TextType.HEADER
+                      ),
+                    )
+                  ],
+                ),
+                BlocConsumer<StudentQuestBloc, RonggaState>(
+                  listener: (_, state) {
+                    if (state is SuccessState) {
+                      _studentStyle = state.datastore;
+                    }
+                  },
+                  builder: (_, state) {
+                    if (state is LoadingState) {
+                      return const Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } if (state is FailureState) {
+                      print(state.error);
+                      return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset("assets/images/incorrect.json",
+                                  repeat: true, animate: true, reverse: false),
+                              const SizedBox(height: 10),
+                              TextTypography(
+                                type: TextType.HEADER,
+                                text: "Data gagal ditampilkan, terjadi error pada sistem!",
+                                align: TextAlign.center,
+                              )
+                            ],
                           )
-                        ],
-                      )
-                  );
-                  /*return const Padding(
+                      );
+                      /*return const Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
                         child: Text(
                             "Data gagal ditampilkan, terjadi error pada sistem!")),
                   );*/
-                } if (state is SuccessState) {
-                  if (_studentStyle.nis!.isNotEmpty) {
-                    return _renderExtendedPage(widget.type, _studentStyle);
-                  } else if (widget.type != UserType.SISWA) {
+                    } if (state is SuccessState) {
+                      if (_studentStyle.nis!.isNotEmpty) {
+                        return _renderExtendedPage(widget.type, _studentStyle);
+                      } else if (widget.type != UserType.SISWA) {
+                        return Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Lottie.asset("assets/images/no-data.json",
+                                    repeat: true, animate: true, reverse: false),
+                                const SizedBox(height: 10),
+                                TextTypography(
+                                  type: TextType.HEADER,
+                                  text: "Siswa ini belum melakukan tes gaya belajar di tahun ajaran saat ini",
+                                  align: TextAlign.center,
+                                )
+                              ],
+                            )
+                        );
+                      } else {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset("assets/images/no-data.json",
+                                  repeat: true, animate: true, reverse: false),
+                              const SizedBox(height: 10),
+                              TextTypography(
+                                type: TextType.HEADER,
+                                text: "Sepertinya tahun ini kamu belum mengambil tes terbaru\nSelesaikan tes terbarumu ya.",
+                                align: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              ButtonWidget(
+                                background: green,
+                                tint: white,
+                                type: ButtonType.LARGE,
+                                content: "Mulai Tes",
+                                onPressed: () {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => const Questionnaire(),
+                                      ));
+                                },
+                              )
+                            ],
+                          ),
+                        );
+                      }
+                    }
                     return Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -168,62 +221,17 @@ class _StudentHome extends State<StudentHome> {
                             const SizedBox(height: 10),
                             TextTypography(
                               type: TextType.HEADER,
-                              text: "Siswa ini belum melakukan tes gaya belajar di tahun ajaran saat ini",
+                              text: "Wah, tidak ada data yang ditemukan",
                               align: TextAlign.center,
                             )
                           ],
                         )
                     );
-                  } else {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Lottie.asset("assets/images/no-data.json",
-                              repeat: true, animate: true, reverse: false),
-                          const SizedBox(height: 10),
-                          TextTypography(
-                            type: TextType.HEADER,
-                            text: "Sepertinya tahun ini kamu belum mengambil tes terbaru\nSelesaikan tes terbarumu ya.",
-                            align: TextAlign.center,
-                          ),
-                          const SizedBox(height: 10),
-                          ButtonWidget(
-                            background: green,
-                            tint: white,
-                            type: ButtonType.LARGE,
-                            content: "Mulai Tes",
-                            onPressed: () {
-                              Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const Questionnaire(),
-                                  ));
-                            },
-                          )
-                        ],
-                      ),
-                    );
-                  }
-                }
-                return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Lottie.asset("assets/images/no-data.json",
-                            repeat: true, animate: true, reverse: false),
-                        const SizedBox(height: 10),
-                        TextTypography(
-                          type: TextType.HEADER,
-                          text: "Wah, tidak ada data yang ditemukan",
-                          align: TextAlign.center,
-                        )
-                      ],
-                    )
-                );
-              },
-            ),
-          ],
-        )
+                  },
+                ),
+              ],
+            )
+        ),
     );
   }
 
@@ -253,6 +261,7 @@ class _StudentHome extends State<StudentHome> {
 
     return ListView(
       shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
         CardContainer(

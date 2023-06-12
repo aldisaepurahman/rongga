@@ -144,8 +144,7 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: 130,
+                          Expanded(
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Semester",
@@ -168,8 +167,7 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                              width: 130,
+                          Expanded(
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Tahun Ajaran",

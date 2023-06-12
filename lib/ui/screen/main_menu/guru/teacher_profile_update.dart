@@ -2,12 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
@@ -142,7 +143,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
             buttonBottom: "Kembali",
             onPressedButtonLeft: () {
               Navigator.of(context).pop();
-              _getProfilePhoto(ImageSource.gallery);
+              _getProfilePhoto();
             },
             onPressedButtonRight: () {
               Navigator.of(context).pop();
@@ -328,8 +329,22 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
     );
   }
 
-  void _getProfilePhoto(ImageSource source) async {
-    if (!kIsWeb) {
+  void _getProfilePhoto() async {
+    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        // allowedExtensions: ['jpg', 'jpeg', 'png'],
+        allowMultiple: false);
+
+    if (pickedFile != null) {
+      setState(() {
+        if (!kIsWeb) {
+          imageFile = File(pickedFile.files.single.path!);
+        } else {
+          webImage = pickedFile.files.single.bytes;
+        }
+      });
+    }
+    /*if (!kIsWeb) {
       XFile? pickedFile = await ImagePicker().pickImage(
         source: source,
       );
@@ -347,7 +362,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
           webImage = pickedFile;
         });
       }
-    }
+    }*/
   }
 
   @override
@@ -361,7 +376,7 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
         title: "Ambil Gambar dari Galeri",
         onTap: () {
           Navigator.of(context).pop();
-          _getProfilePhoto(ImageSource.gallery);
+          _getProfilePhoto();
         },
       ),
       BottomSheetCustomItem(
@@ -614,10 +629,9 @@ class _TeacherProfileUpdate extends State<TeacherProfileUpdate> {
           ),
         ),
         Container(
-            height: 30,
             margin: const EdgeInsets.only(top: 15),
             child: RadioButton(
-              type: RadioType.HORIZONTAL,
+              type: RadioType.VERTICAL,
               choiceList: const <String>["Laki-laki", "Perempuan"],
               selectedChoice: _genderType,
               onSelectedChoice: (value) {

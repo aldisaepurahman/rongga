@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker_web/image_picker_web.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/auth/auth_event.dart';
@@ -273,14 +274,18 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
         if (dialogType == 2) {
           Future.delayed(const Duration(milliseconds: 700), () {
             BlocProvider.of<RegisterDetailBloc>(context).add(ResetEvent());
+            Navigator.of(context).pop();
           });
           Future.delayed(const Duration(milliseconds: 1400), () {
             BlocProvider.of<LoginBloc>(context).add(AuthLogin(
                 no_induk: widget.no_induk, password: widget.password));
+            Navigator.of(context).pop();
           });
         } else if (dialogType == 3) {
           Future.delayed(const Duration(seconds: 2), () {
             BlocProvider.of<RegisterDetailBloc>(context).add(ResetEvent());
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
           });
         }
         if (dialogType > 1) {
@@ -329,8 +334,22 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
         user: users_data));
   }
 
-  void _getProfilePhoto(ImageSource source) async {
-    if (!kIsWeb) {
+  void _getProfilePhoto() async {
+    FilePickerResult? pickedFile = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        // allowedExtensions: ['jpg', 'jpeg', 'png'],
+        allowMultiple: false);
+
+    if (pickedFile != null) {
+      setState(() {
+        if (!kIsWeb) {
+          imageFile = File(pickedFile.files.single.path!);
+        } else {
+          webImage = pickedFile.files.single.bytes;
+        }
+      });
+    }
+    /*if (!kIsWeb) {
       XFile? pickedFile = await ImagePicker().pickImage(
         source: source,
       );
@@ -348,7 +367,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
           webImage = pickedFile;
         });
       }
-    }
+    }*/
   }
 
   @override
@@ -361,7 +380,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
         title: "Ambil Gambar dari Galeri",
         onTap: () {
           Navigator.of(context).pop();
-          _getProfilePhoto(ImageSource.gallery);
+          _getProfilePhoto();
         },
       )
     ];
@@ -458,7 +477,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                         icon: Icons.camera_alt,
                                         miniButton: true,
                                         onPressed: () {
-                                          _getProfilePhoto(ImageSource.gallery);
+                                          _getProfilePhoto();
                                           /*showModalBottomSheet(
                                             context: context,
                                             shape: const RoundedRectangleBorder(
@@ -721,7 +740,7 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
                                 icon: Icons.camera_alt,
                                 miniButton: true,
                                 onPressed: () {
-                                  _getProfilePhoto(ImageSource.gallery);
+                                  _getProfilePhoto();
                                   /*showModalBottomSheet(
                                     context: context,
                                     shape: const RoundedRectangleBorder(

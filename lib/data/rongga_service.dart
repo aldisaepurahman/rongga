@@ -13,7 +13,8 @@ class RonggaService {
   RonggaService();
 
   final Dio _dio = Dio();
-  final _baseUrl = "http://127.0.0.1:3000";
+  // final _baseUrl = "http://127.0.0.1:3000";
+  final _baseUrl = "http://apirongga.noncognitive.my.id";
 
   Future<ServiceStatus> login(Map<String, dynamic> request) async {
     try {
@@ -22,7 +23,7 @@ class RonggaService {
         data: request,
       );
 
-      // print("Info: ${response.data["user_data"].toString()}");
+      print("Info: ${response.data["user_data"].toString()}");
 
       if (response.data["user_data"].isEmpty) {
         return ServiceStatus(
@@ -572,16 +573,11 @@ class RonggaService {
     }
   }
 
-  Future<ServiceStatus> getTestResults(Map<String, dynamic> request, String token) async {
+  Future<ServiceStatus> getTestResults(Map<String, dynamic> request) async {
     try {
       final response = await _dio.post(
         "$_baseUrl/kuesioner/show",
-        data: request,
-          options: Options(
-              headers: {
-                "Authorization": "Bearer $token"
-              }
-          )
+        data: request
       );
 
       print("Info: ${response.data["values"].toString()}");

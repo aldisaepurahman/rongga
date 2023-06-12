@@ -34,6 +34,7 @@ import 'package:non_cognitive/utils/user_type.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final SharedPreferences pref = await SharedPreferences.getInstance();
   final String user = pref.getString("user") ?? "";
   final bool hasOnboard = pref.getBool("onboard") ?? false;

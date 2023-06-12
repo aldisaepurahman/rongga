@@ -385,7 +385,7 @@ class _CreateRombel extends State<CreateRombel> {
                     ),
                   );
                 } else if (state is SuccessState) {
-                  if (hasGroup) {
+                  if (hasGroup && listPageRombel.isNotEmpty) {
                     return ListView(
                       shrinkWrap: true,
                       children: [

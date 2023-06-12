@@ -34,7 +34,7 @@ class _CircleAvatarCustom extends State<CircleAvatarCustom> {
               ? Image.memory(widget.webPreview!)
               :(widget.image != null) ? Image.file(widget.image!)
               : (widget.fromNetwork != null && widget.fromNetwork!.isNotEmpty)
-              ? Image.network("http://localhost:3000/public/images/${widget.fromNetwork!}") : Image.asset(widget.path!),
+              ? Image.network("http://apirongga.noncognitive.my.id/public/images/${widget.fromNetwork!}") : Image.asset(widget.path!),
         ),
       ),
     );

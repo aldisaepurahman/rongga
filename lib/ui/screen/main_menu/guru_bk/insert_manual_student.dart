@@ -118,29 +118,34 @@ class _InsertManualStudent extends State<InsertManualStudent> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 25, bottom: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ButtonWidget(
-                        background: gray,
-                        tint: lightGray,
-                        type: ButtonType.BACK,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      )
-                    ],
-                  ),
+                Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 25, bottom: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ButtonWidget(
+                            background: gray,
+                            tint: lightGray,
+                            type: ButtonType.BACK,
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          )
+                        ],
+                      ),
+                    )
                 ),
                 const SizedBox(width: 25),
-                Container(
-                  margin: const EdgeInsets.only(top: 25, bottom: 15),
-                  child: TextTypography(
-                      text: "Input Siswa Manual di Tingkat ${widget.tingkat}",
-                      type: TextType.HEADER),
+                Expanded(
+                  flex: 3,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 25, bottom: 15),
+                      child: TextTypography(
+                          text: "Input Siswa Manual di Tingkat ${widget.tingkat}",
+                          type: TextType.HEADER),
+                    )
                 )
               ],
             ),

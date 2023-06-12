@@ -169,6 +169,7 @@ class _StudentProfile extends State<StudentProfile> {
   ListView _renderPage(UserType type, bool isMobile, Student student) {
     return ListView(
       shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
         if (isMobile) ...[
@@ -209,45 +210,49 @@ class _StudentProfile extends State<StudentProfile> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if ((type == UserType.SISWA && student.kuesioner == 0) || type != UserType.SISWA)...[
-                ButtonWidget(
-                  background: green,
-                  tint: white,
-                  type: ButtonType.MEDIUM,
-                  content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
-                  onPressed: () {
-                    if (type == UserType.SISWA) {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const Questionnaire(),
-                          ));
-                    } else {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
-                          ));
-                    }
-                  },
+                Expanded(
+                    child: ButtonWidget(
+                      background: green,
+                      tint: white,
+                      type: ButtonType.MEDIUM,
+                      content: type == UserType.SISWA ? "Mulai Tes" : "Hasil Tes",
+                      onPressed: () {
+                        if (type == UserType.SISWA) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const Questionnaire(),
+                              ));
+                        } else {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => StudentHome(type: type, student: student, expandedContents: true),
+                              ));
+                        }
+                      },
+                    )
                 ),
                 const SizedBox(width: 20)
               ],
-              ButtonWidget(
-                background: green,
-                tint: green,
-                type: ButtonType.OUTLINED,
-                content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
-                onPressed: () {
-                  if (type == UserType.SISWA) {
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                          builder: (context) => StudentProfileUpdate(student: student),
-                        )).then(onBackPage);
-                  } else {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => TeacherScoreInput(type: type, student: student),
-                        ));
-                  }
-                },
+              Expanded(
+                  child: ButtonWidget(
+                    background: green,
+                    tint: green,
+                    type: ButtonType.OUTLINED,
+                    content: type == UserType.SISWA ? "Ubah Profil" : "Input Nilai Akhir",
+                    onPressed: () {
+                      if (type == UserType.SISWA) {
+                        Navigator.push(context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentProfileUpdate(student: student),
+                            )).then(onBackPage);
+                      } else {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TeacherScoreInput(type: type, student: student),
+                            ));
+                      }
+                    },
+                  )
               ),
             ],
           ),

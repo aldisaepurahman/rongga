@@ -23,7 +23,7 @@ class _SidebarCustom extends State<SidebarCustom> {
 
     return Container(
       decoration: BoxDecoration(color: skyBlue),
-      width: _showMobile ? 70 : MediaQuery.of(context).size.width < 1366 ? MediaQuery.of(context).size.width * 0.25 : 300,
+      width: _showMobile ? 56 : MediaQuery.of(context).size.width < 1366 ? MediaQuery.of(context).size.width * 0.25 : 300,
       padding: EdgeInsets.symmetric(vertical: 24, horizontal: _showMobile ? 12 : 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

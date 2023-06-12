@@ -36,7 +36,7 @@ class RadioButtonState extends State<RadioButton> {
               Row(
                 children: [
                   SizedBox(
-                    width: 250,
+                    width: 200,
                     child: RadioListTile(
                       title:
                       TextTypography(type: TextType.DESCRIPTION, text: item),

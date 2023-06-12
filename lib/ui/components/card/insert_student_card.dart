@@ -41,14 +41,14 @@ class _InsertStudentCard extends State<InsertStudentCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 130,
+                  Expanded(
                     child: TextTypography(
                       type: TextType.DESCRIPTION,
                       text: "Nama Siswa",
                     ),
                   ),
                   Expanded(
+                    flex: 2,
                       child: DropdownFilter(
                           onChanged: (String? value) {
                             setState(() {

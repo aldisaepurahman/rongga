@@ -3,6 +3,7 @@ import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/forms/text_input.dart';
@@ -47,6 +48,8 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
 
   @override
   Widget build(BuildContext context) {
+    final _showMobile = MediaQuery.of(context).size.width < screenMd;
+
     return CardContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +59,7 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: 130,
+                  Expanded(
                     child: TextTypography(
                       type: TextType.DESCRIPTION,
                       text: "Tingkat Kelas",
@@ -86,31 +88,40 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   if (widget.listStudent.isNotEmpty && (widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS)) ...[
-                    ButtonWidget(
-                      background: blue,
-                      tint: white,
-                      type: ButtonType.MEDIUM,
-                      content: "Input Siswa Manual",
-                      onPressed: widget.onManualInput,
+                    Expanded(
+                        child: ButtonWidget(
+                          background: blue,
+                          tint: white,
+                          type: (_showMobile) ? ButtonType.ICON_ONLY : ButtonType.MEDIUM,
+                          icon: Icons.add,
+                          content: "Input Siswa Manual",
+                          onPressed: widget.onManualInput,
+                        )
                     ),
                     const SizedBox(width: 20)
                   ],
                   if (widget.allStudent > 0 && (widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS)) ...[
-                    ButtonWidget(
-                      background: orange,
-                      tint: black,
-                      type: ButtonType.MEDIUM,
-                      content: "Buat Ulang Rombel",
-                      onPressed: widget.onReset,
+                    Expanded(
+                        child: ButtonWidget(
+                          background: orange,
+                          tint: black,
+                          type: (_showMobile) ? ButtonType.ICON_ONLY : ButtonType.MEDIUM,
+                          icon: Icons.lock_reset,
+                          content: "Buat Ulang Rombel",
+                          onPressed: widget.onReset,
+                        )
                     ),
                     const SizedBox(width: 20)
                   ],
-                  ButtonWidget(
-                    background: green,
-                    tint: white,
-                    type: ButtonType.MEDIUM,
-                    content: "Cek",
-                    onPressed: widget.onPressedSubmit,
+                  Expanded(
+                      child: ButtonWidget(
+                        background: green,
+                        tint: white,
+                        type: (_showMobile) ? ButtonType.ICON_ONLY : ButtonType.MEDIUM,
+                        icon: Icons.search,
+                        content: "Cek",
+                        onPressed: widget.onPressedSubmit,
+                      )
                   )
                 ],
               )

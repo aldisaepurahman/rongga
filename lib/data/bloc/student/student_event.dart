@@ -26,7 +26,6 @@ class StudentQuestionnaire extends Events {
 class StudentTestResults extends Events {
   final int id_siswa;
   final String tahun_ajaran;
-  final String token;
 
-  StudentTestResults({required this.id_siswa, required this.tahun_ajaran, required this.token});
+  StudentTestResults({required this.id_siswa, required this.tahun_ajaran});
 }
