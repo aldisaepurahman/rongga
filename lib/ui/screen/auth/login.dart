@@ -202,6 +202,7 @@ class _LoginState extends State<Login> {
                 }
               } else if (state is FailureState) {
                 isSubmitted = !isSubmitted;
+                print(state.error);
                 Future.delayed(const Duration(seconds: 1), () {
                   showSubmitDialog(3, Users());
                 });
@@ -213,6 +214,7 @@ class _LoginState extends State<Login> {
                     showSubmitDialog(2, state.datastore["user_data"]);
                   });
                 } else {
+                  print(state.datastore);
                   Future.delayed(const Duration(seconds: 1), () {
                     showSubmitDialog(3, Users());
                   });

@@ -3,19 +3,21 @@ import 'package:non_cognitive/data/bloc/events.dart';
 class MakeRombelSiswa extends Events {
   final int id_sekolah;
   final int id_tahun_ajaran;
+  final String tahun_ajaran;
   final int tingkat;
   final String token;
 
-  MakeRombelSiswa({required this.id_sekolah, required this.id_tahun_ajaran, required this.tingkat, required this.token});
+  MakeRombelSiswa({required this.id_sekolah, required this.id_tahun_ajaran, required this.tahun_ajaran, required this.tingkat, required this.token});
 }
 
 class CheckRombelSiswa extends Events {
   final int id_sekolah;
   final int id_tahun_ajaran;
+  final String tahun_ajaran;
   final int tingkat;
   final String token;
 
-  CheckRombelSiswa({required this.id_sekolah, required this.id_tahun_ajaran, required this.tingkat, required this.token});
+  CheckRombelSiswa({required this.id_sekolah, required this.id_tahun_ajaran, required this.tahun_ajaran, required this.tingkat, required this.token});
 }
 
 class AddRombelSiswa extends Events {

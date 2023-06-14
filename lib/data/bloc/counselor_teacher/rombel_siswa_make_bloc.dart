@@ -23,7 +23,7 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
       await Future.wait([
         service.getStudentTingkat({"tingkat": event.tingkat, "id_sekolah": event.id_sekolah}, event.token),
         service.getAverageNilaiAkhir({"tingkat": event.tingkat, "id_tahun_ajaran": event.id_tahun_ajaran, "id_sekolah": event.id_sekolah}, event.token),
-        service.getAllTestResults({"id_tahun_ajaran": event.id_tahun_ajaran}, event.token),
+        service.getAllTestResults({"tahun_ajaran": event.tahun_ajaran}, event.token),
         service.searchTeacher({"id_sekolah": event.id_sekolah}, event.token),
         service.showRombelSekolah({"id_sekolah": event.id_sekolah, "tingkat": event.tingkat}, event.token)
       ]).then((arr) {

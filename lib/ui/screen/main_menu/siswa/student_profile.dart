@@ -38,6 +38,7 @@ class _StudentProfile extends State<StudentProfile> {
   late List<BottomSheetCustomItem> bottom_sheet_profile_list = <BottomSheetCustomItem>[];
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  bool cardVisible = true;
 
   Student _student = Student(
       idNumber: "",
@@ -92,6 +93,7 @@ class _StudentProfile extends State<StudentProfile> {
       } else {
         _student = Student.fromJson(jsonDecode(user));
       }
+      cardVisible = prefs.getBool("profileCard") ?? true;
     });
   }
 
@@ -173,28 +175,55 @@ class _StudentProfile extends State<StudentProfile> {
       padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
         if (isMobile) ...[
-          CardContainer(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                      child: Lottie.asset("assets/images/information-icon.json",
-                          repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                  Expanded(
-                      flex: 8,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: TextTypography(
-                          type: TextType.TITLE,
-                          text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
-                              "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
-                              : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
-                              "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
-                        ),
+          Visibility(
+            visible: cardVisible,
+              child: CardContainer(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Lottie.asset("assets/images/information-icon.json",
+                              repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                      Expanded(
+                          flex: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                TextTypography(
+                                  type: TextType.TITLE,
+                                  text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
+                                      "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
+                                      : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
+                                      "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
+                                ),
+                                if (!kIsWeb) ...[
+                                  const SizedBox(height: 20),
+                                  ButtonWidget(
+                                    background: green,
+                                    tint: white,
+                                    type: ButtonType.MEDIUM,
+                                    content: "Mengerti",
+                                    onPressed: () async {
+                                      setState(() {
+                                        cardVisible = !cardVisible;
+                                      });
+                                      if (!kIsWeb) {
+                                        final SharedPreferences prefs = await _prefs;
+                                        prefs.setBool("profileCard", cardVisible);
+                                      }
+                                    },
+                                  )
+                                ]
+                              ],
+                            ),
+                          )
                       )
+                    ],
                   )
-                ],
               )
           ),
           const SizedBox(height: 20),
@@ -260,28 +289,53 @@ class _StudentProfile extends State<StudentProfile> {
           BiodataCard(user_data: student),
           StatusProfileCard(type: UserType.SISWA, student_data: student)
         ] else ...[
-          CardContainer(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                      child: Lottie.asset("assets/images/information-icon.json",
-                          repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                  Expanded(
-                      flex: 8,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: TextTypography(
-                          type: TextType.TITLE,
-                          text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
-                              "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
-                              : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
-                              "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
-                        ),
+          Visibility(
+              visible: cardVisible,
+              child: CardContainer(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Center(
+                          child: Lottie.asset("assets/images/information-icon.json",
+                              repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                      Expanded(
+                          flex: 8,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                TextTypography(
+                                  type: TextType.TITLE,
+                                  text: type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang kamu miliki seperti tingkat kelas hingga rombel kelasmu. Kamu juga "
+                                      "bisa mengubah data diri tersebut dengan menekan tombol Ubah Profil dibawah ini ya."
+                                      : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
+                                      "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
+                                ),
+                                if (!kIsWeb) ...[
+                                  const SizedBox(height: 20),
+                                  ButtonWidget(
+                                    background: green,
+                                    tint: white,
+                                    type: ButtonType.MEDIUM,
+                                    content: "Mengerti",
+                                    onPressed: () async {
+                                      setState(() {
+                                        cardVisible = !cardVisible;
+                                      });
+                                      final SharedPreferences prefs = await _prefs;
+                                      prefs.setBool("profileCard", cardVisible);
+                                    },
+                                  )
+                                ]
+                              ],
+                            ),
+                          )
                       )
+                    ],
                   )
-                ],
               )
           ),
           Row(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_bloc.dart';
 import 'package:non_cognitive/data/bloc/teacher/teacher_event.dart';
@@ -10,6 +11,8 @@ import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/badges/badges.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/student_search_card.dart';
+import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
@@ -109,13 +112,60 @@ class _SearchStudent extends State<SearchStudent> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 } else if (state is FailureState) {
-                  return const Padding(
+                  return Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
-                        child: Text(
-                            "Data gagal ditampilkan, terjadi error pada sistem!")),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/images/incorrect.json",
+                                repeat: true, animate: true, reverse: false),
+                            const SizedBox(height: 10),
+                            TextTypography(
+                              type: TextType.HEADER,
+                              text: "Terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
+                              align: TextAlign.center,
+                            ),
+                            const SizedBox(height: 10),
+                            ButtonWidget(
+                              background: blue,
+                              tint: white,
+                              type: ButtonType.LARGE,
+                              content: "Coba Lagi",
+                              onPressed: () {
+                                BlocProvider.of<TeacherBloc>(context).add(
+                                    StudentOnSearch(
+                                        id_sekolah: 1,
+                                        nama: namaController.text,
+                                        rombel: rombelController.text,
+                                        token: _teacher.token!
+                                    ));
+                              },
+                            )
+                          ],
+                        )
+                    ),
                   );
                 } else if (state is SuccessState) {
+                  if (list_student.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const SizedBox(height: 10),
+                          Lottie.asset("assets/images/no-data.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
+                          TextTypography(
+                            type: TextType.TITLE,
+                            text: "Maaf, tidak ada siswa dengan nama dan rombel tersebut.",
+                            align: TextAlign.center,
+                          )
+                        ],
+                      ),
+                    );
+                  }
+
                   return ListView.builder(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),

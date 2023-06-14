@@ -31,6 +31,7 @@ class TeacherProfile extends StatefulWidget {
 
 class _TeacherProfile extends State<TeacherProfile> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  bool cardVisible = true;
 
   Teacher _teacher = Teacher(
       idNumber: "",
@@ -63,6 +64,7 @@ class _TeacherProfile extends State<TeacherProfile> {
       } else {
         _teacher = Teacher.fromJson(jsonDecode(user));
       }
+      cardVisible = prefs.getBool("teacherProfileCard") ?? true;
     });
   }
 
@@ -136,26 +138,53 @@ class _TeacherProfile extends State<TeacherProfile> {
               ),
             ),
           ),*/
-        CardContainer(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                    child: Lottie.asset("assets/images/information-icon.json",
-                        repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                Expanded(
-                    flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: TextTypography(
-                        type: TextType.TITLE,
-                        text: widget.type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang dimiliki oleh guru kalian seperti yang bisa dilihat dibawah ini."
-                            : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai data diri yang bapak/ibu miliki. Jika ingin mengubah data diri anda, tekan tombol Ubah Profil.",
-                      ),
+        Visibility(
+          visible: cardVisible,
+            child: CardContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: Lottie.asset("assets/images/information-icon.json",
+                            repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                    Expanded(
+                        flex: 8,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextTypography(
+                                type: TextType.TITLE,
+                                text: widget.type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang dimiliki oleh guru kalian seperti yang bisa dilihat dibawah ini."
+                                    : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai data diri yang bapak/ibu miliki. Jika ingin mengubah data diri anda, tekan tombol Ubah Profil.",
+                              ),
+                              if (!kIsWeb) ...[
+                                const SizedBox(height: 20),
+                                ButtonWidget(
+                                  background: green,
+                                  tint: white,
+                                  type: ButtonType.MEDIUM,
+                                  content: "Mengerti",
+                                  onPressed: () async {
+                                    setState(() {
+                                      cardVisible = !cardVisible;
+                                    });
+                                    if (!kIsWeb) {
+                                      final SharedPreferences prefs = await _prefs;
+                                      prefs.setBool("teacherProfileCard", cardVisible);
+                                    }
+                                  },
+                                )
+                              ]
+                            ],
+                          ),
+                        )
                     )
+                  ],
                 )
-              ],
             )
         ),
         if (isMobile) ...[

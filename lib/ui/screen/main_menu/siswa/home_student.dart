@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +42,7 @@ class StudentHome extends StatefulWidget {
 
 class _StudentHome extends State<StudentHome> {
   bool needConfirmation = true;
+  bool cardVisible = true;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -72,6 +74,7 @@ class _StudentHome extends State<StudentHome> {
       } else {
         _student = Student.fromJson(jsonDecode(user));
       }
+      cardVisible = prefs.getBool("homeCard") ?? true;
 
       BlocProvider.of<StudentQuestBloc>(context).add(ResetEvent());
       BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, tahun_ajaran: _student.tahun_ajaran!));
@@ -140,7 +143,6 @@ class _StudentHome extends State<StudentHome> {
                         child: Center(child: CircularProgressIndicator()),
                       );
                     } if (state is FailureState) {
-                      print(state.error);
                       return Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -152,6 +154,17 @@ class _StudentHome extends State<StudentHome> {
                                 type: TextType.HEADER,
                                 text: "Data gagal ditampilkan, terjadi error pada sistem!",
                                 align: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              ButtonWidget(
+                                background: blue,
+                                tint: white,
+                                type: ButtonType.LARGE,
+                                content: "Coba Lagi",
+                                onPressed: () {
+                                  BlocProvider.of<StudentQuestBloc>(context).add(ResetEvent());
+                                  BlocProvider.of<StudentQuestBloc>(context).add(StudentTestResults(id_siswa: _student.id_siswa!, tahun_ajaran: _student.tahun_ajaran!));
+                                },
                               )
                             ],
                           )
@@ -264,28 +277,53 @@ class _StudentHome extends State<StudentHome> {
       physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 15),
       children: [
-        CardContainer(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(
-                    child: Lottie.asset("assets/images/waving.json",
-                        repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                Expanded(
-                  flex: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: TextTypography(
-                        type: TextType.TITLE,
-                        text: type == UserType.SISWA
-                            ? "Halo ${_student.name}. Selamat datang di Rongga. Disini kamu bisa lihat seperti apa hasil tes gaya belajar "
-                            "yang kamu miliki. Selain itu, kamu juga bisa tau seperti apa cara belajar yang sesuai dengan gaya belajar yang kamu miliki."
-                            : "Halo bapak/ibu guru, Selamat datang di Rongga. Disini saya infokan bagaimana hasil tes gaya belajar dari ${_student.name} ya.",
-                      ),
+        Visibility(
+          visible: cardVisible,
+            child: CardContainer(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                        child: Lottie.asset("assets/images/waving.json",
+                            repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                    Expanded(
+                        flex: 8,
+                        child: Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextTypography(
+                                type: TextType.TITLE,
+                                text: type == UserType.SISWA
+                                    ? "Halo ${_student.name}. Selamat datang di Rongga. Disini kamu bisa lihat seperti apa hasil tes gaya belajar "
+                                    "yang kamu miliki. Selain itu, kamu juga bisa tau seperti apa cara belajar yang sesuai dengan gaya belajar yang kamu miliki."
+                                    : "Halo bapak/ibu guru, Selamat datang di Rongga. Disini saya infokan bagaimana hasil tes gaya belajar dari ${_student.name} ya.",
+                              ),
+                              if (!kIsWeb) ...[
+                                const SizedBox(height: 20),
+                                ButtonWidget(
+                                  background: green,
+                                  tint: white,
+                                  type: ButtonType.MEDIUM,
+                                  content: "Mengerti",
+                                  onPressed: () async {
+                                    setState(() {
+                                      cardVisible = false;
+                                    });
+                                    final SharedPreferences prefs = await _prefs;
+                                    prefs.setBool("homeCard", cardVisible);
+                                  },
+                                )
+                              ]
+                            ],
+                          ),
+                        )
                     )
+                  ],
                 )
-              ],
             )
         ),
         BiodataCard(user_data: _student, fullBio: false),

@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: 'Non-Cognitive',
+      title: 'Rongga',
       // home: Navigations(type: UserType.GURU, hasExpandedContents: true),
       // home: OnboardingPage(),
       home: _getLandingPage(),

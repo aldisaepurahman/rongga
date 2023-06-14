@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/student/student_bloc.dart';
 import 'package:non_cognitive/data/bloc/student/student_event.dart';
@@ -9,6 +10,8 @@ import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/teacher.dart';
 import 'package:non_cognitive/ui/components/card/item_search_card.dart';
 import 'package:non_cognitive/ui/components/card/teacher_search_card.dart';
+import 'package:non_cognitive/ui/components/core/button.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/layout/main_layout.dart';
 import 'package:non_cognitive/ui/screen/main_menu/guru/teacher_profile.dart';
@@ -101,28 +104,70 @@ class _SearchTeacher extends State<SearchTeacher> {
                   return Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
-                        child: Text(
-                            state.error)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/images/incorrect.json",
+                                repeat: true, animate: true, reverse: false),
+                            const SizedBox(height: 10),
+                            TextTypography(
+                              type: TextType.HEADER,
+                              text: "Waduh, terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
+                              align: TextAlign.center,
+                            ),
+                            const SizedBox(height: 10),
+                            ButtonWidget(
+                              background: blue,
+                              tint: white,
+                              type: ButtonType.LARGE,
+                              content: "Coba Lagi",
+                              onPressed: () {
+                                BlocProvider.of<StudentBloc>(context)
+                                    .add(TeacherOnSearch(id_sekolah: 1, nama: namaController.text, token: _student.token!));
+                              },
+                            )
+                          ],
+                        )
+                    ),
                   );
                 } else if (state is SuccessState) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: list_teacher.length,
-                    itemBuilder: (context, index) {
-                      return ItemSearchCard(
-                        id_number: list_teacher[index].idNumber ?? "",
-                        name: list_teacher[index].name ?? "",
-                        image: list_teacher[index].photo ?? "",
-                        type: list_teacher[index].type ?? UserType.GURU,
-                        onCheckDetailed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                TeacherProfile(type: UserType.SISWA, teacher: list_teacher[index]),
-                          ));
-                        },
-                      );
-                    },
+                  if (list_teacher.isNotEmpty) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: list_teacher.length,
+                      itemBuilder: (context, index) {
+                        return ItemSearchCard(
+                          id_number: list_teacher[index].idNumber ?? "",
+                          name: list_teacher[index].name ?? "",
+                          image: list_teacher[index].photo ?? "",
+                          type: list_teacher[index].type ?? UserType.GURU,
+                          onCheckDetailed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  TeacherProfile(type: UserType.SISWA, teacher: list_teacher[index]),
+                            ));
+                          },
+                        );
+                      },
+                    );
+                  }
+
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 10),
+                        Lottie.asset("assets/images/no-data.json",
+                            repeat: true, animate: true, reverse: false),
+                        const SizedBox(height: 10),
+                        TextTypography(
+                          type: TextType.TITLE,
+                          text: "Maaf, tidak ada guru dengan nama tersebut.",
+                          align: TextAlign.center,
+                        )
+                      ],
+                    ),
                   );
                 }
                 return const Padding(

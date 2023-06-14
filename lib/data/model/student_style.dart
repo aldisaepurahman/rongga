@@ -17,16 +17,16 @@ class StudentStyle {
   StudentStyle.fromJson(Map<String, dynamic> json) {
     nis = json['no_induk'];
     name = json['nama'];
-    learningStyle = (int.parse(json['skor_visual']) > 0 && int.parse(json['skor_auditorial']) > 0 && int.parse(json['skor_kinestetik']) > 0) ?
-    (int.parse(json['skor_visual']) == int.parse(json['skor_auditorial'])) && (int.parse(json['skor_kinestetik']) == int.parse(json['skor_auditorial']))
-      ? "Gabungan (All)" : (int.parse(json['skor_visual']) < int.parse(json['skor_auditorial'])) && (int.parse(json['skor_kinestetik']) == int.parse(json['skor_auditorial']))
-      ? "Gabungan (Kinestetik + Auditorial)" : (int.parse(json['skor_visual']) > int.parse(json['skor_auditorial'])) && (int.parse(json['skor_kinestetik']) == int.parse(json['skor_visual']))
-      ? "Gabungan (Visual + Kinestetik)" : (int.parse(json['skor_visual']) == int.parse(json['skor_auditorial'])) && (int.parse(json['skor_kinestetik']) < int.parse(json['skor_auditorial']))
-      ? "Gabungan (Visual + Auditorial)" : (int.parse(json['skor_visual']) < int.parse(json['skor_kinestetik'])) && (int.parse(json['skor_kinestetik']) > int.parse(json['skor_auditorial']))
-      ? "Kinestetik" : (int.parse(json['skor_visual']) < int.parse(json['skor_auditorial'])) && (int.parse(json['skor_kinestetik']) < int.parse(json['skor_auditorial']))
+    learningStyle = (json['skor_visual'] > 0 && json['skor_auditorial'] > 0 && json['skor_kinestetik'] > 0) ?
+    (json['skor_visual'] == json['skor_auditorial']) && (json['skor_kinestetik'] == json['skor_auditorial'])
+      ? "Gabungan (All)" : (json['skor_visual'] < json['skor_auditorial']) && (json['skor_kinestetik'] == json['skor_auditorial'])
+      ? "Gabungan (Kinestetik + Auditorial)" : (json['skor_visual'] > json['skor_auditorial']) && (json['skor_kinestetik'] == json['skor_visual'])
+      ? "Gabungan (Visual + Kinestetik)" : (json['skor_visual'] == json['skor_auditorial']) && (json['skor_kinestetik'] < json['skor_auditorial'])
+      ? "Gabungan (Visual + Auditorial)" : (json['skor_visual'] < json['skor_kinestetik']) && (json['skor_kinestetik'] > json['skor_auditorial'])
+      ? "Kinestetik" : (json['skor_visual'] < json['skor_auditorial']) && (json['skor_kinestetik'] < json['skor_auditorial'])
       ? "Auditorial" : "Visual" : "Tidak Diketahui";
-    visual_score = int.parse(json['skor_visual']);
-    auditorial_score = int.parse(json['skor_auditorial']);
-    kinestetik_score = int.parse(json['skor_kinestetik']);
+    visual_score = json['skor_visual'];
+    auditorial_score = json['skor_auditorial'];
+    kinestetik_score = json['skor_kinestetik'];
   }
 }

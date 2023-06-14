@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -78,6 +79,7 @@ class _CreateRombel extends State<CreateRombel> {
   bool hasGroup = false;
   bool isSubmitted = false;
   int allStudents = 0;
+  bool cardVisible = true;
 
   final Map<String, int> tingkatKelasOpt = {
     "VII (Tujuh)": 7,
@@ -92,6 +94,7 @@ class _CreateRombel extends State<CreateRombel> {
 
     setState(() {
       _teacher = Teacher.fromJson(jsonDecode(user));
+      cardVisible = prefs.getBool("rombelBKCard") ?? true;
     });
   }
 
@@ -157,6 +160,7 @@ class _CreateRombel extends State<CreateRombel> {
             BlocProvider.of<RombelSiswaMakeBloc>(context).add(
                 MakeRombelSiswa(
                     id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                    tahun_ajaran: _teacher.tahun_ajaran!,
                     id_sekolah: _teacher.id_sekolah!,
                     tingkat: tingkatKelasOpt[tingkatChoice]!,
                   token: _teacher.token!
@@ -275,27 +279,52 @@ class _CreateRombel extends State<CreateRombel> {
                 )
               ],
             ),
-            CardContainer(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                        child: Lottie.asset("assets/images/information-icon.json",
-                            repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                    Expanded(
-                        flex: 8,
-                        child: Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: TextTypography(
-                            type: TextType.TITLE,
-                            text: "Di halaman ini, bapak/ibu bisa melihat daftar rombel yang telah dibuat selama tahun ajaran ini, bisa untuk dirombak, "
-                                "bisa untuk menambahkan siswa secara manual pada rombel tertentu.",
-                          ),
+            Visibility(
+              visible: cardVisible,
+                child: CardContainer(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                            child: Lottie.asset("assets/images/information-icon.json",
+                                repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                        Expanded(
+                            flex: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  TextTypography(
+                                    type: TextType.TITLE,
+                                    text: "Di halaman ini, bapak/ibu bisa melihat daftar rombel yang telah dibuat selama tahun ajaran ini, bisa untuk dirombak, "
+                                        "bisa untuk menambahkan siswa secara manual pada rombel tertentu.",
+                                  ),
+                                  if (!kIsWeb) ...[
+                                    const SizedBox(height: 20),
+                                    ButtonWidget(
+                                      background: green,
+                                      tint: white,
+                                      type: ButtonType.MEDIUM,
+                                      content: "Mengerti",
+                                      onPressed: () async {
+                                        setState(() {
+                                          cardVisible = false;
+                                        });
+                                        final SharedPreferences prefs = await _prefs;
+                                        prefs.setBool("rombelBKCard", cardVisible);
+                                      },
+                                    )
+                                  ]
+                                ],
+                              ),
+                            )
                         )
+                      ],
                     )
-                  ],
-                )
+                ),
             ),
             TingkatOnlyCard(
                 type: widget.type,
@@ -310,6 +339,7 @@ class _CreateRombel extends State<CreateRombel> {
                 BlocProvider.of<RombelSiswaCheckBloc>(context).add(
                     CheckRombelSiswa(
                         id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                        tahun_ajaran: _teacher.tahun_ajaran!,
                       id_sekolah: _teacher.id_sekolah!,
                       tingkat: tingkatKelasOpt[tingkatChoice]!,
                         token: _teacher.token!
@@ -378,9 +408,35 @@ class _CreateRombel extends State<CreateRombel> {
                   return Padding(
                     padding: EdgeInsets.all(24),
                     child: Center(
-                        child: TextTypography(
-                          type: TextType.DESCRIPTION,
-                          text: state.error,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset("assets/images/incorrect.json",
+                                repeat: true, animate: true, reverse: false),
+                            const SizedBox(height: 10),
+                            TextTypography(
+                              type: TextType.HEADER,
+                              text: "Waduh, terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
+                              align: TextAlign.center,
+                            ),
+                            const SizedBox(height: 10),
+                            ButtonWidget(
+                              background: blue,
+                              tint: white,
+                              type: ButtonType.LARGE,
+                              content: "Coba Lagi",
+                              onPressed: () {
+                                BlocProvider.of<RombelSiswaCheckBloc>(context).add(
+                                    CheckRombelSiswa(
+                                        id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                                        tahun_ajaran: _teacher.tahun_ajaran!,
+                                        id_sekolah: _teacher.id_sekolah!,
+                                        tingkat: tingkatKelasOpt[tingkatChoice]!,
+                                        token: _teacher.token!
+                                    ));
+                              },
+                            )
+                          ],
                         )
                     ),
                   );
@@ -471,6 +527,7 @@ class _CreateRombel extends State<CreateRombel> {
                               BlocProvider.of<RombelSiswaMakeBloc>(context).add(
                                   MakeRombelSiswa(
                                       id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                                      tahun_ajaran: _teacher.tahun_ajaran!,
                                       id_sekolah: _teacher.id_sekolah!,
                                       tingkat: tingkatKelasOpt[tingkatChoice]!,
                                     token: _teacher.token!
@@ -529,9 +586,30 @@ class _CreateRombel extends State<CreateRombel> {
                           const SizedBox(height: 10),
                           TextTypography(
                             type: TextType.TITLE,
-                            text: state.error,
+                            text: "Terjadi kesalahan sistem dalam membentuk rombel siswa. Silahkan coba ulangi proses pembuatan rombel.",
                             align: TextAlign.center,
                           ),
+                          const SizedBox(height: 10),
+                          ButtonWidget(
+                            background: blue,
+                            tint: white,
+                            type: ButtonType.LARGE,
+                            content: "Coba Lagi",
+                            onPressed: () {
+                              BlocProvider.of<RombelSiswaMakeBloc>(context).add(
+                                  MakeRombelSiswa(
+                                      id_tahun_ajaran: _teacher.id_tahun_ajaran!,
+                                      tahun_ajaran: _teacher.tahun_ajaran!,
+                                      id_sekolah: _teacher.id_sekolah!,
+                                      tingkat: tingkatKelasOpt[tingkatChoice]!,
+                                      token: _teacher.token!
+                                  ));
+                              BlocProvider.of<RombelSiswaCheckBloc>(context).add(ResetEvent());
+                              widget.extendedContents = true;
+                              index = 0;
+                              allStudents = 0;
+                            },
+                          )
                         ],
                       ),
                     );

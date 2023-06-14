@@ -264,6 +264,28 @@ class _TeacherHome extends State<TeacherHome> {
                                   type: TextType.HEADER,
                                   text: "Waduh, terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
                                   align: TextAlign.center,
+                                ),
+                                const SizedBox(height: 10),
+                                ButtonWidget(
+                                  background: blue,
+                                  tint: white,
+                                  type: ButtonType.LARGE,
+                                  content: "Coba Lagi",
+                                  onPressed: () {
+                                    BlocProvider.of<TeacherHomeBloc>(context).add(ResetEvent());
+
+                                    BlocProvider.of<TeacherHomeBloc>(context)
+                                        .add(
+                                        StudentRombelSearch(
+                                          wali_kelas: widget.type == UserType.ADMIN ? 0 : _teacher.wali_kelas!,
+                                          id_sekolah: widget.type == UserType.ADMIN ? _user.id_sekolah! : _teacher.id_sekolah!,
+                                          id_guru: widget.type == UserType.ADMIN ? 0 : _teacher.id_guru!,
+                                          tingkat: _tingkatOpt[_tingkatChoice],
+                                          rombel: rombelController.text,
+                                          id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+                                          token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
+                                        ));
+                                  },
                                 )
                               ],
                             )
@@ -284,7 +306,7 @@ class _TeacherHome extends State<TeacherHome> {
                                     type: TextType.HEADER,
                                     text: "Rombel yang dicari tidak ditemukan.",
                                     align: TextAlign.center,
-                                  )
+                                  ),
                                 ],
                               )
                           ),

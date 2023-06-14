@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/events.dart';
 import 'package:non_cognitive/data/bloc/rongga_state.dart';
 import 'package:non_cognitive/data/bloc/teacher/student_mapel_bloc.dart';
@@ -229,11 +230,38 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
                     child: Center(child: CircularProgressIndicator()),
                   );
                 } else if (state is FailureState) {
-                  return const Padding(
-                    padding: EdgeInsets.all(24),
-                    child: Center(
-                        child: Text(
-                            "Data gagal ditampilkan, terjadi error pada sistem!")),
+                  return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset("assets/images/incorrect.json",
+                              repeat: true, animate: true, reverse: false),
+                          const SizedBox(height: 10),
+                          TextTypography(
+                            type: TextType.HEADER,
+                            text: "Data gagal ditampilkan, terjadi error pada sistem!",
+                            align: TextAlign.center,
+                          ),
+                          const SizedBox(height: 10),
+                          ButtonWidget(
+                            background: blue,
+                            tint: white,
+                            type: ButtonType.LARGE,
+                            content: "Coba Lagi",
+                            onPressed: () {
+                              var mapp = {
+                                "tingkat": widget.student.tingkat,
+                                "id_siswa": widget.student.id_siswa,
+                                "id_tahun_ajaran": widget.student.id_tahun_ajaran,
+                                "id_sekolah": widget.student.id_sekolah,
+                                "rombel": widget.student.rombel
+                              };
+
+                              BlocProvider.of<StudentMapelBloc>(context).add(StudentScoreExists(criterias: mapp, token: _teacher.token!));
+                            },
+                          )
+                        ],
+                      )
                   );
                 } else if (state is SuccessState) {
                   return CardContainer(

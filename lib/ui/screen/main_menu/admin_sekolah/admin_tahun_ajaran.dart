@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_bloc.dart';
 import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_delact_bloc.dart';
 import 'package:non_cognitive/data/bloc/admin/tahun_ajaran_event.dart';
@@ -223,7 +224,31 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
                   if (state is FailureState) {
                     return Padding(
                       padding: EdgeInsets.all(24),
-                      child: Center(child: Text(state.error)),
+                      child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset("assets/images/incorrect.json",
+                                  repeat: true, animate: true, reverse: false),
+                              const SizedBox(height: 10),
+                              TextTypography(
+                                type: TextType.HEADER,
+                                text: "Terjadi kesalahan pada sistem, coba untuk mengecek sekali lagi.",
+                                align: TextAlign.center,
+                              ),
+                              const SizedBox(height: 10),
+                              ButtonWidget(
+                                background: blue,
+                                tint: white,
+                                type: ButtonType.LARGE,
+                                content: "Coba Lagi",
+                                onPressed: () {
+                                  initBloc();
+                                },
+                              )
+                            ],
+                          )
+                      ),
                     );
                   }
                   if (state is SuccessState) {

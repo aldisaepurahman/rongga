@@ -111,6 +111,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
   Map<String, dynamic> student_data = {};
   String filenames = "";
   int method = 0;
+  bool cardVisible = true;
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
@@ -357,9 +358,18 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     }*/
   }
 
+  void initProfile() async {
+    final SharedPreferences prefs = await _prefs;
+
+    setState(() {
+      cardVisible = prefs.getBool("updateProfileCard") ?? true;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    initProfile();
     BlocProvider.of<StudentBloc>(context).add(ResetEvent());
 
     bottom_sheet_profile_list = [
@@ -459,26 +469,54 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                   )
                 ],
               ),
-              CardContainer(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: Lottie.asset("assets/images/information-icon.json",
-                              repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
-                      Expanded(
-                          flex: 8,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: TextTypography(
-                              type: TextType.TITLE,
-                              text: "Di halaman ini, kamu bisa mengubah data pribadi yang dapat dilihat oleh guru di sekolahmu. Pastikan "
-                                  "untuk melengkapi semua data yang ada disini ya.",
-                            ),
+              Visibility(
+                visible: cardVisible,
+                  child: CardContainer(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                              child: Lottie.asset("assets/images/information-icon.json",
+                                  repeat: true, animate: true, reverse: false, height: MediaQuery.of(context).size.height * 0.1)),
+                          Expanded(
+                              flex: 8,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    TextTypography(
+                                      type: TextType.TITLE,
+                                      text: "Di halaman ini, kamu bisa mengubah data pribadi yang dapat dilihat oleh guru di sekolahmu. Pastikan "
+                                          "untuk melengkapi semua data yang ada disini ya.",
+                                    ),
+                                    if (!kIsWeb) ...[
+                                      const SizedBox(height: 20),
+                                      ButtonWidget(
+                                        background: green,
+                                        tint: white,
+                                        type: ButtonType.MEDIUM,
+                                        content: "Mengerti",
+                                        onPressed: () async {
+                                          setState(() {
+                                            cardVisible = !cardVisible;
+                                          });
+                                          if (!kIsWeb) {
+                                            final SharedPreferences prefs = await _prefs;
+                                            prefs.setBool(
+                                                "updateProfileCard", cardVisible);
+                                          }
+                                        },
+                                      )
+                                    ]
+                                  ],
+                                ),
+                              )
                           )
+                        ],
                       )
-                    ],
                   )
               ),
               const SizedBox(height: 20),
