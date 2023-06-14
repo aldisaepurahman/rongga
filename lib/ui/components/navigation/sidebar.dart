@@ -34,7 +34,7 @@ class _SidebarCustom extends State<SidebarCustom> {
                 borderRadius: BorderRadius.circular(8), color: white),
             padding: const EdgeInsets.all(5),
             child: Center(
-              child: Image.asset("assets/images/rongga-logo-blue.png")
+              child: Image.asset(_showMobile ? "assets/images/rongga-logo-icon-no-background.png" : "assets/images/rongga-logo-blue.png")
             ),
           ),
           const SizedBox(height: 24),
