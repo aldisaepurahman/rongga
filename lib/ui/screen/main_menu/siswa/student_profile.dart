@@ -85,7 +85,6 @@ class _StudentProfile extends State<StudentProfile> {
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
-    print("infokan $user");
 
     setState(() {
       if (widget.student != null) {
@@ -200,7 +199,7 @@ class _StudentProfile extends State<StudentProfile> {
                                       : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
                                       "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
                                 ),
-                                if (!kIsWeb) ...[
+                                if (!kIsWeb || isMobile) ...[
                                   const SizedBox(height: 20),
                                   ButtonWidget(
                                     background: green,
@@ -314,7 +313,7 @@ class _StudentProfile extends State<StudentProfile> {
                                       : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai siswa yang bapak ibu lihat. Jika ingin melihat hasil tes siswa ini, pilih tombol Hasil Tes, "
                                       "dan jika ingin memasukkan nilai akhir dari siswa, tekan tombol Input Nilai Akhir",
                                 ),
-                                if (!kIsWeb) ...[
+                                if (!kIsWeb || isMobile) ...[
                                   const SizedBox(height: 20),
                                   ButtonWidget(
                                     background: green,

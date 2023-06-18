@@ -245,7 +245,6 @@ class _RegisterState extends State<Register> {
               }
               if (state is FailureState) {
                 isSubmitted = !isSubmitted;
-                print(state.error);
                 Future.delayed(const Duration(seconds: 1), () {
                   showSubmitDialog(3);
                 });
@@ -257,7 +256,6 @@ class _RegisterState extends State<Register> {
                     showSubmitDialog(2);
                   });
                 } else {
-                  print(state.datastore);
                   Future.delayed(const Duration(seconds: 1), () {
                     showSubmitDialog(3);
                   });

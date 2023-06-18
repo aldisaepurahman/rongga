@@ -145,11 +145,13 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
+                            flex: 1,
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Semester",
                               )),
                           Expanded(
+                            flex: 3,
                               child: DropdownFilter(
                                   onChanged: (String? value) {
                                     setState(() {
@@ -168,11 +170,13 @@ class _AdminFormTahunAjaran extends State<AdminFormTahunAjaran> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
+                            flex: 1,
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Tahun Ajaran",
                               )),
                           Expanded(
+                            flex: 3,
                               child: TextInputCustom(
                                   controller: tahunController,
                                   hint: "Misal: 2022/2023",

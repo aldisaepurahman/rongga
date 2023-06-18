@@ -21,8 +21,6 @@ class CircleAvatarCustom extends StatefulWidget {
 class _CircleAvatarCustom extends State<CircleAvatarCustom> {
   @override
   Widget build(BuildContext context) {
-    print((widget.fromNetwork != null && widget.fromNetwork!.isNotEmpty) ? widget.fromNetwork! : "");
-
     return CircleAvatar(
         backgroundColor: Colors.transparent,
         radius: widget.radius,

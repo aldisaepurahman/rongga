@@ -249,6 +249,7 @@ class _StudentHome extends State<StudentHome> {
   }
 
   ListView _renderExtendedPage(UserType type, StudentStyle student_style) {
+    final _showMobile = MediaQuery.of(context).size.width < screenMd;
     List<Map<String, String>> psychologyItem = <Map<String, String>>[];
 
     if (student_style.learningStyle! == "Gabungan (All)") {
@@ -302,7 +303,7 @@ class _StudentHome extends State<StudentHome> {
                                     "yang kamu miliki. Selain itu, kamu juga bisa tau seperti apa cara belajar yang sesuai dengan gaya belajar yang kamu miliki."
                                     : "Halo bapak/ibu guru, Selamat datang di Rongga. Disini saya infokan bagaimana hasil tes gaya belajar dari ${_student.name} ya.",
                               ),
-                              if (!kIsWeb) ...[
+                              if (!kIsWeb || _showMobile) ...[
                                 const SizedBox(height: 20),
                                 ButtonWidget(
                                   background: green,

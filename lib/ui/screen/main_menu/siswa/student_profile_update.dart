@@ -268,7 +268,6 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
     if ((webImage != null || imageFile != null) && (method != 2)) {
       student_data["photo"] = (kIsWeb) ? await MultipartFile.fromBytes(webImage!, filename: filenames) : await MultipartFile.fromFile(imageFile!.path, filename: filenames);
     }
-    print(student_data.toString());
 
     if (student_data["no_induk"].isNotEmpty && student_data["email"].isNotEmpty && student_data["nama"].isNotEmpty
     && student_data["gender"].isNotEmpty && student_data["status_siswa"] > 0 && student_data["id_tingkat_siswa"] > 0
@@ -492,7 +491,7 @@ class _StudentProfileUpdate extends State<StudentProfileUpdate> {
                                       text: "Di halaman ini, kamu bisa mengubah data pribadi yang dapat dilihat oleh guru di sekolahmu. Pastikan "
                                           "untuk melengkapi semua data yang ada disini ya.",
                                     ),
-                                    if (!kIsWeb) ...[
+                                    if (!kIsWeb || _showMobile) ...[
                                       const SizedBox(height: 20),
                                       ButtonWidget(
                                         background: green,

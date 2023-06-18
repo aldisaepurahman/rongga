@@ -80,7 +80,6 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
       "id_sekolah": widget.student.id_sekolah,
       "rombel": widget.student.rombel
     };
-    print("mapp : $mapp");
     Future.delayed(Duration.zero, () {
       BlocProvider.of<StudentMapelBloc>(context).add(StudentScoreExists(criterias: mapp, token: _teacher.token!));
     });

@@ -26,7 +26,7 @@ class TeacherHomeBloc extends Bloc<Events, RonggaState> {
           "tingkat": event.tingkat,
           "rombel": event.rombel
         }, event.token),
-        service.getAllTestResults({"id_tahun_ajaran": event.id_tahun_ajaran}, event.token),
+        service.getAllTestResults({"tahun_ajaran": event.tahun_ajaran}, event.token),
       ]).then((arr) {
         bool foundError = false;
 

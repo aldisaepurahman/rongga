@@ -48,7 +48,7 @@ class _InsertStudentCard extends State<InsertStudentCard> {
                     ),
                   ),
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                       child: DropdownFilter(
                           onChanged: (String? value) {
                             setState(() {

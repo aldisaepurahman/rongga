@@ -151,11 +151,13 @@ class _AdminFormRombel extends State<AdminFormRombel> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
+                            flex: 1,
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Tingkat Kelas",
                               )),
                           Expanded(
+                            flex: 3,
                               child: DropdownFilter(
                                   onChanged: (String? value) {
                                     setState(() {
@@ -174,11 +176,13 @@ class _AdminFormRombel extends State<AdminFormRombel> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
+                            flex: 1,
                               child: TextTypography(
                                 type: TextType.DESCRIPTION,
                                 text: "Nama Rombel",
                               )),
                           Expanded(
+                            flex: 3,
                               child: TextInputCustom(
                                   controller: rombelController,
                                   hint: "Misal: 8A",

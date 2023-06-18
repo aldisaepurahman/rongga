@@ -56,7 +56,6 @@ class _TeacherProfile extends State<TeacherProfile> {
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
-    print("infokan $user");
 
     setState(() {
       if (widget.teacher != null) {
@@ -161,7 +160,7 @@ class _TeacherProfile extends State<TeacherProfile> {
                                 text: widget.type == UserType.SISWA ? "Di halaman ini, kamu bisa melihat data diri yang dimiliki oleh guru kalian seperti yang bisa dilihat dibawah ini."
                                     : "Di halaman ini, bapak/ibu bisa melihat informasi detail mengenai data diri yang bapak/ibu miliki. Jika ingin mengubah data diri anda, tekan tombol Ubah Profil.",
                               ),
-                              if (!kIsWeb) ...[
+                              if (!kIsWeb || isMobile) ...[
                                 const SizedBox(height: 20),
                                 ButtonWidget(
                                   background: green,

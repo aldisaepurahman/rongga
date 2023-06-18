@@ -87,6 +87,8 @@ class _TingkatOnlyCard extends State<TingkatOnlyCard> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  if (!_showMobile)
+                    const Expanded(flex: 4, child: SizedBox()),
                   if (widget.listStudent.isNotEmpty && (widget.type == UserType.GURU_BK ||  widget.type == UserType.GURU_BK_WALI_KELAS)) ...[
                     Expanded(
                         child: ButtonWidget(

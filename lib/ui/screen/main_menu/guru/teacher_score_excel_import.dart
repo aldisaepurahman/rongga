@@ -292,34 +292,28 @@ class _TeacherScoreExcelInput extends State<TeacherScoreExcelInput> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  flex: 1,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 25, bottom: 15),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ButtonWidget(
-                            background: gray,
-                            tint: lightGray,
-                            type: ButtonType.BACK,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      ),
-                    )
+                Container(
+                  margin: const EdgeInsets.only(top: 25, bottom: 15),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ButtonWidget(
+                        background: gray,
+                        tint: lightGray,
+                        type: ButtonType.BACK,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(width: 25),
-                Expanded(
-                  flex: 3,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 25, bottom: 15),
-                      child: TextTypography(
-                          text: "Import Nilai Akhir Siswa", type: TextType.HEADER),
-                    )
+                Container(
+                  margin: const EdgeInsets.only(top: 25, bottom: 15),
+                  child: TextTypography(
+                      text: "Import Nilai", type: TextType.HEADER),
                 )
               ],
             ),

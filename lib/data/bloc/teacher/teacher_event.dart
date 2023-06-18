@@ -43,7 +43,7 @@ class TeacherExcelCheck extends Events {
 class StudentRombelSearch extends Events {
   final int wali_kelas;
   final int id_sekolah;
-  final int id_tahun_ajaran;
+  final String tahun_ajaran;
   int? id_guru;
   int? tingkat;
   final String rombel;
@@ -52,7 +52,7 @@ class StudentRombelSearch extends Events {
   StudentRombelSearch({
     required this.wali_kelas,
     required this.id_sekolah,
-    required this.id_tahun_ajaran,
+    required this.tahun_ajaran,
     this.id_guru = 0,
     this.tingkat = 0,
     required this.rombel,

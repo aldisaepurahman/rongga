@@ -327,7 +327,6 @@ class _CompleteUserAccount extends State<CompleteUserAccount> {
           ? await MultipartFile.fromBytes(webImage!, filename: filenames)
           : await MultipartFile.fromFile(imageFile!.path, filename: filenames);
     }
-    print(users_data.toString());
 
     BlocProvider.of<RegisterDetailBloc>(context).add(AuthRegisterDetail(
         isStudent: widget.type == UserType.SISWA ? true : false,

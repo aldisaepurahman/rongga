@@ -48,7 +48,6 @@ class _AdminTahunAjaran extends State<AdminTahunAjaran> {
   void initBloc() {
     BlocProvider.of<TahunAjaranDelActBloc>(context).add(ResetEvent());
     BlocProvider.of<TahunAjaranBloc>(context).add(ResetEvent());
-    print("user: ${_user.id_sekolah}");
     BlocProvider.of<TahunAjaranBloc>(context)
         .add(TahunAjaranShow(id_sekolah: _user.id_sekolah!, token: _user.token!));
   }

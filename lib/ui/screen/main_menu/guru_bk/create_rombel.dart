@@ -19,6 +19,7 @@ import 'package:non_cognitive/ui/components/card/tingkat_only_card.dart';
 import 'package:non_cognitive/ui/components/core/button.dart';
 import 'package:non_cognitive/ui/components/core/card_container.dart';
 import 'package:non_cognitive/ui/components/core/color.dart';
+import 'package:non_cognitive/ui/components/core/constants.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_double_button.dart';
 import 'package:non_cognitive/ui/components/dialog/dialog_no_button.dart';
@@ -90,7 +91,6 @@ class _CreateRombel extends State<CreateRombel> {
   void initProfile() async {
     final SharedPreferences prefs = await _prefs;
     final String user = prefs.getString("user") ?? "";
-    print("infokan $user");
 
     setState(() {
       _teacher = Teacher.fromJson(jsonDecode(user));
@@ -261,6 +261,8 @@ class _CreateRombel extends State<CreateRombel> {
 
   @override
   Widget build(BuildContext context) {
+    final _showMobile = MediaQuery.of(context).size.width < screenMd;
+
     return MainLayout(
         type: widget.type,
         menu_name: "Buat Rombel",
@@ -302,7 +304,7 @@ class _CreateRombel extends State<CreateRombel> {
                                     text: "Di halaman ini, bapak/ibu bisa melihat daftar rombel yang telah dibuat selama tahun ajaran ini, bisa untuk dirombak, "
                                         "bisa untuk menambahkan siswa secara manual pada rombel tertentu.",
                                   ),
-                                  if (!kIsWeb) ...[
+                                  if (!kIsWeb || _showMobile) ...[
                                     const SizedBox(height: 20),
                                     ButtonWidget(
                                       background: green,

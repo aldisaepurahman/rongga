@@ -82,7 +82,7 @@ class _TeacherHome extends State<TeacherHome> {
           id_guru: widget.type == UserType.ADMIN ? 0 : _teacher.id_guru!,
           tingkat: widget.type == UserType.ADMIN ? 0 : _tingkatOpt[_tingkatChoice],
           rombel: "",
-          id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+          tahun_ajaran: widget.type == UserType.ADMIN ? _user.tahun_ajaran! : _teacher.tahun_ajaran!,
           token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
         ));
   }
@@ -221,7 +221,7 @@ class _TeacherHome extends State<TeacherHome> {
                                           id_guru: widget.type == UserType.ADMIN ? 0 : _teacher.id_guru!,
                                           tingkat: _tingkatOpt[_tingkatChoice],
                                           rombel: rombelController.text,
-                                          id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+                                          tahun_ajaran: widget.type == UserType.ADMIN ? _user.tahun_ajaran! : _teacher.tahun_ajaran!,
                                           token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
                                         ));
                                   },
@@ -282,7 +282,7 @@ class _TeacherHome extends State<TeacherHome> {
                                           id_guru: widget.type == UserType.ADMIN ? 0 : _teacher.id_guru!,
                                           tingkat: _tingkatOpt[_tingkatChoice],
                                           rombel: rombelController.text,
-                                          id_tahun_ajaran: widget.type == UserType.ADMIN ? _user.id_tahun_ajaran! : _teacher.id_tahun_ajaran!,
+                                          tahun_ajaran: widget.type == UserType.ADMIN ? _user.tahun_ajaran! : _teacher.tahun_ajaran!,
                                           token: widget.type == UserType.ADMIN ? _user.token! : _teacher.token!,
                                         ));
                                   },
