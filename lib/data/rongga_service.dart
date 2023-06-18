@@ -13,8 +13,8 @@ class RonggaService {
   RonggaService();
 
   final Dio _dio = Dio();
-  final _baseUrl = "http://127.0.0.1:3000";
-  // final _baseUrl = "http://apirongga.noncognitive.my.id";
+  // final _baseUrl = "http://127.0.0.1:3000";
+  final _baseUrl = "http://apirongga.noncognitive.my.id";
   // final _baseUrl = "http://103.28.53.179";
 
   Future<ServiceStatus> login(Map<String, dynamic> request) async {
@@ -23,8 +23,6 @@ class RonggaService {
         "$_baseUrl/auth/api/v1/login",
         data: request,
       );
-
-      print("Info: ${response.data["user_data"].toString()}");
 
       if (response.data["user_data"].isEmpty) {
         return ServiceStatus(
@@ -50,8 +48,6 @@ class RonggaService {
           data: request
       );
 
-      print("Info: ${response.toString()}");
-
       if (response == null) {
         return ServiceStatus(datastore: false, message: response.toString());
       }
@@ -71,8 +67,6 @@ class RonggaService {
           data: data
       );
 
-      print("Info: ${response.toString()}");
-
       if (response == null) {
         return ServiceStatus(datastore: false, message: response.toString());
       }
@@ -91,8 +85,6 @@ class RonggaService {
           "$_baseUrl/auth/api/v1/registerTeacher",
           data: data
       );
-
-      print("Info: ${response.toString()}");
 
       if (response == null) {
         return ServiceStatus(datastore: false, message: response.toString());
@@ -167,8 +159,6 @@ class RonggaService {
               }
           )
       );
-
-      print("Info: ${response.toString()}");
 
       if (response == null) {
         return ServiceStatus(datastore: false, message: response.toString());
@@ -261,8 +251,6 @@ class RonggaService {
               }
           )
       );
-
-      print("Info: ${response.data["values"].toString()}");
 
       if (response == null) {
         return ServiceStatus(datastore: List<NilaiAkhirInput>.from([]), message: response.toString());
@@ -359,8 +347,6 @@ class RonggaService {
               }
           )
       );
-
-      print("Info: ${response.data["values"].toString()}");
 
       if (response == null) {
         return ServiceStatus(
@@ -580,8 +566,6 @@ class RonggaService {
         "$_baseUrl/kuesioner/show",
         data: request
       );
-
-      print("Info: ${response.data["values"].toString()}");
 
       if (response == null || response.data["values"].length == 0) {
         return ServiceStatus(
