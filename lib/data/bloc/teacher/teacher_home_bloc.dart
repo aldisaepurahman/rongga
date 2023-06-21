@@ -54,7 +54,7 @@ class TeacherHomeBloc extends Bloc<Events, RonggaState> {
           for (var i = 0; i < list_siswa.length; i++) {
             int idxQuest = quests.indexWhere((row) => row.nis == list_siswa[i].idNumber);
             if (idxQuest >= 0) {
-              maps['list_siswa'].add(quests[i]);
+              maps['list_siswa'].add(quests[idxQuest]);
             }
           }
 

@@ -19,13 +19,22 @@ class LoadingDialog extends StatelessWidget {
       child: Container(
         width: 100,
         padding: EdgeInsets.all(10),
-        height: 60,
+        height: 100,
         child: Column(
           children: [
             Expanded(
                 child: Center(
                     child: Lottie.asset(path_image,
-                        repeat: true, animate: true, reverse: false)))
+                        repeat: true, animate: true, reverse: false))),
+            const SizedBox(height: 5),
+            const Text(
+              textAlign: TextAlign.center,
+              "Memuat..",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: "Poppins",
+                  fontWeight: FontWeight.bold),
+            )
           ],
         ),
       ),
