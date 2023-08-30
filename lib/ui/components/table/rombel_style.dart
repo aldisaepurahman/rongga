@@ -1,14 +1,20 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
+import 'package:non_cognitive/ui/components/core/color.dart';
 import 'package:non_cognitive/ui/components/core/typography.dart';
+import 'package:non_cognitive/ui/screen/main_menu/siswa/student_profile.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class RombelStyleTableData extends DataTableSource {
   BuildContext context;
   final List<StudentStyle> content;
+  final UserType type;
 
   RombelStyleTableData({
     required this.context,
-    required this.content
+    required this.content,
+    required this.type,
   });
 
   @override
@@ -31,9 +37,24 @@ class RombelStyleTableData extends DataTableSource {
         DataCell(SizedBox(
           width: double.infinity,
           child: Container(
-            child: TextTypography(
-              type: TextType.LABEL_TITLE,
-              text: content[index].name!,
+            child: RichText(
+                text: TextSpan(
+                    style: TextStyle(
+                        fontSize: 14, fontFamily: "Poppins", color: black, fontWeight: FontWeight.bold
+                    ),
+                    children: [
+                      TextSpan(
+                          text: content[index].name!,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.of(context).push(
+                                  MaterialPageRoute(builder: (context) => StudentProfile(
+                                      userType: type, student: content[index].student!))
+                              );
+                            }
+                      )
+                    ]
+                )
             ),
           ),
         )),

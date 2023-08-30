@@ -1,3 +1,4 @@
+import 'package:non_cognitive/data/model/student.dart';
 import 'package:non_cognitive/data/model/student_style.dart';
 
 class RombelSiswa {
@@ -5,11 +6,13 @@ class RombelSiswa {
   String? name;
   StudentStyle style;
   String? level;
+  Student? student;
 
   RombelSiswa(
       {this.id_siswa = 0,
       this.name = "",
       required this.style,
-      this.level = ""});
+      this.level = "",
+      this.student});
 
 }

@@ -8,6 +8,7 @@ import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/table/rombel_create.dart';
 import 'package:non_cognitive/ui/components/table/rombel_style.dart';
 import 'package:non_cognitive/ui/components/table/table_column.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class RombelPage extends StatefulWidget {
   final String rombel_name;
@@ -17,6 +18,7 @@ class RombelPage extends StatefulWidget {
   final ValueChanged<String?> onSelectedWaliKelas;
   final List<String> tableHeader;
   final List<RombelSiswa> tableContent;
+  final UserType type;
 
   RombelPage(
       {super.key,
@@ -26,7 +28,7 @@ class RombelPage extends StatefulWidget {
       required this.teacherChoose,
       required this.onSelectedWaliKelas,
       required this.tableHeader,
-      required this.tableContent});
+      required this.tableContent, required this.type});
 
   @override
   State<StatefulWidget> createState() => _RombelPage();
@@ -127,7 +129,9 @@ class _RombelPage extends State<RombelPage> {
             source: RombelCreateTableData(
                 context: context,
                 content: widget.tableContent,
-              useLevel: true
+              useLevel: true,
+              isFieldReadOnly: true,
+              type: widget.type
             ),
             rowsPerPage: 5,
             columnSpacing: 0,

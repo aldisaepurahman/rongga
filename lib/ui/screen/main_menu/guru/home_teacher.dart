@@ -369,7 +369,8 @@ class _TeacherHome extends State<TeacherHome> {
                                 columns: createTableHeaders(["No", "Nama Siswa", "Gaya Belajar"]),
                                 source: RombelStyleTableData(
                                     context: context,
-                                    content: listStudent
+                                    content: listStudent,
+                                  type: _teacher.type!
                                 ),
                                 rowsPerPage: 5,
                                 columnSpacing: 0,

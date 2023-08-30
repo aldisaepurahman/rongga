@@ -13,7 +13,8 @@ class RonggaService {
   RonggaService();
 
   final Dio _dio = Dio();
-  // final _baseUrl = "http://127.0.0.1:3000";
+  // // final _baseUrl = "http://127.0.0.1:3000";
+  // final _baseUrl = "http://192.168.100.36:3000";
   final _baseUrl = "http://apirongga.noncognitive.my.id";
   // final _baseUrl = "http://103.28.53.179";
 

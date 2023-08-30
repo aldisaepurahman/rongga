@@ -1,3 +1,5 @@
+import 'package:non_cognitive/data/model/student.dart';
+
 class StudentStyle {
   String? nis;
   String? name;
@@ -5,6 +7,7 @@ class StudentStyle {
   int? visual_score;
   int? auditorial_score;
   int? kinestetik_score;
+  Student? student;
 
   StudentStyle(
       {this.nis = "",
@@ -12,7 +15,8 @@ class StudentStyle {
       this.learningStyle = "",
       this.visual_score = 0,
       this.auditorial_score = 0,
-      this.kinestetik_score = 0});
+      this.kinestetik_score = 0,
+      this.student});
 
   StudentStyle.fromJson(Map<String, dynamic> json) {
     nis = json['no_induk'];

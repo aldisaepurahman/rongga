@@ -276,7 +276,7 @@ class _StudentProfile extends State<StudentProfile> {
                       } else {
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => TeacherScoreInput(type: type, student: student),
+                              builder: (context) => TeacherScoreInput(type: type, student: student, isFieldReadOnly: false),
                             ));
                       }
                     },
@@ -394,7 +394,7 @@ class _StudentProfile extends State<StudentProfile> {
                               } else {
                                 Navigator.of(context).push(
                                     MaterialPageRoute(
-                                      builder: (context) => TeacherScoreInput(type: type, student: student),
+                                      builder: (context) => TeacherScoreInput(type: type, student: student, isFieldReadOnly: false),
                                     ));
                               }
                             },

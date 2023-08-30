@@ -28,8 +28,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TeacherScoreInput extends StatefulWidget {
   final UserType type;
   final Student student;
+  final bool isFieldReadOnly;
 
-  const TeacherScoreInput({super.key, required this.type, required this.student});
+  const TeacherScoreInput({super.key, required this.type, required this.student, required this.isFieldReadOnly});
 
   @override
   State<StatefulWidget> createState() => _TeacherScoreInput();
@@ -268,7 +269,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           for (var nilai_akhir in list_nilai)
-                            FinalScoreCard(nama_mapel: nilai_akhir.nama_mapel!, nilai: nilai_akhir.nilai!, onScoreChanged: (value) {nilai_akhir.nilai = value;})
+                            FinalScoreCard(nama_mapel: nilai_akhir.nama_mapel!, nilai: nilai_akhir.nilai!, onScoreChanged: (value) {nilai_akhir.nilai = value;}, isFieldReadOnly: widget.isFieldReadOnly)
                         ],
                       )
                   );

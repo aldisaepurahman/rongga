@@ -459,7 +459,8 @@ class _CreateRombel extends State<CreateRombel> {
                                       rombel_name: listPageRombel[i]['rombel'],
                                       description: listPageRombel[i]['description'],
                                       tableHeader: ["No", "Nama Siswa", "Gaya Belajar"],
-                                      tableContent: listPageRombel[i]['list_siswa']
+                                      tableContent: listPageRombel[i]['list_siswa'],
+                                    type: _teacher.type!,
                                   ),
                               ]
                           ),
@@ -588,7 +589,8 @@ class _CreateRombel extends State<CreateRombel> {
                           const SizedBox(height: 10),
                           TextTypography(
                             type: TextType.TITLE,
-                            text: "Terjadi kesalahan sistem dalam membentuk rombel siswa. Silahkan coba ulangi proses pembuatan rombel.",
+                            text: "Terjadi kesalahan sistem dalam membentuk rombel siswa."
+                                "Silahkan coba ulangi proses pembuatan rombel.",
                             align: TextAlign.center,
                           ),
                           const SizedBox(height: 10),
@@ -636,7 +638,8 @@ class _CreateRombel extends State<CreateRombel> {
                                         listGuruChoose[i] = value!;
                                       },
                                       tableHeader: ["No", "Nama Siswa", "Gaya Belajar - Level Akademik"],
-                                      tableContent: listPageRombel[i]['list_siswa']
+                                      tableContent: listPageRombel[i]['list_siswa'],
+                                    type: _teacher.type!,
                                   ),
                               ]
                           ),

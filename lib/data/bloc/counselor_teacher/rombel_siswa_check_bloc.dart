@@ -82,7 +82,8 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
                       RombelSiswa(
                           id_siswa: list_siswa[i].id_siswa,
                           name: list_siswa[i].name,
-                          style: quests[idxQuest]
+                          style: quests[idxQuest],
+                          student: list_siswa[i]
                       )
                   );
                 } else {
@@ -90,7 +91,8 @@ class RombelSiswaCheckBloc extends Bloc<Events, RonggaState> {
                       RombelSiswa(
                           id_siswa: list_siswa[i].id_siswa,
                           name: list_siswa[i].name,
-                          style: StudentStyle()
+                          style: StudentStyle(),
+                          student: list_siswa[i]
                       )
                   );
                 }

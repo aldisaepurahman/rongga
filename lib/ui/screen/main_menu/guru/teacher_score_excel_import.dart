@@ -345,7 +345,9 @@ class _TeacherScoreExcelInput extends State<TeacherScoreExcelInput> {
                 _importExcel();
               },
               onPressedSubmit: () {
-                BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_final_score, token: widget.teacher.token!));
+                if (list_final_score.isNotEmpty) {
+                  BlocProvider.of<StudentMapelScoreBloc>(context).add(StudentScoreInput(scores: list_final_score, token: widget.teacher.token!));
+                }
               },
             ),
             BlocConsumer<TeacherExcelBloc, RonggaState>(

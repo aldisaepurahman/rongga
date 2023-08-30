@@ -8,19 +8,21 @@ import 'package:non_cognitive/ui/components/forms/dropdown_filter.dart';
 import 'package:non_cognitive/ui/components/table/rombel_create.dart';
 import 'package:non_cognitive/ui/components/table/rombel_style.dart';
 import 'package:non_cognitive/ui/components/table/table_column.dart';
+import 'package:non_cognitive/utils/user_type.dart';
 
 class RombelCheckPage extends StatefulWidget {
   final String rombel_name;
   final String description;
   final List<String> tableHeader;
   final List<RombelSiswa> tableContent;
+  final UserType type;
 
   RombelCheckPage(
       {super.key,
       required this.rombel_name,
       required this.description,
       required this.tableHeader,
-      required this.tableContent});
+      required this.tableContent, required this.type});
 
   @override
   State<StatefulWidget> createState() => _RombelCheckPage();
@@ -87,7 +89,9 @@ class _RombelCheckPage extends State<RombelCheckPage> {
             source: RombelCreateTableData(
                 context: context,
                 content: widget.tableContent,
-              useLevel: false
+              useLevel: false,
+              isFieldReadOnly: false,
+              type: widget.type
             ),
             rowsPerPage: 5,
             columnSpacing: 0,

@@ -66,7 +66,7 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
             i = 0;
             foundError = false;
             for (var j = 0; j < nilai_akhir.length; j++) {
-              int idxSiswa = nilai_akhir.indexWhere((row) => row.id_siswa == nilai_akhir[j].id_siswa);
+              int idxSiswa = list_siswa.indexWhere((row) => row.id_siswa == nilai_akhir[j].id_siswa);
               int idxQuest = quests.indexWhere((row) => row.nis == list_siswa[idxSiswa].idNumber);
 
               if (idxSiswa >= 0 && idxQuest >= 0){
@@ -75,7 +75,8 @@ class RombelSiswaMakeBloc extends Bloc<Events, RonggaState> {
                       id_siswa: list_siswa[idxSiswa].id_siswa,
                       name: list_siswa[idxSiswa].name,
                       style: quests[idxQuest],
-                      level: nilai_akhir[j].level_avg
+                      level: nilai_akhir[j].level_avg,
+                      student: list_siswa[idxSiswa]
                     )
                 );
 

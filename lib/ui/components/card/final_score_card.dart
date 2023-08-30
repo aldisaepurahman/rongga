@@ -7,8 +7,9 @@ class FinalScoreCard extends StatefulWidget {
   final String nama_mapel;
   int nilai;
   final ValueChanged<int> onScoreChanged;
+  final bool isFieldReadOnly;
 
-  FinalScoreCard({super.key, required this.nama_mapel, required this.nilai, required this.onScoreChanged});
+  FinalScoreCard({super.key, required this.nama_mapel, required this.nilai, required this.onScoreChanged, required this.isFieldReadOnly});
 
   @override
   State<StatefulWidget> createState() => _FinalScoreCard();
@@ -51,6 +52,7 @@ class _FinalScoreCard extends State<FinalScoreCard> {
                   controller: nilaiController,
                   hint: "Nilai",
                   type: TextInputCustomType.NORMAL,
+                  readOnly: widget.isFieldReadOnly,
                   onChanged: (value) {
                     if (value != null) {
                       widget.onScoreChanged(int.parse(value));
