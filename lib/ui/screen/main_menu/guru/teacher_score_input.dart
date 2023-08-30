@@ -156,7 +156,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
     return MainLayout(
         type: widget.type,
         menu_name: "Cari Siswa",
-        floatingButton: ButtonWidget(
+        floatingButton: widget.isFieldReadOnly == false ? ButtonWidget(
           background: orange,
           tint: black,
           type: ButtonType.FLOAT,
@@ -164,7 +164,7 @@ class _TeacherScoreInput extends State<TeacherScoreInput> {
           onPressed: () {
             submitWarningDialog();
           },
-        ),
+        ) : const SizedBox(width: 0),
         child: ListView(
           children: [
             Row(
